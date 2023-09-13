@@ -1,0 +1,86 @@
+
+.container-card{
+    width: calc(100%);
+    height: calc(100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-card {
+    max-width: 5;
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 5px 0 rgb(84, 130, 170);
+}
+
+h1{
+    font-size: 35px;
+}
+  
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+.content-header-card{
+    width: calc(100%);
+    height: calc(100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0.3rem;
+}
+
+.header{
+    width: calc(100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.title{
+    background-image: linear-gradient(to bottom, #35127E, #2e91c3);
+    /* color: #35127E;     */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.content-form{
+    width: calc(100%);
+    padding-left: calc(5%) ;
+    padding-right: calc(5%);
+}
+
+.input{
+    width: calc(100%);
+}
+
+.btn{
+    width: calc(100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.forgot-password{
+    padding-left: 0px;
+}
+
+.email-input{
+    padding-top: 10px;
+}
+
+.aLink{
+    float:right;
+    padding-right:60px;
+    text-decoration:none;
+}
+
+.main-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
