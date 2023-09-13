@@ -1,0 +1,72 @@
+<div class="container-card">
+  <mat-card class="content-card">
+    <mat-card-header>
+      <div class="content-header-card">
+        <img mat-card-image src="../../assets/images/logo.svg" alt="Central Optic logo">
+      </div>
+
+      <!-- <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Shiba Inu</mat-card-title>
+          <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+    </mat-card-header>
+    <div class="header">
+      <h1 class="title"><strong>Central Optic</strong></h1>
+    </div>
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <mat-card-content>
+      <div class="content-form">
+        <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+          <div class="email-input">
+            <mat-form-field class="full-width input" appearance="outline">
+              <mat-label>Usuario</mat-label>
+              <input formControlName="username" matInput required name="email" [(ngModel)]="email" />
+              <mat-error *ngIf="!loginForm.controls['username'].valid">
+                El usuario es requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+
+            <span class="aLink">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+
+            <mat-form-field class="full-width input" appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required name="password"
+                [(ngModel)]="password" />
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>
+                  {{hide ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+              </button>
+              <mat-error *ngIf="!loginForm.controls['password'].valid">
+                La contraseña es requerida
+              </mat-error>
+            </mat-form-field>
+          </div>
+            <!-- <div class="btn"> -->
+              <button mat-flat-button color="primary" type="submit">Iniciar sesión</button>
+            <!-- </div> -->
+
+        </form>
+      </div>
+
+
+      <!-- <p>
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+            bred for hunting.
+          </p> -->
+    </mat-card-content>
+    <!-- <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions> -->
+  </mat-card>
+</div>
