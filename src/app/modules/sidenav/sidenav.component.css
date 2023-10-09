@@ -6,7 +6,7 @@
     top: 0;
     width: 5rem;
     height: 100vh;
-    box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+    box-shadow: 0.063rem 0 1.25rem 0 #fff;
 }
 
 .example-viewport {
@@ -95,6 +95,13 @@
     margin: 0 0.5rem;
     text-align: center;
 }
+
+
+
+.imagen-blanca{
+    background-color: #fff;
+}
+
 
 .sidenav-link-text{
     margin-left: 1.5rem;

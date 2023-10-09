@@ -2,7 +2,9 @@ import { Component, Output, EventEmitter, OnInit, HostListener, ViewChild } from
 import { navbarData } from './nav-data';
 import { animate, animation, keyframes, style, transition, trigger } from '@angular/animations';
 import { INavbarData, fadeInOut } from './helper';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { HeaderService } from '../header/service/header.service';
+import { filter } from 'rxjs/operators';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -45,10 +47,26 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private headerService:HeaderService) {}
 
   ngOnInit(): void {
       this.screenWidth = window.innerWidth;
+
+      this.subscribeToRouteChanges();
+  }
+  private subscribeToRouteChanges() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.headerService.setTitle(String(this.navData.find(e => e.routeLink===event.url.substring(1))?.label))
+      }
+    });
+  }
+  detectRouteChange(): void {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.headerService.setTitle(String(this.navData.find(e => event==e)?.label))
+    });
   }
 
   toggleCollapse(): void {
@@ -72,6 +90,7 @@ export class SidenavComponent implements OnInit {
 
   shrinkItems(item: INavbarData): void {
     if (!this.multiple) {
+      this.headerService.setTitle(item.label);
       for(let modelItem of this.navData) {
         if (item !== modelItem && modelItem.expanded) {
           modelItem.expanded = false;

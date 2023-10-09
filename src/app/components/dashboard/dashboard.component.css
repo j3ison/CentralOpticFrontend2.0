@@ -1,0 +1,24 @@
+
+.example-card{
+    max-width: 400px;
+    .container{
+        width: calc(100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+
+        .name{
+            font-size: larger;
+        }
+
+        .content{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .address{
+            color: #4e4e4e;
+        }
+    }
+}

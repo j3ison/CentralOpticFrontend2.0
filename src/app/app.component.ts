@@ -36,7 +36,7 @@ export class AppComponent implements OnInit{
   } 
 
   onHeaderDesactive():boolean{
-    if(this.router.url=='/login' /*|| this.router.url=='/dashboard'*/){
+    if(this.router.url=='/login'){
       return false
     }
     return true
@@ -48,7 +48,6 @@ export class AppComponent implements OnInit{
   }
 
   
-
   changeTitle(){
     this.title = ", world!"
   }

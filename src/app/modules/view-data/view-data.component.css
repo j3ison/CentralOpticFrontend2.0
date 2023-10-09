@@ -1,0 +1,178 @@
+.container {
+  width: calc(100%);
+  /* height: 78vh; */
+  display: flex;
+  flex-direction: column;
+
+  .header-content {
+    width: calc(100%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+
+    .header-search {
+      position: relative;
+
+      .normal-search {
+        .search {
+          border: none;
+          height: 2.375rem;
+          padding-left: 2.5rem;
+          padding-right: 1.25rem;
+          background-color: #f3f3f9;
+          box-shadow: none;
+          border-radius: 1.875rem;
+          outline: 0;
+        }
+
+        .search-icon {
+          position: absolute;
+          font-size: 1rem;
+          line-height: 2.375rem;
+          left: 0.813rem;
+          color: #74788d
+        }
+      }
+    }
+
+    .header-icon {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        font-size: 22px;
+        background-image: linear-gradient(to bottom, #170d3e, #2b3e4e, #170d3e);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+    }
+  }
+
+  .content {
+
+    /* width: calc(100%); */
+    .container-grid-items {
+      width: calc(100%);
+      display: flex;
+      flex-direction: row;
+      transition: all .5s ease;
+
+
+      .content-items-active {
+        width: calc(25%);
+      }
+
+      .content-items-desactive {
+        width: calc(100%);
+      }
+
+
+      .content-form {
+        width: calc(75%);
+        display: flex;
+        flex-direction: column;
+        margin: 0 1rem;
+        background: #fafafa;
+        border-radius: 0.4rem;
+
+        .content-btn {
+          display: flex;
+          width: calc(100%);
+          padding: 0.3rem;
+          justify-content: end;
+
+          .btn {
+            border-color: #830000;
+            background-color: #ff0000;
+            width: 7rem;
+            padding: 0.2rem;
+            border-radius: 0.4rem;
+            color: #ffffff;
+
+            .fa-regular {
+              padding-left: 0.2rem;
+            }
+          }
+        }
+
+        .Content-content-form {
+          width: calc(100%);
+          padding: 0.3rem;
+        }
+
+      }
+    }
+  }
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/4114/4114739.png');
+  background-size: cover;
+}
+
+.emoji {
+  width: 250px;
+  padding: 2rem;
+}
+
+.contentt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-card {
+  width: calc(100%);
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* .scrollwrap {
+    overflow-y: auto;
+    visibility: hidden;
+    height: calc(100% - 3.65rem);
+  } */
+/*
+  .container,
+  .scrollwrap:hover,
+  .scrollwrap:focus {
+    visibility: visible;
+  }
+  
+  .scrollwrap_delayed {
+    transition: visibility 0.5s 0.2s;
+  }
+  
+  .scrollwrap_delayed:hover {
+    transition: visibility 0.2s 0.2s;
+  }
+  
+  /* works on chrome, edge and safari */
+/* .scrollwrap::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .scrollwrap::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollwrap::-webkit-scrollbar-thumb {
+    background-color: #556268;
+    border-radius: 20px;
+  } */
+
+/* works on firefox */
+/* .scrollwrap {
+    scrollbar-width: thin;
+    scrollbar-color: #556268 transparent;
+  }  */
