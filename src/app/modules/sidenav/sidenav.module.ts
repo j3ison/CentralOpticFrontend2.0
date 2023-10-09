@@ -12,6 +12,6 @@ import { AuthModule } from 'src/app/auth/auth.module';
 @NgModule({
   declarations: [SidenavComponent,SublevelMenuComponent],
   imports: [BrowserModule,AppRoutingModule,MatTooltipModule,AuthModule],
-  exports:[SidenavComponent,SublevelMenuComponent]
+  exports:[SidenavComponent , SublevelMenuComponent]
 })
 export class SidenavModule { }

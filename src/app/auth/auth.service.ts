@@ -23,19 +23,19 @@ const USERS : user[] = [
     token:'token1',
     username:'Roberto',
     password:'1234',
-    role:'Manager'
+    role:'SuperAdmin'
   },
   {
     token:'token2',
     username:'Fatima',
     password:'1234',
-    role:'Bodega'
+    role:'Admin'
   },
   {
     token:'token3',
     username:'Maria',
     password:'1234',
-    role:'Vendedor'
+    role:'Admin'
   }
 ]
 
@@ -59,9 +59,7 @@ export class AuthService {
   login(credentials: LoginCredentials) /*:Observable<never>*/ {
 
     const login = USERS.find(e=> e.username === credentials.username && e.password === credentials.password)
-    console.log(login)
     if(login){
-      console.log('e')
       this.pushNewUser(login)
       this.saveTokenToLocalStore(login)
       this.redirectToDashboard()

@@ -1,0 +1,67 @@
+<div class="container" *ngIf="itemData$.length>0">
+  <div class="header-content">
+    <div class="header-search">
+      <div class="normal-search">
+        <input matInput type="search" class="search" name="" id="" placeholder="Search...">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      </div>
+    </div>
+
+    <div class="header-icon">
+      <i class="icon fa-solid " [ngClass]="setTypeViewIcon()" (click)="setTypeView()"></i>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="container-grid-items" *ngIf="!typeViewIcon">
+      <div [ngClass]="setClassItems()">
+        <div class="row">
+          <ng-container *ngFor="let item of itemData$; let i = index">
+            <div [ngClass]="getColSize(i)" class="mb-3">
+              <ng-container *ngTemplateOutlet="itemViewGrid; context: { $implicit: item }"
+                (click)="clickItemGrip()"></ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="content-form" *ngIf="valFormularioGrip">
+        <div class="content-btn">
+          <button class="btn" (click)="cancelForm()">
+            Cerrar
+            <i class="fa-regular fa-circle-xmark"></i>
+          </button>
+        </div>
+        <div class="Content-content-form">
+          <ng-container *ngTemplateOutlet="formView"></ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="typeViewIcon">
+      <app-table [data]="itemData$" [columns]="tableColumns"></app-table>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="itemData$.length === 0">
+  <div class="container-card">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Asistente Virtual</mat-card-title>
+        <mat-card-subtitle>Engineer Dog</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="contentt">
+        <img class="emoji" mat-card-image src="https://cdn-icons-png.flaticon.com/512/742/742753.png" alt="Error">
+        <p>
+          Error al cargar los datos
+        </p>
+      </mat-card-content>
+      <mat-card-footer>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>
+

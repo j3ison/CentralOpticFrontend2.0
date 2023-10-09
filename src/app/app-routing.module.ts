@@ -8,11 +8,9 @@ import { hasRole } from './auth/guards/has-role.guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { 
-    path: 'dashboard', 
-    component: DashboardComponent,
-    canMatch: [isLoggedInGuard],
-    canActivate: [hasRole([ 'Manager','Bodega','Vendedor'])],
-    canLoad: [hasRole([ 'Manager','Bodega','Vendedor'])],
+    path: '', 
+    loadChildren:() => import('./components/components.module').then(m => m.ComponentsModule),
+    canMatch: [isLoggedInGuard]
   },
       
 

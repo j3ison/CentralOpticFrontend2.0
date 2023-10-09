@@ -1,17 +1,20 @@
-<!-- <app-sidenav *ngIf="onNavDesative()" (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
-
-<app-header 
-[collapsed]="isSidaNavCollapsed"
-[screenWidth]="screenWidth"></app-header>
-
-
-<button (click)="delete()">
-    delete
-</button>
+<app-view-data [ItemViewGrid]="customTemplate" [ItemData]="data"></app-view-data>
 
 
 
-<a *akoShowForRoles="['Manager']">Manager</a>
-<a *akoShowForRoles="['Bodega']">Bodega</a>
-<a *akoShowForRoles="['Vendedor']">Vendedor</a>
- -->
+
+<ng-template #customTemplate let-data>
+    <mat-card class="example-card">
+        <div class="container">
+            <h1 class="name">{{data.nombre}}</h1>
+            <div class="content">
+                <h2>{{data.cedula}}</h2>
+                <div>
+                    <h3>{{data.edad}}</h3>
+                </div>
+            </div>
+            <h3 class="address">{{data.direccion}}</h3>
+        </div>
+    </mat-card>
+</ng-template>
+

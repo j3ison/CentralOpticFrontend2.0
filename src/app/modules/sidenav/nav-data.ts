@@ -1,35 +1,66 @@
 import { Router } from '@angular/router';
 import { INavbarData } from './helper';
 
-export const navbarData:INavbarData[]=[
+export const navbarData: INavbarData[] = [
     {
         routeLink: 'dashboard',
         icon: 'fa-solid fa-house',
         label: 'Inicio',
-        role:['Manager','Vendedor','Bodega']
+        role: ['Admin', 'SuperAdmin', 'Vendedor', 'Optometrista']
     },
     {
-        routeLink: 'cliente',
-        icon: 'fa-regular fa-circle-user',
+        routeLink: 'client',
+        icon: 'fa-regular fa-address-card',
         label: 'Cliente',
-        items:[
+        role: ['Admin', 'SuperAdmin', 'Vendedor', 'Optometrista']
+    }, {
+        routeLink: 'employee',
+        icon: 'fa-solid fa-users-line',
+        label: 'Empleado',
+        items: [
             {
-                routeLink: 'cliente/info',
-                icon: 'fa-regular fa-address-card', 
-                label: 'Información del Cliente',
-                role:['Manager','Bodega']
+                routeLink: 'employee/employee',
+                icon: 'fa-solid fa-user-tie',
+                label: 'Empleados',
+                role: ['Admin', 'SuperAdmin']
             },
             {
-                routeLink: 'cliente/contacto-cliente',
-                icon: 'fa-solid fa-mobile-screen-button',
-                label: 'Contactos del Cliente',
-                role:['Manager']
+                routeLink: 'employee/user',
+                icon: 'fa-solid fa-user-lock',
+                label: 'Usuarios',
+                role: ['SuperAdmin']
 
             }
         ],
-        role:['Manager','Bodega']
-    },
-    {
+        role: ['Admin', 'SuperAdmin']
+    }, {
+        routeLink: 'invoice',
+        icon: 'fa-solid fa-file-invoice',
+        label: 'Factura',
+        role: ['Admin', 'SuperAdmin', 'Vendedor']
+    }, {
+        routeLink: 'pay',
+        icon: 'fa-solid fa-coins',
+        label: 'Pago',
+        role: ['Admin', 'SuperAdmin', 'Vendedor']
+    }, {
+        routeLink: 'eye-exam',
+        icon: 'fa-solid fa-hospital-user',
+        label: 'Examen de vista',
+        role: ['Admin', 'SuperAdmin', 'Optometrista']
+    }, {
+        routeLink: 'product',
+        icon: 'fa-solid fa-glasses',
+        label: 'Producto',
+        role: ['Admin', 'SuperAdmin', 'Vendedor']
+    }, {
+        routeLink: 'order',
+        icon: 'fa-solid fa-truck-field',
+        label: 'Orden Pedido',
+        role: ['Admin', 'SuperAdmin']
+    }
+    /*,
+    {    <i class=""></i>
         routeLink: 'empleado',
         icon: 'fa-solid fa-user-tie',
         label: 'Empleado',
@@ -47,8 +78,8 @@ export const navbarData:INavbarData[]=[
                 role:['Manager','Vendedor']
             }
         ],
-        role:['Manager','Vendedor']
-    },
+        role:['Admin']
+    },*/
     // {
     //     routeLink:'provedor',
     //     icon: 'fa-solid fa-address-card',
@@ -117,12 +148,12 @@ export const navbarData:INavbarData[]=[
     //     icon: 'fa-solid fa-truck',
     //     label:'Entrega'
     // }
-     // {
+    // {
     //     routeLink:'orden-pedido-entrega',
     //     icon: 'fa-solid fa-file-signature',
     //     label:'Orden Pedido Entrega'
     // },
-    
+
 ];
 
 // <i class="fa-regular fa-paste"></i>
