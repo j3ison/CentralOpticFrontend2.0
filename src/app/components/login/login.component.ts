@@ -3,14 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EMPTY, catchError, finalize } from 'rxjs';
+import { ApiService } from 'src/app/auth/api.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { LoginCredentials } from 'src/app/auth/model';
 
 
-interface Acceso {
-  nombreUsuario: string,
-  clave: string
-}
+// interface Acceso {
+//   nombreUsuario: string,
+//   clave: string
+// }
 
 
 @Component({
@@ -23,17 +24,15 @@ export class LoginComponent implements OnInit{
   email!: string;
   password!: string;
 
-  private acceso:Acceso ={
-    nombreUsuario: '',
-    clave: ''
-  }
+  // private acceso:Acceso ={
+  //   nombreUsuario: '',
+  //   clave: ''
+  // }
   
   
-  constructor(/*private authService: AuthService*/private fb: FormBuilder, private router: Router,
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router,
     // private cookieService: CookieService,
     // private apiService:ApiService
-
-    private auth:AuthService
     ) {}
 
   ngOnInit() {
@@ -74,12 +73,27 @@ export class LoginComponent implements OnInit{
     // }
     // console.log(this.loginForm.value);
 
-    console.log(this.loginForm.value)
+    //this.acceso.nombreUsuario = this.email
+    //this.acceso.clave = this.password
 
-    this.acceso.nombreUsuario = this.email
-    this.acceso.clave = this.password
+    // this.apiService.postAcceso('acceso',this.acceso)
+    // .subscribe( (respuesta:any) => {
 
-    this.auth.login(this.loginForm.value as LoginCredentials)
+    //   console.log(respuesta)
+
+    // }, (error) => { 
+
+    //   console.log(error)
+    // })
+
+    // console.log(this.loginForm.value)
+
+    //this.acceso.nombreUsuario = this.email
+    //this.acceso.clave = this.password
+
+    this.authService.login(this.loginForm.value as LoginCredentials)
+
+
     // .pipe(
     //   finalize(() => (this.processingRequest = false)),
     //   catchError((error: HttpErrorResponse) => {

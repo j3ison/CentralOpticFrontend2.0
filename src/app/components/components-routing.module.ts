@@ -15,44 +15,44 @@ const routes: Routes = [
     path: 'dashboard',
     component:DashboardComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole(['Admin', 'SuperAdmin'])],
-    canLoad: [hasRole(['Admin', 'SuperAdmin'])]
+    canActivate: [hasRole(['Administrador', 'Super Administrador'])],
+    canLoad: [hasRole(['Administrador', 'Super Administrador'])]
   },{
     path :'client',
     component:ClientComponent,
-    canActivate: [hasRole([ 'SuperAdmin','Admin','Optometrista','Vendedor'])],
-    canLoad: [hasRole([ 'SuperAdmin','Admin','Optometrista','Vendedor'])]
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista','Venta'])]
   },{
     path :'employee',
     loadChildren:() => import('./employee/employee.module').then(m => m.EmployeeModule),
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole(['Admin', 'SuperAdmin'])],
-    canLoad: [hasRole(['Admin', 'SuperAdmin'])]
+    canActivate: [hasRole(['Administrador', 'Super Administrador'])],
+    canLoad: [hasRole(['Administrador', 'Super Administrador'])]
   },{
     path :'invoice',
     component:InvoiceComponent,
-    canActivate: [hasRole([ 'SuperAdmin','Admin','Vendedor'])],
-    canLoad: [hasRole([ 'SuperAdmin','Admin','Vendedor'])]
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
   },{
     path :'pay',
     component:PayComponent,
-    canActivate: [hasRole([ 'SuperAdmin','Admin','Vendedor'])],
-    canLoad: [hasRole([ 'SuperAdmin','Admin','Vendedor'])]
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
   },{
     path :'eye-exam',
     component:EyeExamComponent,
-    canActivate: [hasRole([ 'SuperAdmin','Admin','Optometrista'])],
-    canLoad: [hasRole([ 'SuperAdmin','Admin','Optometrista'])]
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista'])]
   },{
     path :'product',
     component:ProductComponent,
-    canActivate: [hasRole([ 'SuperAdmin','Admin','Vendedor'])],
-    canLoad: [hasRole([ 'SuperAdmin','Admin','Vendedor'])]
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
   },{
     path :'order',
     component:OrderComponent,
-    canActivate: [hasRole([ 'SuperAdmin','Admin','Vendedor'])],
-    canLoad: [hasRole([ 'SuperAdmin','Admin','Vendedor'])]
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
   }
 ];
 

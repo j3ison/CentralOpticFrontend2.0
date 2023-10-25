@@ -10,14 +10,14 @@ const routes: Routes = [
     path: 'employee',
     component:EmployeeComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole(['Admin', 'SuperAdmin'])],
-    canLoad: [hasRole(['Admin', 'SuperAdmin'])]
+    canActivate: [hasRole(['Administrador', 'Super Administrador'])],
+    canLoad: [hasRole(['Administrador', 'Super Administrador'])]
   },{
     path :'user',
     component:UserComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole([ 'SuperAdmin'])],
-    canLoad: [hasRole([ 'SuperAdmin'])]
+    canActivate: [hasRole([ 'Super Administrador'])],
+    canLoad: [hasRole([ 'Super Administrador'])]
   }
 ];
 

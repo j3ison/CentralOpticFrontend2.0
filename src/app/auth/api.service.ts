@@ -9,7 +9,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   public getAcceso(endpoint: string) {
-    return this.http.get('https://localhost:7210/centralopticapi/'+endpoint);
+    return this.http.get('https://localhost:7210/centralopticapi/'+ endpoint);
   }
 
   public postAcceso(endpoint: string, body: Object) {

@@ -6,13 +6,13 @@ export const navbarData: INavbarData[] = [
         routeLink: 'dashboard',
         icon: 'fa-solid fa-house',
         label: 'Inicio',
-        role: ['Admin', 'SuperAdmin', 'Vendedor', 'Optometrista']
+        role: ['Administrador', 'Super Administrador', 'Venta', 'Optometrista']
     },
     {
         routeLink: 'client',
         icon: 'fa-regular fa-address-card',
         label: 'Cliente',
-        role: ['Admin', 'SuperAdmin', 'Vendedor', 'Optometrista']
+        role: ['Administrador', 'Super Administrador', 'Venta', 'Optometrista']
     }, {
         routeLink: 'employee',
         icon: 'fa-solid fa-users-line',
@@ -22,42 +22,42 @@ export const navbarData: INavbarData[] = [
                 routeLink: 'employee/employee',
                 icon: 'fa-solid fa-user-tie',
                 label: 'Empleados',
-                role: ['Admin', 'SuperAdmin']
+                role: ['Administrador', 'Super Administrador']
             },
             {
                 routeLink: 'employee/user',
                 icon: 'fa-solid fa-user-lock',
                 label: 'Usuarios',
-                role: ['SuperAdmin']
+                role: ['Super Administrador']
 
             }
         ],
-        role: ['Admin', 'SuperAdmin']
+        role: ['Administrador', 'Super Administrador']
     }, {
         routeLink: 'invoice',
         icon: 'fa-solid fa-file-invoice',
         label: 'Factura',
-        role: ['Admin', 'SuperAdmin', 'Vendedor']
+        role: ['Administrador', 'Super Administrador', 'Venta']
     }, {
         routeLink: 'pay',
         icon: 'fa-solid fa-coins',
         label: 'Pago',
-        role: ['Admin', 'SuperAdmin', 'Vendedor']
+        role: ['Administrador', 'Super Administrador', 'Venta']
     }, {
         routeLink: 'eye-exam',
         icon: 'fa-solid fa-hospital-user',
         label: 'Examen de vista',
-        role: ['Admin', 'SuperAdmin', 'Optometrista']
+        role: ['Administrador', 'Super Administrador', 'Optometrista']
     }, {
         routeLink: 'product',
         icon: 'fa-solid fa-glasses',
         label: 'Producto',
-        role: ['Admin', 'SuperAdmin', 'Vendedor']
+        role: ['Administrador', 'Super Administrador', 'Venta']
     }, {
         routeLink: 'order',
         icon: 'fa-solid fa-truck-field',
         label: 'Orden Pedido',
-        role: ['Admin', 'SuperAdmin']
+        role: ['Administrador', 'Super Administrador']
     }
     /*,
     {    <i class=""></i>
