@@ -8,3 +8,12 @@ export interface User {
 export interface UserWithToken extends User {
   token: string;
 }
+
+export interface LoginUser {
+  id: number;
+  token: string;
+  username:string;
+  password:string;
+  role:Role;
+}
+
