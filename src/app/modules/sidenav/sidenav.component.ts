@@ -5,6 +5,7 @@ import { INavbarData, fadeInOut } from './helper';
 import { NavigationEnd, Router } from '@angular/router';
 import { HeaderService } from '../header/service/header.service';
 import { filter } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -54,19 +55,35 @@ export class SidenavComponent implements OnInit {
 
       this.subscribeToRouteChanges();
   }
+
   private subscribeToRouteChanges() {
+    
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.headerService.setTitle(String(this.navData.find(e => e.routeLink===event.url.substring(1))?.label))
+        console.log(event.url.substring(1))
+        this.detectRouteChange(this.navData,event.url.substring(1));
+        // const match = event.url.match(/\/([^/]+)$/)!!;
+        // console.log(event.url.substring(1))
+        // console.log(this.navData)
+        
+        // this.headerService.setTitle(String(this.navData.find(e => e.routeLink===event.url.substring(1) || e?.items?.find(e =>e.routeLink === event.url.substring(1)))?.label))
       }
     });
   }
-  detectRouteChange(): void {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.headerService.setTitle(String(this.navData.find(e => event==e)?.label))
-    });
+
+
+
+  detectRouteChange(data:any[],datab:string) {
+    data.forEach(data =>{
+      if(data.items && data.items.length>0){
+        this.detectRouteChange(data.items, datab);
+      }
+
+      if(!data.items && data.routeLink === datab ){
+        this.headerService.setTitle(data.label);
+        return
+      }
+    })
   }
 
   toggleCollapse(): void {

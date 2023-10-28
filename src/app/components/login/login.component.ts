@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EMPTY, catchError, finalize } from 'rxjs';
+import { ApiService } from 'src/app/auth/api.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { LoginCredentials } from 'src/app/auth/model';
 
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit{
     // private cookieService: CookieService,
     // private apiService:ApiService
 
-    private auth:AuthService
+    private auth:AuthService,private apiService:ApiService
     ) {}
 
   ngOnInit() {
@@ -74,42 +75,33 @@ export class LoginComponent implements OnInit{
     // }
     // console.log(this.loginForm.value);
 
-    console.log(this.loginForm.value)
+    // console.log(this.loginForm.value)
 
     this.acceso.nombreUsuario = this.email
     this.acceso.clave = this.password
 
-    this.auth.login(this.loginForm.value as LoginCredentials)
-    // .pipe(
-    //   finalize(() => (this.processingRequest = false)),
-    //   catchError((error: HttpErrorResponse) => {
-    //     console.log(error)
-    //     throw error;
-    //   })
-    // )
-    
+    var acceso1 = {
+      NombreUsuario: this.email,
+      Clave:this.password
+    }
 
+    console.log(acceso1)
 
-    // console.log(this.acceso)
+    this.apiService.postAcceso('acceso',acceso1)
+    .subscribe( (respuesta:any) => {
 
-    // this.apiService.postAcceso('acceso',this.acceso)
-    // .subscribe( (respuesta:any) => {
+      console.log(respuesta)
 
-    //   // console.log(respuesta.token)
-    //   this.cookieService.set('token', respuesta.token )
-    //   //this.authService.setLoggedIn(true);
-    //   this.router.navigate(['/dashboard']);
+      
 
-    // }, (error: any) => { 
-      // console.log(error)
-      // Swal.fire({
-      //   icon: 'error',
-      //   title: 'Error',
-      //   text: 'Error al ingresar los datos'
-      // })
+    }, (error) => { 
+      console.log(error)
+     
     //   console.log('Email:', this.email);
     //   console.log('Password:', this.password);
-    // })
+    })
+
+    // this.auth.login(this.loginForm.value as LoginCredentials)
 
   }
 
