@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User, UserWithToken } from './model/user.interface';
+import { LoginUser, User, UserWithToken } from './model/user.interface';
 import { BehaviorSubject, Observable, ignoreElements, map, of, tap } from 'rxjs';
-import { LoginCredentials, Role } from './model';
+import { Acceso, LoginCredentials, Role } from './model';
 import { ApiService } from './api.service';
 import { Token } from '@angular/compiler';
 import { CookieService } from 'ngx-cookie-service';
@@ -11,31 +11,27 @@ import { CookieService } from 'ngx-cookie-service';
 // const USER_LOCAL_COOKIESERVICE_KEY = 'userData';
 const USER_LOCAL_STORAGE_KEY = 'userData';
 
-interface user {
-  token: string;
-  username:string;
-  password:string;
-  role:Role;
-}
-
-const USERS : user[] = [
+const USERS : LoginUser[] = [
   {
+    id: 1,
     token:'token1',
     username:'Roberto',
     password:'1234',
-    role:'SuperAdmin'
+    role:'Super Administrador'
   },
   {
+    id: 2,
     token:'token2',
     username:'Fatima',
     password:'1234',
-    role:'Admin'
+    role:'Administrador'
   },
   {
+    id: 3,
     token:'token3',
     username:'Maria',
     password:'1234',
-    role:'Admin'
+    role:'Administrador'
   }
 ]
 
@@ -44,7 +40,12 @@ const USERS : user[] = [
 })
 export class AuthService {
 
-  private user = new BehaviorSubject<user | null>(null);
+  private acceso:Acceso ={
+    nombreUsuario: '',
+    clave: ''
+  }
+
+  private user = new BehaviorSubject<LoginUser | null>(null);
   user$ = this.user.asObservable();
   isLoggedIn$: Observable<boolean> = this.user$.pipe(map(Boolean));
 
@@ -58,12 +59,37 @@ export class AuthService {
 
   login(credentials: LoginCredentials) /*:Observable<never>*/ {
 
-    const login = USERS.find(e=> e.username === credentials.username && e.password === credentials.password)
-    if(login){
+    this.acceso.nombreUsuario = credentials.username
+    this.acceso.clave = credentials.password
+
+    this.apiService.postAcceso('acceso', this.acceso)
+    .subscribe( (respuesta:any) => {
+
+      console.log(respuesta)
+
+      // if(login){
+      const login:LoginUser = {
+        username: credentials.username,
+        role: respuesta.role,
+        token: respuesta.token,
+        id: respuesta.id,
+        password: ''
+      }
+      
       this.pushNewUser(login)
       this.saveTokenToLocalStore(login)
       this.redirectToDashboard()
-    }
+      // }
+
+    }, (error) => { 
+
+      console.log(error)
+
+    })
+
+
+    //const login = USERS.find(e=> e.username === credentials.username && e.password === credentials.password)
+   
   }
 
   logout(): void {
@@ -76,7 +102,7 @@ export class AuthService {
     this.router.navigateByUrl('/dashboard');
   }
 
-  private pushNewUser(token: user) {
+  private pushNewUser(token: LoginUser) {
     this.user.next(token);
   }
 
@@ -89,10 +115,13 @@ export class AuthService {
 
   private loadUserFromLocalStorage(): void {
     const userFromLocal = this.cookieService.get(USER_LOCAL_STORAGE_KEY);
-    
-    userFromLocal && this.pushNewUser(JSON.parse(userFromLocal));
+    //console.log(userFromLocal);
+
+    //const UserLogin:LoginUser = JSON.parse(userFromLocal) as LoginUser;
+    userFromLocal && this.pushNewUser(JSON.parse(userFromLocal) as LoginUser );
+   
   }
-  private saveTokenToLocalStore(userToken: user): void {
+  private saveTokenToLocalStore(userToken: LoginUser): void {
     this.cookieService.set(USER_LOCAL_STORAGE_KEY, JSON.stringify(userToken))
     // localStorage.setItem(USER_LOCAL_STORAGE_KEY, userToken);
   }

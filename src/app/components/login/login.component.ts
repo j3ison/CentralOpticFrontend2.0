@@ -8,10 +8,10 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { LoginCredentials } from 'src/app/auth/model';
 
 
-interface Acceso {
-  nombreUsuario: string,
-  clave: string
-}
+// interface Acceso {
+//   nombreUsuario: string,
+//   clave: string
+// }
 
 
 @Component({
@@ -24,17 +24,17 @@ export class LoginComponent implements OnInit{
   email!: string;
   password!: string;
 
-  private acceso:Acceso ={
-    nombreUsuario: '',
-    clave: ''
-  }
+  // private acceso:Acceso ={
+  //   nombreUsuario: '',
+  //   clave: ''
+  // }
   
   
-  constructor(/*private authService: AuthService*/private fb: FormBuilder, private router: Router,
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router,
     // private cookieService: CookieService,
     // private apiService:ApiService
 
-    private auth:AuthService,private apiService:ApiService
+    private auth:AuthService
     ) {}
 
   ngOnInit() {
@@ -75,20 +75,26 @@ export class LoginComponent implements OnInit{
     // }
     // console.log(this.loginForm.value);
 
-    // console.log(this.loginForm.value)
+    console.log(this.loginForm.value)
 
-    this.acceso.nombreUsuario = this.email
-    this.acceso.clave = this.password
+    //this.acceso.nombreUsuario = this.email
+    //this.acceso.clave = this.password
 
-    var acceso1 = {
-      NombreUsuario: this.email,
-      Clave:this.password
-    }
+    this.auth.login(this.loginForm.value as LoginCredentials)
+    // .pipe(
+    //   finalize(() => (this.processingRequest = false)),
+    //   catchError((error: HttpErrorResponse) => {
+    //     console.log(error)
+    //     throw error;
+    //   })
+    // )
+    
 
-    console.log(acceso1)
 
-    this.apiService.postAcceso('acceso',acceso1)
-    .subscribe( (respuesta:any) => {
+    // console.log(this.acceso)
+
+    // this.apiService.postAcceso('acceso',this.acceso)
+    // .subscribe( (respuesta:any) => {
 
       console.log(respuesta)
 
