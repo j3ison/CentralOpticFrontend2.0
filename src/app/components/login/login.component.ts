@@ -96,16 +96,16 @@ export class LoginComponent implements OnInit{
     // this.apiService.postAcceso('acceso',this.acceso)
     // .subscribe( (respuesta:any) => {
 
-      console.log(respuesta)
+      // console.log(respuesta)
 
       
 
-    }, (error) => { 
-      console.log(error)
+    // }, (error) => { 
+    //   console.log(error)
      
     //   console.log('Email:', this.email);
     //   console.log('Password:', this.password);
-    })
+    // })
 
     // this.auth.login(this.loginForm.value as LoginCredentials)
 

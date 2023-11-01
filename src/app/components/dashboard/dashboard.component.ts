@@ -15,11 +15,12 @@ interface SideNavToggle {
 })
 export class DashboardComponent {
   
-  data = [
-    {nombre:'Amanda Flores Castillo',cedula:'',edad:'100-091023-00055',direccion:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, optio.'},
-    {nombre:'Amanda Flores Castillo',cedula:'',edad:'100-091023-00055',direccion:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, optio.'},
-    {nombre:'Amanda Flores Castillo',cedula:'',edad:'100-091023-00055',direccion:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, optio.'},
-    {nombre:'Amanda Flores Castillo',cedula:'',edad:'100-091023-00055',direccion:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, optio.'} 
-  ]
+  
+  // data = [
+  //   {nombre:'Amanda Flores Castillo',cedula:'',edad:'100-091023-00055',direccion:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, optio.'},
+  //   {nombre:'Amanda Flores Castillo',cedula:'',edad:'100-091023-00055',direccion:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, optio.'},
+  //   {nombre:'Amanda Flores Castillo',cedula:'',edad:'100-091023-00055',direccion:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, optio.'},
+  //   {nombre:'Amanda Flores Castillo',cedula:'',edad:'100-091023-00055',direccion:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, optio.'} 
+  // ]
 
 }

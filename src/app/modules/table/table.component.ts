@@ -33,15 +33,17 @@ export class TableComponent {
   //Comentario de Jurgen: Pongan la columna de Idcliente tambien
 
   @Input() set data(data: any) {
-    data.pipe(
-      tap((data: any[]) => {
-        this.dataSource.data = data.reverse();
-        this.cdr.detectChanges();
-        // this.dataUpdate = undefined
-        this.btnClickItemRow = true
-        // this.selectItem(undefined)
-      })
-    ).subscribe();
+
+    this.dataSource.data = data.reverse();
+    // data.pipe(
+    //   tap((data: any[]) => {
+    //     this.dataSource.data = data.reverse();
+    //     this.cdr.detectChanges();
+    //     // this.dataUpdate = undefined
+    //     this.btnClickItemRow = true
+    //     // this.selectItem(undefined)
+    //   })
+    // ).subscribe();
   }
 
   @Input() set columns(columns: TableColumn[]) {

@@ -13,7 +13,14 @@ export const navbarData: INavbarData[] = [
         icon: 'fa-regular fa-address-card',
         label: 'Cliente',
         role: ['Administrador', 'Super Administrador', 'Venta', 'Optometrista']
-    }, {
+    },
+    {
+        routeLink: 'employee',
+        icon: 'fa-solid fa-users-line',
+        label: 'Empleado',
+        role: ['Administrador']
+    },
+    {
         routeLink: 'employee',
         icon: 'fa-solid fa-users-line',
         label: 'Empleado',
@@ -22,17 +29,24 @@ export const navbarData: INavbarData[] = [
                 routeLink: 'employee/employee',
                 icon: 'fa-solid fa-user-tie',
                 label: 'Empleados',
-                role: ['Administrador', 'Super Administrador']
+                role: ['Super Administrador']
             },
             {
                 routeLink: 'employee/user',
                 icon: 'fa-solid fa-user-lock',
                 label: 'Usuarios',
+                // items: [
+                //     {
+                //         routeLink: 'employee/user/user',
+                //         icon: 'fa-solid fa-user-lock',
+                //         label: 'Usuarios',
+                //     }
+                // ],
                 role: ['Super Administrador']
 
             }
         ],
-        role: ['Administrador', 'Super Administrador']
+        role: ['Super Administrador']
     }, {
         routeLink: 'invoice',
         icon: 'fa-solid fa-file-invoice',

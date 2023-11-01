@@ -61,7 +61,7 @@ export class SidenavComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         console.log(event.url.substring(1))
-        this.detectRouteChange(this.navData,event.url.substring(1));
+        // this.detectRouteChange(this.navData,event.url.substring(1));
         // const match = event.url.match(/\/([^/]+)$/)!!;
         // console.log(event.url.substring(1))
         // console.log(this.navData)

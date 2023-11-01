@@ -18,8 +18,7 @@
         <div class="row">
           <ng-container *ngFor="let item of itemData$; let i = index">
             <div [ngClass]="getColSize(i)" class="mb-3">
-              <ng-container *ngTemplateOutlet="itemViewGrid; context: { $implicit: item }"
-                (click)="clickItemGrip()"></ng-container>
+              <ng-container *ngTemplateOutlet="itemViewGrid; context: { $implicit: item }"></ng-container>
             </div>
           </ng-container>
         </div>
@@ -32,7 +31,7 @@
           </button>
         </div>
         <div class="Content-content-form">
-          <ng-container *ngTemplateOutlet="formView"></ng-container>
+          <ng-container *ngTemplateOutlet="formView" ></ng-container>
         </div>
       </div>
     </div>

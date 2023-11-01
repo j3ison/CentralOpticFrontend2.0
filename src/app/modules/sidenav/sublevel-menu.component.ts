@@ -23,7 +23,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
           *ngIf="item.items && item.items.length > 0"
           [ngClass]="getActiveClass(item)"
           >
-          <i class="sublevel-link-icon fa fa-circle" [ngClass]="item.icon ? item.icon : 'fa-solid fa-circle'"]></i>
+          <i class="sublevel-link-icon" [ngClass]="item.icon ? item.icon : 'fa-solid fa-circle'"></i>
           <span class="sublevel-link-text" @fadeInOut 
               *ngIf="collapsed">{{item.label}}</span>
           <i *ngIf="item.items && collapsed" class="menu-collapse-icon"

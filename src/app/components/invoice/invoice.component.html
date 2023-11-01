@@ -1,1 +1,119 @@
-<p>invoice works!</p>
+
+<div class="container-form">
+    <form class="content-form">
+        <h1>Formulario Factura</h1>
+        <div class="content-form-item">
+            <div class="form">
+                <label class="title">Tipo de Factura</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-chevron-down"></i>
+                <!-- <div class="alert alert-danger mt-1">
+                    Error
+                </div> -->
+            </div>
+            <!-- <div class="form">
+                <label class="title">Apellidos</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-pencil"></i>
+                 <div class="alert alert-danger mt-1">
+                    Error
+                </div> 
+            </div> -->
+        </div>
+
+        <div class="content-form-item">
+            <div class="form">
+                <label class="title">Cedula</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-address-card"></i>
+
+            </div>
+            <div class="form">
+                <label class="title">Examen</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-hospital-user"></i>
+            </div>
+
+            <div class="form">
+                <label class="title">Cliente</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-address-card"></i>
+            </div>
+        </div>
+
+        <div class="content-form-item">
+            <div class="form">
+                <label class="title">Tipo de Venta</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-address-card"></i>
+            </div>
+
+            <div class="form">
+                <mat-form-field class="form-field-date">
+                    <mat-label class="title">Fecha de emisión</mat-label>
+                    <input matInput [matDatepicker]="datepicker">
+
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="form">
+            <label class="title">Productos/Servicios</label>
+        </div>
+
+        <div class="content-form-item">
+            <div class="form">
+                <label class="title">Impuesto</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-hospital-user"></i>
+            </div>
+
+            <div class="form">
+                <label class="title">Descuento</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-address-card"></i>
+            </div>
+        </div>
+
+        <div class="content-form-item">
+            <mat-form-field class="form">
+                <mat-label>Descripcion</mat-label>
+                <textarea matInput placeholder=""></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="form-button">
+            <button class="btn btn-danger" #btnEnviar>
+                Cancelar
+            </button>
+
+            <button class="btn btn-primary" #btnEnviar>
+                Guardar
+            </button>
+        </div>
+
+
+
+    </form>
+</div>
+
+
+
+<!-- Numero_Factura INT NOT NULL, 
+	Id_EstadoFactura INT NOT NULL, --Foraneo
+	Id_TipoFactura INT NOT NULL, --Foraneo
+	Numero_Empleado INT NOT NULL, --Foraneo
+	Codigo_Cliente INT NOT NULL, --Foraneo
+	Numero_Examen INT, --Foraneo
+
+	-- Campo
+
+	TipoVenta BIT NOT NULL DEFAULT(0),
+	Impuesto DECIMAL(3,2) NOT NULL DEFAULT(0),
+	Descuento DECIMAL(3,2) NOT NULL DEFAULT(0),
+	Fecha_Emision DATETIME NOT NULL DEFAULT GETDATE(),
+	Descripcion_Credito NVARCHAR(75), -->

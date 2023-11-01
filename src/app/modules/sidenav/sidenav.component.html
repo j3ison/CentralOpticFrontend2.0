@@ -33,7 +33,11 @@
                     </a>
 
                     <div *ngIf="(collapsed && data.items && data.items.length > 0)" >
-                        <app-sublevel-menu [data]="data" [collapsed]="collapsed" [multiple]="multiple" [expanded]="data.expanded">
+                        <app-sublevel-menu 
+                         [data]="data"
+                         [collapsed]="collapsed" 
+                         [multiple]="multiple" 
+                         [expanded]="data.expanded">
                         </app-sublevel-menu>
                     </div>
                 </div>

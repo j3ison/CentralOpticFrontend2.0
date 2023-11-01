@@ -1,1 +1,66 @@
-<app-view-data></app-view-data>
+<div class="container-form">
+    <form class="content-form">
+        <h1>Formulario Cliente</h1>
+        <div class="content-form-item">
+            <div class="form">
+                <label class="title">Nombres</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-pencil"></i>
+                <!-- <div class="alert alert-danger mt-1">
+                    Error
+                </div> -->
+            </div>
+            <div class="form">
+                <label class="title">Apellidos</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-pencil"></i>
+                <!-- <div class="alert alert-danger mt-1">
+                    Error
+                </div> -->
+            </div>
+        </div>
+
+        <div class="content-form-item">
+            <div class="form">
+                <label class="title">Cedula</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-address-card"></i>
+
+            </div>
+            <div class="form">
+                <mat-form-field class="form-field-date">
+                    <mat-label class="title">Fecha de nacimiento</mat-label>
+                    <input matInput [matDatepicker]="datepicker">
+
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="form">
+                <label class="title">Empresa</label>
+                <input class="form-data" type="text">
+                <i class="fa-solid fa-hotel"></i>
+            </div>
+        </div>
+
+        <div class="content-form-item">
+            <mat-form-field class="form">
+                <mat-label>Dirección</mat-label>
+                <textarea matInput placeholder=""></textarea>
+            </mat-form-field>
+        </div>
+
+
+        <div class="form-button">
+            <button class="btn btn-danger" #btnEnviar>
+                Cancelar
+            </button>
+
+            <button class="btn btn-primary" #btnEnviar>
+                Guardar
+            </button>
+        </div>
+
+    </form>
+</div>

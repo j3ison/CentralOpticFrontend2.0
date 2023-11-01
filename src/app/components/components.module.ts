@@ -6,14 +6,16 @@ import { LoginModule } from './login/login.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsRoutingModule } from './components-routing.module';
 import { ClientModule } from './client/client.module';
+import { UserModule } from './employee/user/user.module';
+import { InvoiceModule } from './invoice/invoice.module';
 
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule, LoginModule, DashboardModule, ComponentsRoutingModule, ClientModule
+    CommonModule, LoginModule, DashboardModule, ComponentsRoutingModule, ClientModule,UserModule,InvoiceModule
   ], 
-  exports:[DashboardModule, LoginModule, ClientModule]
+  exports:[DashboardModule, LoginModule, ClientModule,UserModule,InvoiceModule]
 })
 export class ComponentsModule { }
