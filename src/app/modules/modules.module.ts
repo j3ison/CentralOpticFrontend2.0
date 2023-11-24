@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { HeaderModule } from './header/header.module';
 import { BodyModule } from './body/body.module';
+import { DialogModule } from './dialog/dialog.module';
 
 
 
@@ -10,6 +11,6 @@ import { BodyModule } from './body/body.module';
     
   ],
   imports: [],
-  exports: [SidenavModule, HeaderModule, BodyModule]
+  exports: [SidenavModule, HeaderModule, BodyModule, DialogModule]
 })
 export class ModulesModule { }

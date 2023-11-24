@@ -8,6 +8,7 @@ import { ComponentsRoutingModule } from './components-routing.module';
 import { ClientModule } from './client/client.module';
 import { UserModule } from './employee/user/user.module';
 import { InvoiceModule } from './invoice/invoice.module';
+import { DialogService } from '../modules/dialog/service/dialog.service';
 
 
 
@@ -16,6 +17,7 @@ import { InvoiceModule } from './invoice/invoice.module';
   imports: [
     CommonModule, LoginModule, DashboardModule, ComponentsRoutingModule, ClientModule,UserModule,InvoiceModule
   ], 
-  exports:[DashboardModule, LoginModule, ClientModule,UserModule,InvoiceModule]
+  exports:[DashboardModule, LoginModule, ClientModule,UserModule,InvoiceModule],
+  providers: [DialogService],
 })
 export class ComponentsModule { }

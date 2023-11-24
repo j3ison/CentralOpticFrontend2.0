@@ -1,7 +1,8 @@
 .mat-mdc-row:hover .mat-mdc-cell {
     /* border-color: currentColor; */
     border-color: #000;
-    background: rgb(217, 170, 247, 0.7);
+    background: rgb(173, 226, 249);
+    color: #000;
     /* color: #ffffff; */
     cursor: pointer;
     
@@ -22,7 +23,7 @@
   }
   
   .active {
-    background-color: #c26cf8;
+    background-color: #00AEF0;
   
     .mat-mdc-cell{
       color: #fff;
@@ -43,6 +44,12 @@
   .btn-primary-disable {
     color: #fff;
     background: rgb(11, 94, 215, 0.6);
+  }
+
+  .btn-primary{
+    color: #fff;
+    background: rgb(25, 120, 208);
+    border-color: rgb(0, 174, 240);
   }
   
   .btn-info-disable{

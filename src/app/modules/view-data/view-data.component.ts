@@ -3,6 +3,9 @@ import { DataGlobalService } from './services/data-global.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { tap } from 'rxjs';
 import { TableColumn } from '../table/model/table-column';
+import { DialogService } from '../dialog/service/dialog.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 // import  ResizeObserver  from 'resize-observer-polyfill';
 
 @Component({
@@ -19,22 +22,26 @@ export class ViewDataComponent {
   // Variables para la table
   tableColumns: TableColumn[] = []
   tableDisplayColumns: String[] = [];
-  dataSource = new MatTableDataSource<any>
+  dataSource = new MatTableDataSource<any>;
+  btnUpdate = true;
+  btnInfo = true;
+  btnDelete = false;
 
   //Variable para grid
   itemData$: any[] = []
   itemViewGrid!: TemplateRef<any> | null;
   formView!: TemplateRef<any> | null;
+  formCreateView!: TemplateRef<any> | null;
+  private matDialogRef!: MatDialogRef<DialogComponent>;
+
 
 
   @Input() set ItemViewGrid(itemViewGrid: TemplateRef<any>) {
     this.itemViewGrid = itemViewGrid;
   }
 
-  // @ViewChild('customTemplate', { static: true })
-  // eventClickItems!: TemplateRef<any>;
-  @Input() set clickItems(item:any) {
-      this.dataGlobalservice.setItemView(item);   
+  @Input() set clickItems(item: any) {
+    this.dataGlobalservice.setItemView(item);
   }
 
 
@@ -42,10 +49,28 @@ export class ViewDataComponent {
     this.formView = formView;
   }
 
-  @Input() set ItemData(itemData: any) {
-    console.log(itemData)
+  @Input() set FormCreateView(formView: TemplateRef<any>) {
+    this.formCreateView = formView;
+  }
 
-    
+  @Input() set tabletBtnUpdate(btnUpdate: boolean) {
+    this.btnUpdate = btnUpdate;
+  }
+
+  @Input() set tabletBtnDelete(btnDelete: boolean) {
+    this.btnDelete = btnDelete;
+  }
+
+  @Input() set tabletBtnInfo(btnInfo: boolean) {
+    this.btnInfo = btnInfo;
+  }
+
+  
+
+  @Input() set ItemData(itemData: any) {
+    // console.log(itemData)
+
+
     this.itemData$ = itemData;
     this.dataSource.data = itemData;
   }
@@ -60,7 +85,7 @@ export class ViewDataComponent {
   container!: ElementRef;
 
 
-  constructor(private dataGlobalservice: DataGlobalService, private elementRef: ElementRef) { }
+  constructor(private dataGlobalservice: DataGlobalService, private elementRef: ElementRef, private dialogService: DialogService) { }
 
   ngOnInit() {
     this.updateColSize(document.body.clientWidth);
@@ -69,31 +94,21 @@ export class ViewDataComponent {
       this.typeViewIcon = type;
     })
 
-    this.dataGlobalservice.$itemView.subscribe(item=>{
-      if(item){
+    this.dataGlobalservice.$itemView.subscribe(item => {
+      if (item) {
         this.valFormularioGrip = true;
         this.updateColSize(600);
+
+        if (this.typeViewIcon && this.valFormularioGrip) {
+          const opcional = document.querySelector('#formulario-table');
+          opcional?.scrollIntoView();
+        }
+      } else {
+        this.valFormularioGrip = false;
+        this.updateColSize(document.body.clientWidth);
       }
     })
 
-
-    // this.resizeObserver = new ResizeObserver((entries) => {
-    //   for (const entry of entries) {
-    //     // entry.target es el elemento que cambió de tamaño (en este caso, el componente)
-    //     const newWidth = entry.contentRect.width;
-    //     const newHeight = entry.contentRect.height;
-    //     console.log(`Nuevo tamaño: Width = ${newWidth}, Height = ${newHeight}`);
-        
-    //     // Aquí puedes realizar acciones basadas en el cambio de tamaño
-    //   }
-    //   console.log(entries);
-    // });
-
-    // // Agrega el elemento DOM al observador
-    // this.resizeObserver.observe(this.elementRef.nativeElement);
-
-    
-    
   }
 
   @HostListener('window:resize', ['$event'])
@@ -104,13 +119,13 @@ export class ViewDataComponent {
 
   updateColSize(windowWidth: number): void {
     if (windowWidth >= 1200 && !this.valFormularioGrip) {
-      this.colSize = 4; // 3 items por fila en pantallas grandes (>= 992px)
+      this.colSize = 4; // 4 items por fila en pantallas grandes (>= 1200px)
     } else if (windowWidth >= 1000 && !this.valFormularioGrip) {
-      this.colSize = 3; // 3 items por fila en pantallas grandes (>= 992px)
+      this.colSize = 3; // 3 items por fila en pantallas grandes (>= 1000px)
     } else if (windowWidth >= 700 && !this.valFormularioGrip) {
-      this.colSize = 2; // 2 items por fila en pantallas medianas (768px <= ancho < 992px)
-    } else if( windowWidth < 700 && this.valFormularioGrip){
-      this.colSize = 1; // 1 item por fila en pantallas pequeñas (< 768px)
+      this.colSize = 2; // 2 items por fila en pantallas medianas (>= 768px)
+    } else if (windowWidth < 700 && this.valFormularioGrip) {
+      this.colSize = 1; // 1 item por fila en pantallas pequeñas (< 700px)
     }
   }
 
@@ -132,8 +147,19 @@ export class ViewDataComponent {
 
   cancelForm() {
     this.dataGlobalservice.setItemView(null);
-    this.valFormularioGrip = false;
-    this.updateColSize(document.body.clientWidth);
+  }
+
+  openDialogWithTemplate(template: TemplateRef<any> | null) {
+    if (template){
+      this.matDialogRef = this.dialogService.openDialogWithTemplate(template);
+  
+      this.matDialogRef.afterClosed().subscribe((res) => {
+      });
+    }
+  }
+
+  cancelDialogResult() {
+    this.matDialogRef.close()
   }
 
 }

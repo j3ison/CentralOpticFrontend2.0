@@ -4,6 +4,7 @@ import { TableColumn } from './model/table-column';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
+import { DataGlobalService } from '../view-data/services/data-global.service';
 // import * as XLSX from 'xlsx';
 
 @Component({
@@ -35,15 +36,7 @@ export class TableComponent {
   @Input() set data(data: any) {
 
     this.dataSource.data = data.reverse();
-    // data.pipe(
-    //   tap((data: any[]) => {
-    //     this.dataSource.data = data.reverse();
-    //     this.cdr.detectChanges();
-    //     // this.dataUpdate = undefined
-    //     this.btnClickItemRow = true
-    //     // this.selectItem(undefined)
-    //   })
-    // ).subscribe();
+    
   }
 
   @Input() set columns(columns: TableColumn[]) {
@@ -53,23 +46,9 @@ export class TableComponent {
 
   }
 
-  // @Input() set buttonShowdelete(Showdelete: boolean) {
-
-  //   if (Showdelete) {
-
-  //     this.dataService
-  //       .getData('acceso').subscribe((data: any) => {
-  //         if (data.rol == 'Administrador') {
-
-  //           this.Showdelete = true;
-
-  //         }
-  //       }
-  //       );
-  //   }
-  // }
-
-  showInfo = false
+  item = null
+  showInfo = false;
+  showDelete = false;
 
   @Input() set buttonShowInfo(ShowInfo: boolean) {
     if(ShowInfo){
@@ -77,17 +56,33 @@ export class TableComponent {
     }
   }
 
+  @Input() set buttonShowDelete(ShowDelete: boolean) {
+    if(ShowDelete){
+      this.showDelete = ShowDelete
+    }
+  }
+
   @Output() selectItemsCell: EventEmitter<any>;
   @Output() selectItemsCellDelete: EventEmitter<any>;
   @Output() selectItemsCellInfo: EventEmitter<any>;
 
-  constructor( private cdr: ChangeDetectorRef) {
+  constructor( private cdr: ChangeDetectorRef, private dataGlobalservice: DataGlobalService) {
 
     this.selectItemsCell = new EventEmitter();
     this.selectItemsCellDelete = new EventEmitter();
     this.selectItemsCellInfo = new EventEmitter();
   }
+
   ngOnInit(): void {
+
+    this.dataGlobalservice.$itemView.subscribe(item => {
+      this.item = item;
+      if(item){
+        this.btnClickItemRow = false;
+      }else{
+        this.btnClickItemRow = true;
+      }
+    })
 
   }
 
@@ -110,24 +105,25 @@ export class TableComponent {
   }
 
   getActiveClass(active: any): string {
-    return active == this.dataUpdate ? 'active' : '';
+    if(!this.item) return ''
+    return active == this.item ? 'active' : '';
   }
 
   selectItem(item: any) {
     this.selectItemsCell.emit(undefined);
     if (item == this.dataUpdate) {
       this.btnClickItemRow = true;
-      this.dataUpdate = undefined
+      this.dataUpdate = undefined;
+      this.dataGlobalservice.setItemView(null);
       this.selectItemsCell.emit(this.dataUpdate);
       return
     }
     this.btnClickItemRow = false;
-    this.dataUpdate = item
-    // this.selectItemsCell.emit(item);
+    this.dataUpdate = item;
+    this.dataGlobalservice.setItemView(item);
   }
 
   btnClickUpdate() {
-    // console.log(this.dataUpdate)
     this.selectItemsCell.emit(this.dataUpdate);
   }
 
@@ -140,23 +136,9 @@ export class TableComponent {
   }
 
   btnClickExport() {
-    console.log(this.dataSource.data);
-    console.log(this.tableColumns);
+    // console.log(this.dataSource.data);
+    // console.log(this.tableColumns);
     // this.exportToExcel();
   }
 
-  // exportToExcel(): void {
-  //   /* Generate worksheet */
-  //   console.log(this.dataSource.data);
-
-  //   const newData = this.dataSource.data.map(obj => {
-  //     const newObj = { ...obj }; // Crear una copia del objeto original
-  //     for (const key in newObj) {
-  //       if (Array.isArray(newObj[key])) {
-  //         newObj[key] = newObj[key].join(', '); // Convertir el campo en una cadena separada por comas
-  //       }
-  //     }
-  //     return newObj; // Devolver el objeto modificado
-  //   });
-  // }
 }
