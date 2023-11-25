@@ -8,7 +8,7 @@
     </div>
 
     <div class="header-icon">
-      <i class="icon fa-regular fa-square-plus" (click)="openDialogWithTemplate(formView)"></i>
+      <i class="icon fa-regular fa-square-plus" (click)="openDialogWithTemplate(formCreate,formCreateView)"></i>
       <i class="icon fa-solid " [ngClass]="setTypeViewIcon()" (click)="setTypeView()"></i>
     </div>
   </div>
@@ -26,24 +26,40 @@
       </div>
       <div class="content-form" *ngIf="valFormularioGrip">
         <div class="content-btn">
+          <button class="btn" (click)="openDialogWithTemplate(formInfo,formInfoView)" 
+          style="
+          width: 8.5rem;
+          margin-right: 
+          0.3rem; color: #fff;
+          background: rgb(12, 141, 0);
+          ">
+            <i class="fa-solid fa-info"></i>
+            Informacion
+          </button>
           <button class="btn" (click)="cancelForm()">
             <i class="fa-regular fa-circle-xmark"></i>
             Cerrar
           </button>
         </div>
         <div class="Content-content-form">
-          <ng-container *ngTemplateOutlet="formView" ></ng-container>
+          <ng-container *ngTemplateOutlet="formView; context: { $implicit: item }" ></ng-container>
         </div>
       </div>
     </div>
 
 
     <div *ngIf="typeViewIcon">
-      <app-table [data]="itemData$" [columns]="tableColumns" [buttonShowInfo]="btnInfo" [buttonShowDelete]="btnDelete"></app-table>
+      <app-table [data]="itemData$" 
+      [columns]="tableColumns" 
+      [buttonShowInfo]="btnInfo"
+      [buttonShowDelete]="btnDelete" 
+      (selectItemsCell)="valFormTablet()"
+      (selectItemsCellInfo)="openDialogWithTemplate(formInfo,formInfoView)"
+       ></app-table>
 
       <mat-divider></mat-divider>
 
-      <div class="content-form-table" *ngIf="valFormularioGrip" id="formulario-table">
+      <div class="content-form-table" *ngIf="valFomularioTable" id="formulario-table">
         <div class="content-btn-table">
           <button class="btn-table" (click)="cancelForm()">
             <i class="fa-regular fa-circle-xmark"></i>
@@ -83,3 +99,20 @@
   </div>
 </div>
 
+
+
+<ng-template #formCreate>
+  <div *ngIf="formCreateView" class="container-template">
+    <ng-container *ngTemplateOutlet="formCreateView" ></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #formInfo>
+  <div *ngIf="formInfoView != null; else val" class="container-template">
+    <ng-container *ngTemplateOutlet="formInfoView; context: { $implicit: item }" ></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #val>
+  {{ viewFormNull() }}
+</ng-template>

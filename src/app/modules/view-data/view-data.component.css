@@ -165,6 +165,10 @@
 
 
 
+.img-small {
+  max-width: 50px;
+  /* max-height: 200px; */
+}
 
 .example-card {
   max-width: 400px;
@@ -195,6 +199,12 @@
   align-items: center;
 }
 
+.container-template{
+  width: calc(100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* .scrollwrap {
     overflow-y: auto;
