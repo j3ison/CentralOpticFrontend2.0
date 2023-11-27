@@ -6,6 +6,7 @@ import { TableColumn } from '../table/model/table-column';
 import { DialogService } from '../dialog/service/dialog.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+import Swal from 'sweetalert2';
 // import  ResizeObserver  from 'resize-observer-polyfill';
 
 @Component({
@@ -18,6 +19,7 @@ export class ViewDataComponent {
   colSize: number = 0;
   typeViewIcon: boolean = true;
   valFormularioGrip = false
+  valFomularioTable = false
 
   // Variables para la table
   tableColumns: TableColumn[] = []
@@ -28,22 +30,26 @@ export class ViewDataComponent {
   btnDelete = false;
 
   //Variable para grid
+  item:any = null;
   itemData$: any[] = []
-  itemViewGrid!: TemplateRef<any> | null;
-  formView!: TemplateRef<any> | null;
-  formCreateView!: TemplateRef<any> | null;
+  itemViewGrid: TemplateRef<any> | null = null;
+  formView: TemplateRef<any> | null = null;
+  formCreateView: TemplateRef<any> | null = null;
+  formInfoView: TemplateRef<any> | null = null;
   private matDialogRef!: MatDialogRef<DialogComponent>;
 
 
 
-  @Input() set ItemViewGrid(itemViewGrid: TemplateRef<any>) {
-    this.itemViewGrid = itemViewGrid;
-  }
+
 
   @Input() set clickItems(item: any) {
     this.dataGlobalservice.setItemView(item);
   }
 
+  // templateRef
+  @Input() set ItemViewGrid(itemViewGrid: TemplateRef<any>) {
+    this.itemViewGrid = itemViewGrid;
+  }
 
   @Input() set FormView(formView: TemplateRef<any>) {
     this.formView = formView;
@@ -52,6 +58,12 @@ export class ViewDataComponent {
   @Input() set FormCreateView(formView: TemplateRef<any>) {
     this.formCreateView = formView;
   }
+
+  @Input() set FormInfoView(formView: TemplateRef<any>) {
+    this.formInfoView = formView;
+  }
+
+
 
   @Input() set tabletBtnUpdate(btnUpdate: boolean) {
     this.btnUpdate = btnUpdate;
@@ -65,7 +77,7 @@ export class ViewDataComponent {
     this.btnInfo = btnInfo;
   }
 
-  
+
 
   @Input() set ItemData(itemData: any) {
     // console.log(itemData)
@@ -95,6 +107,7 @@ export class ViewDataComponent {
     })
 
     this.dataGlobalservice.$itemView.subscribe(item => {
+      this.item = item;
       if (item) {
         this.valFormularioGrip = true;
         this.updateColSize(600);
@@ -104,6 +117,7 @@ export class ViewDataComponent {
           opcional?.scrollIntoView();
         }
       } else {
+        this.valFomularioTable = false;
         this.valFormularioGrip = false;
         this.updateColSize(document.body.clientWidth);
       }
@@ -149,17 +163,41 @@ export class ViewDataComponent {
     this.dataGlobalservice.setItemView(null);
   }
 
-  openDialogWithTemplate(template: TemplateRef<any> | null) {
-    if (template){
-      this.matDialogRef = this.dialogService.openDialogWithTemplate({template});
-  
+  openDialogWithTemplate(template: TemplateRef<any> | null, templateV :TemplateRef<any> | null = null) {
+    if (template && templateV) {
+      console.log(this.formCreateView)
+      this.matDialogRef = this.dialogService.openDialogWithTemplate({ template });
+
       this.matDialogRef.afterClosed().subscribe((res) => {
       });
+    } else {
+      this.viewFormNull();
     }
   }
 
   cancelDialogResult() {
     this.matDialogRef.close()
+  }
+
+  viewFormNull(){
+    Swal.fire({
+      title: "Opción no habilitada",
+      html: `
+       <img src="https://cdn-icons-png.flaticon.com/512/11046/11046410.png" alt="Error" style="width: 100px; height: 100px;">
+      `,
+      showCloseButton: true,
+      
+      focusConfirm: false,
+      confirmButtonText: `
+      <i class="fa-solid fa-person-digging"></i> OK!
+      `,
+      confirmButtonAriaLabel: "Thumbs up, great!",
+      imageWidth: 120,
+    });
+  }
+
+  valFormTablet(){
+    this.valFomularioTable = this.item?true:false;
   }
 
 }
