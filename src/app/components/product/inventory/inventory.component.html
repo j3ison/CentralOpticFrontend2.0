@@ -1,0 +1,14 @@
+<app-view-data [ItemViewGrid]="customTemplate"  [ItemData]="data$" [columns]="tableColumnsProveedor" [clickItems]="dataItems"></app-view-data>
+
+<ng-template #customTemplate let-data>
+    <mat-card class="example-card" (click)="onItemClick(data)">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>{{data.codProducto}}</mat-card-title>
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            {{data.descripcion}}
+        </mat-card-content>
+    </mat-card>
+</ng-template>
