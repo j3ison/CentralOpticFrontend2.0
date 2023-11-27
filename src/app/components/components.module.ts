@@ -9,15 +9,17 @@ import { ClientModule } from './client/client.module';
 import { UserModule } from './employee/user/user.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { DialogService } from '../modules/dialog/service/dialog.service';
+import { ProductModule } from './product/product.module';
+import { InventoryModule } from './product/inventory/inventory.module';
 
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule, LoginModule, DashboardModule, ComponentsRoutingModule, ClientModule,UserModule,InvoiceModule
+    CommonModule, LoginModule, DashboardModule, ComponentsRoutingModule, ClientModule,UserModule,InvoiceModule,ProductModule,InventoryModule
   ], 
-  exports:[DashboardModule, LoginModule, ClientModule,UserModule,InvoiceModule],
+  exports:[DashboardModule, LoginModule, ClientModule,UserModule,InvoiceModule,ProductModule,InventoryModule],
   providers: [DialogService],
 })
 export class ComponentsModule { }

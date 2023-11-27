@@ -151,7 +151,7 @@ export class ViewDataComponent {
 
   openDialogWithTemplate(template: TemplateRef<any> | null) {
     if (template){
-      this.matDialogRef = this.dialogService.openDialogWithTemplate(template);
+      this.matDialogRef = this.dialogService.openDialogWithTemplate({template});
   
       this.matDialogRef.afterClosed().subscribe((res) => {
       });
