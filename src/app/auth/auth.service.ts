@@ -11,29 +11,29 @@ import { CookieService } from 'ngx-cookie-service';
 // const USER_LOCAL_COOKIESERVICE_KEY = 'userData';
 const USER_LOCAL_STORAGE_KEY = 'userData';
 
-const USERS : LoginUser[] = [
-  {
-    id: 1,
-    token:'token1',
-    username:'Roberto',
-    password:'1234',
-    role:'Super Administrador'
-  },
-  {
-    id: 2,
-    token:'token2',
-    username:'Fatima',
-    password:'1234',
-    role:'Administrador'
-  },
-  {
-    id: 3,
-    token:'token3',
-    username:'Maria',
-    password:'1234',
-    role:'Administrador'
-  }
-]
+// const USERS : LoginUser[] = [
+//   {
+//     id: 1,
+//     token:'token1',
+//     username:'Roberto',
+//     password:'1234',
+//     role:'Super Administrador'
+//   },
+//   {
+//     id: 2,
+//     token:'token2',
+//     username:'Fatima',
+//     password:'1234',
+//     role:'Administrador'
+//   },
+//   {
+//     id: 3,
+//     token:'token3',
+//     username:'Maria',
+//     password:'1234',
+//     role:'Administrador'
+//   }
+// ]
 
 @Injectable({
   providedIn: 'root'
@@ -121,6 +121,7 @@ export class AuthService {
     userFromLocal && this.pushNewUser(JSON.parse(userFromLocal) as LoginUser );
    
   }
+  
   private saveTokenToLocalStore(userToken: LoginUser): void {
     this.cookieService.set(USER_LOCAL_STORAGE_KEY, JSON.stringify(userToken))
     // localStorage.setItem(USER_LOCAL_STORAGE_KEY, userToken);

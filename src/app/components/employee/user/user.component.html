@@ -6,6 +6,8 @@
     [clickItems]="dataItems" 
     [FormCreateView]="form"></app-view-data>
 
+    
+
 
 
 <ng-template #customTemplate let-data>
@@ -30,31 +32,16 @@
             <div class="content-form-item">
                 <div class="form">
                     <label class="title">rol</label>
-                    <input class="form-data" type="text">
+                    <input class="form-data" type="text" [value]="data.rol">
                     <i class="fa-solid fa-address-book"></i>
-                    <!-- <div class="alert alert-danger mt-1">
-                        Error
-                    </div> -->
                 </div>
-                <!-- <div class="form">
-                    <label class="title">Apellidos</label>
-                    <input class="form-data" type="text">
-                    <i class="fa-solid fa-pencil"></i>
-                     <div class="alert alert-danger mt-1">
-                        Error
-                    </div> 
-                </div> -->
             </div>
-    
-    
             <div class="content-form-item">
                 <mat-form-field class="form">
                     <mat-label>Descripción</mat-label>
                     <textarea matInput placeholder=""></textarea>
                 </mat-form-field>
             </div>
-    
-    
             <div class="form-button">
                 <button class="btn btn-danger" #btnEnviar>
                     Cancelar

@@ -68,7 +68,7 @@
         </div>
 
         <div class="Content-content-form-table">
-          <ng-container *ngTemplateOutlet="formView" ></ng-container>
+          <ng-container *ngTemplateOutlet="formView; context: { $implicit: item }" ></ng-container>
         </div>
 
       </div>

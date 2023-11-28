@@ -1,15 +1,19 @@
 .container-form {
-    margin: 2rem;
+    width: calc(90%);
+    margin: 1rem;
     border-radius: 0.625rem;
     box-shadow: 0px 0px 2px 0 rgb(150, 155, 160);
+    max-height: 800px;
+    overflow-y: scroll;
 
     .content-form {
+        width: calc(100%);
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
 
-        
+
 
         .content-form-item {
             width: calc(100%);
@@ -32,7 +36,7 @@
                 .form-data {
                     border: none;
                     height: 2.375rem;
-                    padding-left: 1.5rem;
+                    padding-left: 1.25rem;
                     padding-right: 1.25rem;
                     background-color: #f0f0f0;
                     box-shadow: none;
@@ -51,28 +55,125 @@
                     margin-bottom: -2rem;
                 }
 
-                .form-field-date{
-                    margin-top: 1rem ;
+                .form-field-date {
+                    margin-top: 1rem;
                     height: 4.5rem;
                 }
 
             }
 
-            .form-text{
+            .form-text {
                 width: 100%;
             }
 
         }
 
-        .form-button{
+        .form-button {
             width: calc(100%);
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: end;
+            margin-top: 2rem;
             padding: 0 1rem 1rem 1rem;
+        }
+
+        .icon-tablet {
+            font-size: 20px;
         }
 
     }
 
 
+}
+
+.example-card {
+    max-width: 400px;
+    margin-bottom: 8px;
+
+    .container-card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0.5rem;
+    }
+
+    .title {
+        font-size: 19px;
+        margin: 1rem 0 0 0;
+        font-family: 'Times New Roman', Times, serif;
+        color: #000000;
+    }
+}
+
+.container-info {
+    width: calc(100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: -5rem; */
+    max-height: 800px;
+    /* Establece la altura máxima */
+    overflow-y: scroll;
+
+    .content-header-info {
+
+        /* position: relative; */
+        width: calc(100%);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding-top:10rem ;
+
+        .content-content-hearder-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+
+            .content-content-header-title {
+                background-image: linear-gradient(to bottom, #35127E, #2e91c3);
+                /* color: #35127E;     */
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin-bottom: 0;
+            }
+
+            .content-content-header-subtitle {
+                background-image: linear-gradient(to bottom, #2e91c3, #4d8cab);
+                /* color: #35127E;     */
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin-bottom: 0;
+            }
+        }
+
+    }
+
+    .ruc {
+        margin: 2rem 0;
+    }
+
+    .content-body {
+        width: calc(70%);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1rem;
+
+        .content-body-1 {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            .body-subtitle {
+                border-bottom: 1px solid black;
+            }
+        }
+    }
 }

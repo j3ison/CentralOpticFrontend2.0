@@ -6,12 +6,18 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
-
+import { SubTabletComponent } from './modules/sub-tablet/sub-tablet.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
-    InvoiceComponent
+    InvoiceComponent,
+    SubTabletComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +25,13 @@ import { MatInputModule } from '@angular/material/input';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatAutocompleteModule
   ]
 })
 export class InvoiceModule { }
