@@ -26,8 +26,6 @@ export class InventoryComponent {
   dataItems:any = null;
 
   @Output() eventClickItems = new EventEmitter<void>();
-  // Create a FormGroup instance for FormCreateView
-  formCreateView!: FormGroup;
   form!: FormGroup;
 
   constructor(private fb: FormBuilder, private mydataservices: MyDataServices) {}
@@ -35,15 +33,16 @@ export class InventoryComponent {
 
 
   ngOnInit(): void{
-    this.formCreateView = this.fb.group({
-      codProducto: [],
-      descripcion: [],
-      estado: [],
-      precioCompra: [],
-      precioVenta: [],
-      stockMaximo: [],
-      stockMinimo: [],
-      tipoProducto: [],
+    this.form = this.fb.group({
+      cantidad: [0],
+      codProducto: [''],
+      descripcion: [''],
+      estado: [true],
+      precioCompra: [0],
+      precioVenta: [370],
+      stockMaximo: [0],
+      stockMinimo: [0],
+      tipoProducto: ['Reparaciones']
     });
 
     this.mydataservices.getData("producto").subscribe((respuesta: any) => {
