@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { LoginUser } from './model/user.interface';
+import { link } from './enlace'
 
 const USER_LOCAL_STORAGE_KEY = 'userData';
 
@@ -26,7 +27,7 @@ export class MyDataServices {
         'Authorization': 'Bearer ' + localStorage.getItem('access_token')
       })
     };
-    return this.http.get<any[]>('https://localhost:7210/centralopticapi/' + endpoint, httpOptions)
+    return this.http.get<any[]>( link + endpoint, httpOptions) 
   }
 
   /* En el Json que se le pasa a body, o al objeto que se le pasa como parametro body No tiene que ir el identificador*/
@@ -44,7 +45,7 @@ export class MyDataServices {
       })
     };
     return new Promise<boolean>((resolve, reject) => {
-      this.http.post('https://localhost:7210/centralopticapi/' + endpoint, body, httpOptions)
+      this.http.post( link + endpoint, body, httpOptions)
         .subscribe(
           response => {
             console.log('Insertado con éxito');
@@ -75,7 +76,7 @@ export class MyDataServices {
     };
 
     return new Promise<boolean>((resolve, reject) => {
-    this.http.put('https://localhost:7210/centralopticapi/' + endpoint + '/' + Id, body, httpOptions)
+    this.http.put( link + endpoint + '/' + Id, body, httpOptions)
       .subscribe(
         response => {
           console.log('Actualizado con éxito');
@@ -106,7 +107,7 @@ export class MyDataServices {
     };
 
     return new Promise<boolean>((resolve, reject) => {
-    this.http.delete('https://localhost:7210/centralopticapi/' + endpoint + '/' + Id , httpOptions)
+    this.http.delete( link + endpoint + '/' + Id , httpOptions)
       .subscribe(
         response => {
           console.log('Eliminado con éxito');
