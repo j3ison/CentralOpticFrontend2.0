@@ -1,0 +1,77 @@
+<!-- <app-view-data [ItemViewGrid]="customTemplate" 
+[FormView]="form" [ItemData]="data$" 
+ [ItemData]="data$" 
+ [columns]="tableColumnsProveedor" 
+ [clickItems]="dataItems">
+</app-view-data> -->
+
+<app-view-data [ItemViewGrid]="customTemplate" 
+    [FormView]="form" [ItemData]="data$" 
+    [columns]="tableColumnsProveedor" 
+    [clickItems]="dataItems" 
+    [FormCreateView]="form"></app-view-data>
+
+
+<ng-template #customTemplate let-data>
+    <mat-card class="example-card" (click)="onItemClick(data)">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>{{data.codProducto}}</mat-card-title>
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            {{data.descripcion}}
+        </mat-card-content>
+    </mat-card>
+</ng-template>
+
+<ng-template #form let-data>
+    <div class="container-form">
+        <form class="content-form">
+          <h1>Actualizar Registro</h1>
+      
+          <div class="content-form-item">
+            <div class="form">
+              <label class="title">Codigo</label> 
+              <input class="form-data" type="text" [value]="data.codigoProducto">
+            </div>
+      
+            <div class="form">
+              <label class="title">Descripcion</label>
+              <input class="form-data" type="text" [value]="data.descripcion">
+            </div>
+          </div>
+      
+          <div class="content-form-item">
+            <div class="form">
+              <label class="title">Empresa</label>
+              <input class="form-data" type="text" [value]="data.nombreEmpresa">
+            </div>
+      
+            <div class="form">
+              <label class="title">Fecha</label>
+              <input  class="form-data" type="text" [value]="data.fechaAdquisicion">
+            </div>
+      
+            <div class="form">
+              <label class="title">Costo</label>
+              <input  class="form-data" type="text" [value]="data.costo">
+            </div>
+          </div>
+      
+          <div class="content-form-item">
+            <div class="form">
+              <label class="title">Cantidad</label>
+              <input  class="form-data" type="text" [value]="data.cantidad">
+            </div>
+      
+          </div>
+      
+          <div class="form-button">
+            <button class="btn btn-danger" >Cancelar</button>
+      
+            <button class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+          </div>
+        </form>
+      </div>
+</ng-template>

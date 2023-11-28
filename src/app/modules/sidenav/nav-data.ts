@@ -62,12 +62,54 @@ export const navbarData: INavbarData[] = [
         icon: 'fa-solid fa-hospital-user',
         label: 'Examen de vista',
         role: ['Administrador', 'Super Administrador', 'Optometrista']
-    }, {
+    },{
         routeLink: 'product',
         icon: 'fa-solid fa-glasses',
         label: 'Producto',
+        items: [
+            {
+                routeLink: 'product/inventory',
+                icon: 'fa-solid fa-warehouse',
+                label: 'Inventario',
+                role: ['Administrador', 'Super Administrador', 'Venta']
+            },
+            {
+                routeLink: 'product/add',
+                icon: 'fa-solid fa-plus',
+                label: 'Agregar Producto',
+                role: ['Administrador', 'Super Administrador', 'Venta']
+
+            }
+        ],
         role: ['Administrador', 'Super Administrador', 'Venta']
-    }, {
+    },  {
+        routeLink: 'register-product',
+        icon: 'fa-sharp fa-solid fa-cabinet-filing',
+        label: 'Registrar Producto',
+        items: [
+            {
+                routeLink: 'register-product/list',
+                icon: 'fa-solid fa-list',
+                label: 'Lista de registros',
+                role: ['Super Administrador']
+            },
+            {
+                routeLink: 'register-product/addRegister',
+                icon: 'fa-solid fa-plus',
+                label: 'Agregar Registro',
+                // items: [
+                //     {
+                //         routeLink: 'employee/user/user',
+                //         icon: 'fa-solid fa-user-lock',
+                //         label: 'Usuarios',
+                //     }
+                // ],
+                role: ['Super Administrador']
+
+            }
+        ],
+        role: ['Super Administrador']
+    },{
         routeLink: 'order',
         icon: 'fa-solid fa-truck-field',
         label: 'Orden Pedido',

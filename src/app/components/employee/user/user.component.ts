@@ -30,8 +30,10 @@ export class UserComponent {
   ngOnInit(): void {
 
     this.mydataservices.getData("rol").subscribe((respuesta: any) => {
+      
 
       this.data$ = respuesta
+      console.log(respuesta)
 
     }, (error) => {
 

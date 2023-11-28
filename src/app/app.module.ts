@@ -9,6 +9,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { ModulesModule } from './modules/modules.module';
 import { ComponentsModule } from './components/components.module';
 import { DialogModule } from '@angular/cdk/dialog';
+import { InventoryComponent } from './components/product/inventory/inventory.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,8 @@ import { DialogModule } from '@angular/cdk/dialog';
         AuthModule,
         OverlayModule,
         ModulesModule,
-        ComponentsModule
+        ComponentsModule,
+        FormsModule
     ]
 })
 export class AppModule { }

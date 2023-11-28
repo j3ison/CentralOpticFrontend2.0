@@ -8,7 +8,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { PayComponent } from './pay/pay.component';
 import { EyeExamComponent } from './eye-exam/eye-exam.component';
 import { OrderComponent } from './order/order.component';
-import { ProductComponent } from './product/product.component';
+//import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
   {
@@ -45,10 +45,20 @@ const routes: Routes = [
     canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista'])]
   },{
     path :'product',
-    component:ProductComponent,
+    loadChildren:() => import('./product/product.module').then(m => m.ProductModule),
+    canMatch: [isLoggedInGuard],
     canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
     canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
-  },{
+  },
+  {
+    path :'register-product',
+    loadChildren:() => import('./register-product/register-product.module').then(m => m.RegisterProductModule),
+    canMatch: [isLoggedInGuard],
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
+  },
+  
+  {
     path :'order',
     component:OrderComponent,
     canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
