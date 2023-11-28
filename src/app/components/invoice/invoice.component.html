@@ -1,119 +1,708 @@
 
-<div class="container-form">
-    <form class="content-form">
-        <h1>Formulario Factura</h1>
-        <div class="content-form-item">
-            <div class="form">
-                <label class="title">Tipo de Factura</label>
-                <input class="form-data" type="text">
-                <i class="fa-solid fa-chevron-down"></i>
-                <!-- <div class="alert alert-danger mt-1">
-                    Error
-                </div> -->
+
+
+
+<app-view-data [ItemViewGrid]="item" 
+    [FormView]="formUpdate" 
+    [ItemData]="data$" 
+    [FormInfoView]="itemInfo"
+    [columns]="tableColumnsFactura" 
+    [clickItems]="dataItems" 
+    [FormCreateView]="itemCreate"></app-view-data>
+
+
+
+
+
+<ng-template #itemCreate>
+    <div class="container-form">
+        <form class="content-form" [formGroup]="formCreateItems">
+            <h1 style="margin-top: 0.5rem;">Formulario Factura</h1>
+            <div class="content-form-item">
+                <div class="form">
+                    <mat-form-field class="form-field-date">
+                        <mat-label class="title">Fecha de emisión</mat-label>
+                        <input matInput formControlName="fechaEmision" [(ngModel)]="itemInvoice.fecha_Emision"
+                            [value]="itemInvoice.fecha_Emision | date:'dd/MM/yyyy'" readonly>
+                        <mat-datepicker-toggle matIconSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker>
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="form">
+    
+                    <label class="title">Estado de Factura*</label>
+                    <input class="form-data" type="text" formControlName="estadoFactura"
+                        [(ngModel)]="itemInvoice.estado_Factura" [matAutocomplete]="auto">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of listStatusInvoiceFilter | async" [value]="option.estadoFactura">
+                            {{option.estadoFactura}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <!-- <i class="fa-solid fa-address-card"></i> -->
+                    <div class="alert 1alert-danger mt-1"
+                        [hidden]="formGetDataCreateItems('estadoFactura').valid || (formGetDataCreateItems('estadoFactura').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
             </div>
-            <!-- <div class="form">
-                <label class="title">Apellidos</label>
-                <input class="form-data" type="text">
-                <i class="fa-solid fa-pencil"></i>
-                 <div class="alert alert-danger mt-1">
-                    Error
-                </div> 
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Tipo de Factura</label>
+                    <input class="form-data" type="text" formControlName="tipoFactura"
+                        [(ngModel)]="itemInvoice.tipo_Factura" [matAutocomplete]="autoType">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <mat-autocomplete autoActiveFirstOption #autoType="matAutocomplete">
+                        <mat-option *ngFor="let option of listTypeInvoiceFilter | async" [value]="option.tipo_Factura">
+                            {{option.tipo_Factura}}
+                        </mat-option>
+                    </mat-autocomplete>
+    
+                </div>
+                <div class="form">
+                    <label class="title">Tipo de venta *</label>
+                    <input class="form-data" type="text" formControlName="tipoVenta" [(ngModel)]="itemTypeShop"
+                        [matAutocomplete]="autoShop">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <mat-autocomplete autoActiveFirstOption #autoShop="matAutocomplete">
+                        <mat-option *ngFor="let option of typeShopFilter | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+    
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetDataCreateItems('tipoVenta').valid || (formGetDataCreateItems('tipoVenta').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+            </div>
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Cliente *</label>
+                    <input class="form-data" type="text" formControlName="cliente" [(ngModel)]="itemClient.nombres">
+                    <i class="fa-solid fa-address-card" (click)="openDialogWithTemplate(tableCliente)"></i>
+                    <div class="alert 1alert-danger mt-1"
+                        [hidden]="formGetDataCreateItems('cliente').valid || (formGetDataCreateItems('cliente').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+            </div>
+    
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Examen</label>
+                    <input class="form-data" type="text" formControlName="examen" [(ngModel)]="itemInvoice.numExamen"
+                        (input)="onChanceExam()">
+                    <i class="fa-solid fa-hospital-user" (click)="openDialogWithTemplate(tableExamen)"></i>
+                </div>
+            </div>
+    
+            <div *ngIf="itemExam.length > 0 && itemInvoice.numExamen?.toString()?.trim() !== ''" style="width: calc(95%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            ">
+                <h3 style="margin: 1rem 0;">
+                    <strong>
+                        Ojo Derecho
+                    </strong>
+                </h3>
+                <div class="content-form-item" style="margin-bottom: 1.5rem;">
+                    <table mat-table [dataSource]="itemExam" class="mat-elevation-z8" style="width: calc(100%);">
+    
+    
+                        <ng-container matColumnDef="sphDe">
+                            <th mat-header-cell *matHeaderCellDef> Sph </th>
+                            <td mat-cell *matCellDef="let element"> {{element.sphDe}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="cylDe">
+                            <th mat-header-cell *matHeaderCellDef> Cyl </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cylDe}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="ejeDe">
+                            <th mat-header-cell *matHeaderCellDef> Eje </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ejeDe}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="addDe">
+                            <th mat-header-cell *matHeaderCellDef> Add </th>
+                            <td mat-cell *matCellDef="let element"> {{element.addDe}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="dpDe">
+                            <th mat-header-cell *matHeaderCellDef> D/P </th>
+                            <td mat-cell *matCellDef="let element"> {{element.dpDe}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="altDe">
+                            <th mat-header-cell *matHeaderCellDef> Alt </th>
+                            <td mat-cell *matCellDef="let element"> {{element.altDe}} </td>
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsEyesRig"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsEyesRig;"></tr>
+                    </table>
+                </div>
+            </div>
+    
+            <div *ngIf="itemExam.length > 0 && itemInvoice.numExamen?.toString()?.trim() !== ''" style="width: calc(95%);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        ">
+                <h3 style="margin: 1rem 0;">
+                    <strong>
+                        Ojo Izquierdo
+                    </strong>
+                </h3>
+                <div class="content-form-item" style="margin-bottom: 1rem;">
+                    <table mat-table [dataSource]="itemExam" class="mat-elevation-z8" style="width: 40rem;">
+    
+    
+                        <ng-container matColumnDef="sphIz">
+                            <th mat-header-cell *matHeaderCellDef> Sph </th>
+                            <td mat-cell *matCellDef="let element"> {{element.sphIz}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="cylIz">
+                            <th mat-header-cell *matHeaderCellDef> Cyl </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cylIz}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="ejeIz">
+                            <th mat-header-cell *matHeaderCellDef> Eje </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ejeIz}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="addIz">
+                            <th mat-header-cell *matHeaderCellDef> Add </th>
+                            <td mat-cell *matCellDef="let element"> {{element.addIz}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="dpIz">
+                            <th mat-header-cell *matHeaderCellDef> D/P </th>
+                            <td mat-cell *matCellDef="let element"> {{element.dpIz}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="altIz">
+                            <th mat-header-cell *matHeaderCellDef> Alt </th>
+                            <td mat-cell *matCellDef="let element"> {{element.altIz}} </td>
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsEyesLef"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsEyesLef;"></tr>
+                    </table>
+                </div>
+            </div>
+    
+            <!-- tabla -->
+    
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Impuesto *</label>
+                    <input class="form-data" type="number" formControlName="impuesto" [(ngModel)]="itemInvoice.impuesto">
+                    <!-- <i class="fa-solid fa-address-card"></i> -->
+                    <!-- <i class="fa-solid fa-circle-dollar-to-slot"></i> -->
+                    <i class="fa-solid fa-percent"></i>
+                    <div class="alert 1alert-danger mt-1"
+                        [hidden]="formGetDataCreateItems('impuesto').valid || (formGetDataCreateItems('impuesto').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+                <div class="form">
+                    <label class="title">Descuento *</label>
+                    <input class="form-data" type="number" formControlName="descuento" [(ngModel)]="itemInvoice.descuento">
+                    <!-- <i class="fa-solid fa-hospital-user"></i> -->
+                    <!-- <i class="fa-solid fa-circle-dollar-to-slot"></i> -->
+                    <i class="fa-solid fa-percent"></i>
+                    <div class="alert 1alert-danger mt-1"
+                        [hidden]="formGetDataCreateItems('descuento').valid || (formGetDataCreateItems('descuento').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+            </div>
+    
+            <!-- producto/servicio -->
+    
+            <div style="width: calc(95%);
+            display: flex;
+            flex-direction: column;
+            align-items: center; ">
+                <div style="width: calc(100%);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;">
+                    <h2>Productos</h2>
+                    <Button class="btn btn-success" style="margin-right: 1.5rem; margin-bottom: 1rem;"
+                        (click)="openDialogWithTemplate(tableProduct)">
+                        Agregar
+                        <i class="fa-solid fa-cart-plus" style="margin-left: 0.4rem;"></i>
+                    </Button>
+                </div>
+                <table mat-table [dataSource]="itemListProduct" class="mat-elevation-z8">
+    
+                    <ng-container matColumnDef="codProducto">
+                        <th mat-header-cell *matHeaderCellDef> Codigo </th>
+                        <td mat-cell *matCellDef="let transaction"> {{transaction.codProducto}} </td>
+                        <td mat-footer-cell *matFooterCellDef> Subtotal </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="descripcion">
+                        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                        <td mat-cell *matCellDef="let transaction"> {{transaction.descripcion}} </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="cantidad">
+                        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                        <td mat-cell *matCellDef="let transaction">
+                            <div *ngIf="transaction.estado">
+                                {{transaction.cantidad}}
+                            </div>
+                            <div *ngIf="!transaction.estado">
+                                <form [formGroup]="formDataCount">
+                                    <input formControlName="cantidad" type="number" class="form-control"
+                                        [(ngModel)]="transaction.cantidad">
+                                </form>
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="precioVenta">
+                        <th mat-header-cell *matHeaderCellDef> Precio </th>
+                        <td mat-cell *matCellDef="let transaction"> {{transaction.precioVenta | currency}} </td>
+                        <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="accion">
+                        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                        <td mat-cell *matCellDef="let transaction">
+                            <div *ngIf="transaction.estado">
+                                <i class="fa fa-pencil-square-o px-1 icon-tablet" aria-hidden="true"
+                                    style="color: rgb(1, 1, 85);" (click)="transaction.estado = !transaction.estado"></i>
+                                <i class="fa fa-trash-o icon-tablet" aria-hidden="true" style="color: rgb(203, 24, 24);"
+                                    (click)="deleteItemProduct(transaction)"></i>
+                            </div>
+                            <div *ngIf="!transaction.estado">
+                                <i class="fa-solid fa-floppy-disk icon-tablet" aria-hidden="true"
+                                    (click)="saveData(transaction)"></i>
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="dispayedColumnsProducts" class="example-first-header-row">
+                    </tr>
+    
+                    <tr mat-row *matRowDef="let row; columns: dispayedColumnsProducts;"></tr>
+    
+                    <tr mat-footer-row *matFooterRowDef="dispayedColumnsProducts" class="example-first-footer-row"></tr>
+    
+                </table>
+            </div>
+    
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Descripcion Crediticia</label>
+                    <input class="form-data" type="text" formControlName="descripcion"
+                        [(ngModel)]="itemInvoice.descripcion_Credito">
+                    <!-- <i class="fa-solid fa-address-card"></i> -->
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+            </div>
+            <div class="form-button">
+    
+                <button class="btn btn-primary" #btnEnviar style="width: 10rem;" (click)="saveDataConfirmed()"
+                    [disabled]="formCreateItems.invalid">
+                    <i class="fa-regular fa-floppy-disk" style="margin-right: 0.4rem;"></i>
+                    Guardar
+                </button>
+            </div>
+    
+            <div class="content-form-item">
+                <span>Todos los campos con * son obligatorios</span>
+            </div>
+    
+        </form>
+    </div>
+
+</ng-template>
+
+
+<ng-template #formUpdate let-data>
+    <div class="container-form">
+        <form class="content-form" [formGroup]="formUpdateItems">
+            <h1>Actualizacion de Factura</h1>
+            <div class="content-form-item">
+                <div class="form">
+                    <mat-form-field class="form-field-date">
+                        <mat-label class="title">Fecha de emisión</mat-label>
+                        <input matInput formControlName="fechaEmision" [value]="data.fecha_Emision" [(ngModel)]="data.fecha_Emision" readonly>
+                        <mat-datepicker-toggle matIconSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker>
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="form">
+    
+                    <label class="title">Estado de Factura*</label>
+                    <input class="form-data" type="text" formControlName="estadoFactura"
+                        [value]="data.estado_Factura" [(ngModel)]="data.estado_Factura" [matAutocomplete]="auto" [disabled]="updateClick(data)" [readonly]="updateClick(data)">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" >
+                        <mat-option *ngFor="let option of listStatusInvoiceFilterUpdate | async" [value]="option.estadoFactura">
+                            {{option.estadoFactura}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <!-- <i class="fa-solid fa-address-card"></i> -->
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetDataCreateItems('estadoFactura').valid || (formGetDataCreateItems('estadoFactura').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+            </div>
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Cliente *</label>
+                    <input class="form-data" type="text" formControlName="cliente" [value]="data.cliente" [(ngModel)]="data.cliente" readonly>
+                    <i class="fa-solid fa-address-card"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetDataCreateItems('cliente').valid || (formGetDataCreateItems('cliente').pristine)" >
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-button">
+                
+    
+                <button class="btn btn-primary" #btnEnviar (click)="saveDataConfirmeUpdate(data)">
+                    Actualizar
+                </button>
+            </div>
+    
+        </form>
+    </div>
+</ng-template>
+
+
+
+
+<ng-template #itemInfo let-data>
+    
+    <div class="container-info" style="margin-top: 0.5rem;">
+        <div class="content-header-info" style="margin-top: 1rem;">
+            <img mat-card-image src="../../assets/images/logo.svg" alt="Central Optic logo"
+                style="width: 150px; height: 100px;">
+            <div class="content-content-hearder-title" style="margin-left: 2rem;">
+                <h2 class="content-content-header-title" style="font-size: 22px;">CENTRAL OPTIC</h2>
+                <h4 class="content-content-header-subtitle" style="font-size: 16px;">Tu vision es Nuestro compromiso</h4>
+            </div>
+        </div>
+    
+        <h3 class="ruc" style="font-size: 18px; margin-top: 0.5rem; margin-bottom: 0.5rem;">RUC:{{data.numero_Ruc}}</h3>
+        <h3 class="ruc" style="font-size: 18px; margin-top: 0rem;">Emisor:{{data.emisor}}</h3>
+    
+        <div class="content-body">
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Estado de la Factura:</strong></h3>
+                <span class="body-subtitle">{{data.estado_Factura}}</span>
+            </div>
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Tipo de Factura:</strong></h3>
+                <span class="body-subtitle">{{data.tipo_Factura}}</span>
+            </div>
+        </div>
+        <div class="content-body">
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Cliente:</strong></h3>
+                <span class="body-subtitle">{{data.cliente}}</span>
+            </div>
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Empresa Asociada:</strong></h3>
+                <span class="body-subtitle">{{data.empresa_Asociada}}</span>
+            </div>
+        </div>
+    
+        <div style="width: calc(95%);
+            display: flex;
+            flex-direction: column;
+            align-items: center; ">
+            <!-- <div style="width: calc(100%);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;">
+                <h2>Productos</h2>
             </div> -->
+            <!-- <table mat-table [dataSource]="data" class="mat-elevation-z8">
+    
+                <ng-container matColumnDef="codProducto">
+                    <th mat-header-cell *matHeaderCellDef> Codigo </th>
+                    <td mat-cell *matCellDef="let transaction"> {{transaction.codProducto}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Subtotal </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                    <td mat-cell *matCellDef="let transaction"> {{transaction.descripcion}} </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                    <td mat-cell *matCellDef="let transaction">
+                        <div *ngIf="transaction.estado">
+                            {{transaction.cantidad}}
+                        </div>
+                        <div *ngIf="!transaction.estado">
+                            <form [formGroup]="formDataCount">
+                                <input formControlName="cantidad" type="number" class="form-control"
+                                    [(ngModel)]="transaction.cantidad">
+                            </form>
+                        </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="precioVenta">
+                    <th mat-header-cell *matHeaderCellDef> Precio </th>
+                    <td mat-cell *matCellDef="let transaction"> {{transaction.precioVenta | currency}} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsProductsInfo" class="example-first-header-row">
+                </tr>
+    
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsProductsInfo;"></tr>
+    
+                <tr mat-footer-row *matFooterRowDef="displayedColumnsProductsInfo" class="example-first-footer-row"></tr>
+    
+            </table> -->
         </div>
-
-        <div class="content-form-item">
-            <div class="form">
-                <label class="title">Cedula</label>
-                <input class="form-data" type="text">
-                <i class="fa-solid fa-address-card"></i>
-
+    
+        <div class="content-body">
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Descuento:</strong></h3>
+                <span class="body-subtitle">{{data.descuento}}</span>
             </div>
-            <div class="form">
-                <label class="title">Examen</label>
-                <input class="form-data" type="text">
-                <i class="fa-solid fa-hospital-user"></i>
-            </div>
-
-            <div class="form">
-                <label class="title">Cliente</label>
-                <input class="form-data" type="text">
-                <i class="fa-solid fa-address-card"></i>
-            </div>
-        </div>
-
-        <div class="content-form-item">
-            <div class="form">
-                <label class="title">Tipo de Venta</label>
-                <input class="form-data" type="text">
-                <i class="fa-solid fa-address-card"></i>
-            </div>
-
-            <div class="form">
-                <mat-form-field class="form-field-date">
-                    <mat-label class="title">Fecha de emisión</mat-label>
-                    <input matInput [matDatepicker]="datepicker">
-
-                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-                    <mat-datepicker #datepicker>
-                    </mat-datepicker>
-                </mat-form-field>
-            </div>
-
-        </div>
-
-        <div class="form">
-            <label class="title">Productos/Servicios</label>
-        </div>
-
-        <div class="content-form-item">
-            <div class="form">
-                <label class="title">Impuesto</label>
-                <input class="form-data" type="text">
-                <i class="fa-solid fa-hospital-user"></i>
-            </div>
-
-            <div class="form">
-                <label class="title">Descuento</label>
-                <input class="form-data" type="text">
-                <i class="fa-solid fa-address-card"></i>
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Impuesto:</strong></h3>
+                <span class="body-subtitle">{{data.impuesto}}</span>
             </div>
         </div>
-
-        <div class="content-form-item">
-            <mat-form-field class="form">
-                <mat-label>Descripcion</mat-label>
-                <textarea matInput placeholder=""></textarea>
-            </mat-form-field>
+    
+        <div class="content-body">
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Total:</strong></h3>
+                <span class="body-subtitle">{{data.total}}</span>
+            </div>
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Descripcion de credito:</strong></h3>
+                <span class="body-subtitle">{{data.descripcion_Credito}}</span>
+            </div>
         </div>
-
-        <div class="form-button">
-            <button class="btn btn-danger" #btnEnviar>
-                Cancelar
-            </button>
-
-            <button class="btn btn-primary" #btnEnviar>
-                Guardar
-            </button>
+    
+        <div class="content-body">
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Paciente:</strong></h3>
+                <span class="body-subtitle">{{data.paciente}}</span>
+            </div>
+            <div class="content-body-1">
+                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Observacion:</strong></h3>
+                <span class="body-subtitle">{{data.observacion}}</span>
+            </div>
         </div>
+    
+        <!--  -->
+        <!-- <h2>Medidas del Examen del paciente</h2> -->
+        <div style="width: calc(95%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            ">
+            <h3 style="margin: 1rem 0;">
+                <strong>
+                    Ojo Derecho
+                </strong>
+            </h3>
+            <div class="content-form-item" style="margin-bottom: 1.5rem;">
+                <table mat-table [dataSource]="[data]" class="mat-elevation-z8" style="width: 40rem;">
+    
+    
+                    <ng-container matColumnDef="sphDe">
+                        <th mat-header-cell *matHeaderCellDef> Sph </th>
+                        <td mat-cell *matCellDef="let element"> {{element.sphDe}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="cylDe">
+                        <th mat-header-cell *matHeaderCellDef> Cyl </th>
+                        <td mat-cell *matCellDef="let element"> {{element.cylDe}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="ejeDe">
+                        <th mat-header-cell *matHeaderCellDef> Eje </th>
+                        <td mat-cell *matCellDef="let element"> {{element.ejeDe}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="addDe">
+                        <th mat-header-cell *matHeaderCellDef> Add </th>
+                        <td mat-cell *matCellDef="let element"> {{element.addDe}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="dpDe">
+                        <th mat-header-cell *matHeaderCellDef> D/P </th>
+                        <td mat-cell *matCellDef="let element"> {{element.dpDe}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="altDe">
+                        <th mat-header-cell *matHeaderCellDef> Alt </th>
+                        <td mat-cell *matCellDef="let element"> {{element.altDe}} </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsEyesRig"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsEyesRig;"></tr>
+                </table>
+            </div>
+        </div>
+    
+        <div style="width: calc(95%);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        padding-bottom: 5rem;
+                        ">
+            <h3 style="margin: 1rem 0;">
+                <strong>
+                    Ojo Izquierdo
+                </strong>
+            </h3>
+            <div class="content-form-item" style="margin-bottom: 1rem;">
+                <table mat-table [dataSource]="[data]" class="mat-elevation-z8" style="width: 40rem;">
+    
+    
+                    <ng-container matColumnDef="sphIz">
+                        <th mat-header-cell *matHeaderCellDef> Sph </th>
+                        <td mat-cell *matCellDef="let element"> {{element.sphIz}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="cylIz">
+                        <th mat-header-cell *matHeaderCellDef> Cyl </th>
+                        <td mat-cell *matCellDef="let element"> {{element.cylIz}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="ejeIz">
+                        <th mat-header-cell *matHeaderCellDef> Eje </th>
+                        <td mat-cell *matCellDef="let element"> {{element.ejeIz}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="addIz">
+                        <th mat-header-cell *matHeaderCellDef> Add </th>
+                        <td mat-cell *matCellDef="let element"> {{element.addIz}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="dpIz">
+                        <th mat-header-cell *matHeaderCellDef> D/P </th>
+                        <td mat-cell *matCellDef="let element"> {{element.dpIz}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="altIz">
+                        <th mat-header-cell *matHeaderCellDef> Alt </th>
+                        <td mat-cell *matCellDef="let element"> {{element.altIz}} </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsEyesLef"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsEyesLef;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+
+<ng-template #item let-data>
+    <mat-card class="example-card" (click)="onItemClick(data)">
+        <div class="container-card">
+            <div class="content-card">
+                <h2 class="title">
+                    <strong>
+                        Numero de Factura:
+                    </strong>
+                </h2>
+                <span>{{data.numFactura}}</span>
+                <h2 class="title">
+                    <strong>
+                        Tipo de Factura:
+                    </strong>
+                </h2>
+                <span>{{data.estado_Factura}}</span>
+                <h2 class="title">
+                    <strong>
+                        Emisor:
+                    </strong>
+                </h2>
+                <span>{{data.emisor}}</span>
+                <h2 class="title">
+                    <strong>
+                        Cliente:
+                    </strong>
+                </h2>
+                <span>{{data.cliente}}</span>
+                <h2 class="title">
+                    <strong>
+                        Descripcion Crediticia:
+                    </strong>
+                </h2>
+                <span>{{data.descripcion_Credito}}</span>
+            </div>
+
+            <div class="content-card">
+                <img mat-card-sm-image [src]="imgItems(data.estado_Factura)"
+                    style="margin: 0.4rem 0.4rem 0 0; width: 100px; height: 90px;">
+            </div>
+        </div>
+    </mat-card>
+</ng-template>
+
+<!-- 
+        public int? NumFactura { get; set; } no va
+        public string Estado_Factura { get; set; } l
+        public string? Tipo_Factura { get; set; } l
+        public int NumeroEmpleado { get; set; } l
+        public int Codigo_Cliente { get; set; }l
+        public int? NumExamen { get; set; }l
+        public bool TipoVenta { get; set; }l
+        public decimal Impuesto { get; set; }
+        public decimal Descuento { get; set; }
+        public DateTime Fecha_Emision { get; set; }l
+        public string? Descripcion_Credito { get; set; }
+
+ -->
+
+<!-- <button (click)="openDialogWithTemplate(tableCliente)">f</button> -->
 
 
 
-    </form>
-</div>
+<ng-template #tableCliente>
+    <app-sub-tablet [data]="listClient" [columns]="tableColumnsCliente"
+        (selectItemsCell)="resultDataTableClient($event)" (cancelTable)="cancelDialogResult()">
+    </app-sub-tablet>
+</ng-template>
 
+<ng-template #tableExamen>
+    <app-sub-tablet [data]="listExam" [columns]="tableColumnsExam" (selectItemsCell)="resultDataTableExam($event)"
+        (cancelTable)="cancelDialogResult()">
+    </app-sub-tablet>
+</ng-template>
 
-
-<!-- Numero_Factura INT NOT NULL, 
-	Id_EstadoFactura INT NOT NULL, --Foraneo
-	Id_TipoFactura INT NOT NULL, --Foraneo
-	Numero_Empleado INT NOT NULL, --Foraneo
-	Codigo_Cliente INT NOT NULL, --Foraneo
-	Numero_Examen INT, --Foraneo
-
-	-- Campo
-
-	TipoVenta BIT NOT NULL DEFAULT(0),
-	Impuesto DECIMAL(3,2) NOT NULL DEFAULT(0),
-	Descuento DECIMAL(3,2) NOT NULL DEFAULT(0),
-	Fecha_Emision DATETIME NOT NULL DEFAULT GETDATE(),
-	Descripcion_Credito NVARCHAR(75), -->
+<ng-template #tableProduct>
+    <app-sub-tablet [data]="listProductoFilter" [columns]="tableColumnsProduct"
+        (selectItemsCell)="resultDataTableProduct($event)" (cancelTable)="cancelDialogResult()">
+    </app-sub-tablet>
+</ng-template>

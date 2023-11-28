@@ -110,12 +110,12 @@ export class TableComponent {
   }
 
   selectItem(item: any) {
-    this.selectItemsCell.emit(undefined);
+    // this.selectItemsCell.emit(undefined);
     if (item == this.dataUpdate) {
       this.btnClickItemRow = true;
       this.dataUpdate = undefined;
       this.dataGlobalservice.setItemView(null);
-      this.selectItemsCell.emit(this.dataUpdate);
+      // this.selectItemsCell.emit(this.dataUpdate);
       return
     }
     this.btnClickItemRow = false;
@@ -124,6 +124,7 @@ export class TableComponent {
   }
 
   btnClickUpdate() {
+    // this.dataGlobalservice.setItemView(this.dataUpdate)
     this.selectItemsCell.emit(this.dataUpdate);
   }
 
@@ -132,6 +133,7 @@ export class TableComponent {
   }
 
   btnClickInfo() {
+    // this.dataGlobalservice.setItemView(this.dataUpdate)
     this.selectItemsCellInfo.emit(this.dataUpdate);
   }
 
