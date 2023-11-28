@@ -61,7 +61,7 @@ export class MyDataServices {
 
   /* En el Json que se le pasa a body, o al objeto que se le pasa como parametro body No tiene que ir el identificador ya que en este caso solo se le pasa como parametro*/
 
-  updateData(endpoint: string, body: any, Id: number): Promise<boolean> {
+  updateData(endpoint: string, body: any, Id: number | string) : Promise<boolean> {
 
     // const success = true
     //const bearerToken: string = this.cookieService.get('token');

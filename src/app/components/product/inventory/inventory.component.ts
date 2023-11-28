@@ -54,41 +54,55 @@ export class InventoryComponent {
   }
 
  onSubmit() {
-    if (this.form.valid) {
-      // The form is valid, so send it to the server
-      const data = {
-        cantidad: this.form.get('cantidad')?.value,
-        codProducto: this.form.get('codProducto')?.value,
-        descripcion: this.form.get('descripcion')?.value,
-        estado: this.form.get('estado')?.value,
-        precioCompra: this.form.get('precioCompra')?.value,
-        precioVenta: this.form.get('precioVenta')?.value,
-        stockMaximo: this.form.get('stockMaximo')?.value,
-        stockMinimo: this.form.get('stockMinimo')?.value,
-        tipoProducto: this.form.get('tipoProducto')?.value
-      };
-  
-      this.mydataservices.updateData('producto', data,data.codProducto).then((success) => {
-        if (success) {
-  
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Ups...',
-            text: 'Algo salió mal!',
-            footer: '<a href="">¿Por qué tengo este problema??</a>'
-          });
-          return;
-        }
-      });
-    } else {
-      // The form is not valid, so show an error message
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'El formulario no es válido'
-      });
-    }
+    // if (this.form.valid) {
+    //   // The form is valid, so send it to the server
+    //   const data = {
+    //     cantidad: this.form.get('cantidad')?.value,
+    //     codProducto: this.form.get('codProducto')?.value,
+    //     descripcion: this.form.get('descripcion')?.value,
+    //     estado: this.form.get('estado')?.value,
+    //     precioCompra: this.form.get('precioCompra')?.value,
+    //     precioVenta: this.form.get('precioVenta')?.value,
+    //     stockMaximo: this.form.get('stockMaximo')?.value,
+    //     stockMinimo: this.form.get('stockMinimo')?.value,
+    //     tipoProducto: this.form.get('tipoProducto')?.value
+    //   };
+      
+
+      
+    //   this.mydataservices.updateData('producto', data, data.codProducto).then((success) => {
+    //     if (success) {
+    //       Swal.fire({
+    //         icon: 'success',
+    //         title: 'Exito',
+    //         text: 'Se ha ingresado el registro correctamente',
+    //       })
+    //     } else {
+    //       console.log(data)
+    //       Swal.fire({
+    //         icon: 'error',
+    //         title: 'Ups...',
+    //         text: 'Algo salió mal!',
+    //         footer: '<a href="">¿Por qué tengo este problema??</a>'
+    //       });
+    //       return;
+    //     }
+    //   });
+    // } else {
+    //   // The form is not valid, so show an error message
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Error!',
+    //     text: 'El formulario no es válido'
+    //   });
+    // }
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Ups...',
+      text: 'Esta opcion aun esta en proceso de desarrollo'
+    });
+    
   }
   
   onItemClick(data:any) {

@@ -46,10 +46,16 @@ export class AddComponent {
         stockMinimo: this.form.get('stockMinimo')?.value,
         tipoProducto: this.form.get('tipoProducto')?.value
       };
-  
+      
+     
+
       this.mydataservices.postData('producto', data).then((success) => {
         if (success) {
-  
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'Se ha ingresado el registro correctamente',
+          })
         } else {
           Swal.fire({
             icon: 'error',

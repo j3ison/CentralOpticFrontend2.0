@@ -478,7 +478,7 @@ export class InvoiceComponent {
       });
     } else {
       let fecha1 = new Date();
-      fecha1.setHours(0, 0, 0, 0)
+      //fecha1.setHours(0, 0, 0, 0)
       const data: InvoicePost = {
         numFactura: 0,
         estado_Factura: this.itemInvoice.estado_Factura,
@@ -488,7 +488,7 @@ export class InvoiceComponent {
         tipoVenta: this.itemTypeShop.toLowerCase() == 'convenio ' ? true : false,
         impuesto: this.itemInvoice.impuesto / 100,
         descuento: this.itemInvoice.descuento / 100,
-        fecha_Emision: "2023-11-27T20:54:29.617",
+        fecha_Emision: fecha1.toISOString(),
       }
 
       if (this.itemInvoice.descripcion_Credito?.trim() != '') {

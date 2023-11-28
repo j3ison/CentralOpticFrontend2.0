@@ -32,7 +32,7 @@ export class ListComponent {
 
 
     this.mydataservices.getData("registroproducto").subscribe((respuesta: any) => {
-      this.data$ = respuesta
+      this.data$ = respuesta.reverse();
       console.log(respuesta)
     }, (error) => {
       console.log(error)
@@ -41,31 +41,39 @@ export class ListComponent {
 
  onSubmit() {
 
-      // The form is valid, so send it to the server
-      const data = {
-        codigoProducto: this.form.get('codProducto')?.value,
-        descripcion: this.form.get('descripcion')?.value,
-        nombreEmpresa: this.form.get('nombreEmpresa')?.value,
-        fechaAdquisicion: this.form.get('fechaAdquisicion')?.value,
-        costo: this.form.get('costo')?.value,
-        cantidad: this.form.get('cantidad')?.value,
-        estado: this.form.get('estado')?.value,
-      };
+      //The form is valid, so send it to the server
+      // const data = {
+      //   codigoProducto: this.form.get('codProducto')?.value,
+      //   descripcion: this.form.get('descripcion')?.value,
+      //   nombreEmpresa: this.form.get('nombreEmpresa')?.value,
+      //   fechaAdquisicion: this.form.get('fechaAdquisicion')?.value,
+      //   costo: this.form.get('costo')?.value,
+      //   cantidad: this.form.get('cantidad')?.value,
+      //   estado: this.form.get('estado')?.value,
+      // };
   
-      this.mydataservices.updateData('registroproducto', data,data.codigoProducto).then((success) => {
-        if (success) {
+      // this.mydataservices.updateData('registroproducto', data,data.codigoProducto).then((success) => {
+      //   if (success) {
   
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Ups...',
-            text: 'Algo salió mal!',
-            footer: '<a href="">¿Por qué tengo este problema??</a>'
-          });
-          return;
-        }
-      });
-  }
+      //   } else {
+      //     Swal.fire({
+      //       icon: 'error',
+      //       title: 'Ups...',
+      //       text: 'Algo salió mal!',
+      //       footer: '<a href="">¿Por qué tengo este problema??</a>'
+      //     });
+      //     return;
+      //   }
+      // });
+
+      Swal.fire({
+               icon: 'error',
+               title: 'Ups...',
+               text: 'Esta opcion aun esta en proceso de desarrollo'
+             });
+      
+
+  } 
   
   onItemClick(data:any) {
     this.dataItems = data

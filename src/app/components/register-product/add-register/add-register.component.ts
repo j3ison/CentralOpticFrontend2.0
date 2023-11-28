@@ -24,9 +24,10 @@ export class AddRegisterComponent {
   ngOnInit() {
     this.today = new Date();
     this.form = this.fb.group({
-      codigoProducto: [''],
+      codProducto: [''],
       descripcion: [''],
       fechaAdquisicion: this.today.toISOString(),
+      nombreEmpresa: [''],
       costo: [0],
       cantidad: [0],
       estado: [true]
@@ -48,8 +49,15 @@ export class AddRegisterComponent {
   
       this.mydataservices.postData('registroProducto', data).then((success) => {
         if (success) {
-  
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'Se ha ingresado el registro correctamente',
+          })
         } else {
+
+          console.log(data);
+
           Swal.fire({
             icon: 'error',
             title: 'Ups...',
