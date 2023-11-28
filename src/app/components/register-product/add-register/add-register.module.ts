@@ -8,16 +8,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { InventoryComponent } from './inventory.component';
-import { ProductModule } from '../product.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddRegisterComponent } from './add-register.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 // import { MatCardModule } from '@angular/material/card';
-
-
 
 @NgModule({
     declarations: [
-        InventoryComponent,
+        AddRegisterComponent,
     ],
     imports: [
         CommonModule,
@@ -30,8 +28,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MatInputModule,
         ViewDataModule,
         FormsModule,
-        ReactiveFormsModule 
+        ReactiveFormsModule,
+        MatAutocompleteModule
     ], 
-    exports:[InventoryComponent]
+    exports:[AddRegisterComponent]
 })
-export class InventoryModule { }
+export class AddRegisterModule { }

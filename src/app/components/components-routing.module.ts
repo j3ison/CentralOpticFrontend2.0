@@ -49,7 +49,16 @@ const routes: Routes = [
     canMatch: [isLoggedInGuard],
     canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
     canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
-  },{
+  },
+  {
+    path :'register-product',
+    loadChildren:() => import('./register-product/register-product.module').then(m => m.RegisterProductModule),
+    canMatch: [isLoggedInGuard],
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
+  },
+  
+  {
     path :'order',
     component:OrderComponent,
     canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],

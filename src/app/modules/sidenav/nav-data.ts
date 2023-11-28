@@ -82,7 +82,34 @@ export const navbarData: INavbarData[] = [
             }
         ],
         role: ['Administrador', 'Super Administrador', 'Venta']
-    }, {
+    },  {
+        routeLink: 'register-product',
+        icon: 'fa-sharp fa-solid fa-cabinet-filing',
+        label: 'Registrar Producto',
+        items: [
+            {
+                routeLink: 'register-product/list',
+                icon: 'fa-solid fa-list',
+                label: 'Lista de registros',
+                role: ['Super Administrador']
+            },
+            {
+                routeLink: 'register-product/addRegister',
+                icon: 'fa-solid fa-plus',
+                label: 'Agregar Registro',
+                // items: [
+                //     {
+                //         routeLink: 'employee/user/user',
+                //         icon: 'fa-solid fa-user-lock',
+                //         label: 'Usuarios',
+                //     }
+                // ],
+                role: ['Super Administrador']
+
+            }
+        ],
+        role: ['Super Administrador']
+    },{
         routeLink: 'order',
         icon: 'fa-solid fa-truck-field',
         label: 'Orden Pedido',

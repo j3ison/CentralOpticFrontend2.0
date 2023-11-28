@@ -11,15 +11,20 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { DialogService } from '../modules/dialog/service/dialog.service';
 import { ProductModule } from './product/product.module';
 import { InventoryModule } from './product/inventory/inventory.module';
+import { AddModule } from './product/add/add.module';
+import { ListModule } from './register-product/list/list.module';
+import { AddRegisterModule } from './register-product/add-register/add-register.module';
+import { RegisterProductModule } from './register-product/register-product.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
-    CommonModule, LoginModule, DashboardModule, ComponentsRoutingModule, ClientModule,UserModule,InvoiceModule,ProductModule,InventoryModule
+    CommonModule, LoginModule, DashboardModule, ComponentsRoutingModule, ClientModule,UserModule,InvoiceModule,ProductModule,InventoryModule,AddModule,ListModule,AddRegisterModule,RegisterProductModule
   ], 
-  exports:[DashboardModule, LoginModule, ClientModule,UserModule,InvoiceModule,ProductModule,InventoryModule],
+  exports:[DashboardModule, LoginModule, ClientModule,UserModule,InvoiceModule,ProductModule,InventoryModule,AddModule,ListModule,AddRegisterModule,RegisterProductModule],
   providers: [DialogService],
 })
 export class ComponentsModule { }
