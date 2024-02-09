@@ -57,39 +57,38 @@ export class AuthService {
     this.loadUserFromLocalStorage();
   }
 
-  login(credentials: LoginCredentials) /*:Observable<never>*/ {
+  login(credentials: LoginCredentials): Promise<boolean> /*:Observable<never>*/ {
 
     this.acceso.nombreUsuario = credentials.username
     this.acceso.clave = credentials.password
 
-    this.apiService.postAcceso('acceso', this.acceso)
-    .subscribe( (respuesta:any) => {
+    return new Promise<boolean>((resolve, reject) => {
 
-      console.log(respuesta)
+      this.apiService.postAcceso('acceso', this.acceso)
+      .subscribe( (respuesta:any) => {
+  
+        console.log(respuesta)
+  
+        // if(login){
+        const login:LoginUser = {
+          username: credentials.username,
+          role: respuesta.role,
+          token: respuesta.token,
+          id: respuesta.id,
+          password: ''
+        }
+        
+        this.pushNewUser(login)
+        this.saveTokenToLocalStore(login)
+        this.redirectToDashboard()
 
-      // if(login){
-      const login:LoginUser = {
-        username: credentials.username,
-        role: respuesta.role,
-        token: respuesta.token,
-        id: respuesta.id,
-        password: ''
-      }
-      
-      this.pushNewUser(login)
-      this.saveTokenToLocalStore(login)
-      this.redirectToDashboard()
-      // }
-
-    }, (error) => { 
-
-      console.log(error)
-
+        resolve(true);
+  
+      }, (error) => { 
+  
+        resolve(false);
+      })    
     })
-
-
-    //const login = USERS.find(e=> e.username === credentials.username && e.password === credentials.password)
-   
   }
 
   logout(): void {

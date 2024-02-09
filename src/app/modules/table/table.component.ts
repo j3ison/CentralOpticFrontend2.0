@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DataGlobalService } from '../view-data/services/data-global.service';
+import { SearchTableService } from './service/search-table.service';
 // import * as XLSX from 'xlsx';
 
 @Component({
@@ -66,7 +67,7 @@ export class TableComponent {
   @Output() selectItemsCellDelete: EventEmitter<any>;
   @Output() selectItemsCellInfo: EventEmitter<any>;
 
-  constructor( private cdr: ChangeDetectorRef, private dataGlobalservice: DataGlobalService) {
+  constructor( private cdr: ChangeDetectorRef, private dataGlobalservice: DataGlobalService, private search:SearchTableService) {
 
     this.selectItemsCell = new EventEmitter();
     this.selectItemsCellDelete = new EventEmitter();
@@ -75,6 +76,12 @@ export class TableComponent {
 
   ngOnInit(): void {
 
+    
+
+  }
+
+  ngAfterViewInit() {
+    
     this.dataGlobalservice.$itemView.subscribe(item => {
       this.item = item;
       if(item){
@@ -83,11 +90,15 @@ export class TableComponent {
         this.btnClickItemRow = true;
       }
     })
-
-  }
-
-  ngAfterViewInit() {
+    
     this.dataSource.paginator = this.paginator;
+
+    
+    this.search.text$.subscribe(text => {
+      // console.log(text)
+      this.applyFilter(text)
+    })
+
   }
 
 
@@ -99,9 +110,21 @@ export class TableComponent {
     return false;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+
+  applyFilter(event:Event){
+
+    if (event && event.target) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+  
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
   }
 
   getActiveClass(active: any): string {

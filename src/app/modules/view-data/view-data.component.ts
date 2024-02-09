@@ -7,6 +7,7 @@ import { DialogService } from '../dialog/service/dialog.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import Swal from 'sweetalert2';
+import { SearchTableService } from '../table/service/search-table.service';
 // import  ResizeObserver  from 'resize-observer-polyfill';
 
 @Component({
@@ -30,7 +31,7 @@ export class ViewDataComponent {
   btnDelete = false;
 
   //Variable para grid
-  item:any = null;
+  item: any = null;
   itemData$: any[] = []
   itemViewGrid: TemplateRef<any> | null = null;
   formView: TemplateRef<any> | null = null;
@@ -38,6 +39,7 @@ export class ViewDataComponent {
   formInfoView: TemplateRef<any> | null = null;
   private matDialogRef!: MatDialogRef<DialogComponent>;
 
+  public page!: number
 
 
 
@@ -78,12 +80,11 @@ export class ViewDataComponent {
   }
 
 
+  filteredItemData: any[] = []
 
   @Input() set ItemData(itemData: any) {
-    // console.log(itemData)
-
-
     this.itemData$ = itemData;
+    this.filteredItemData = this.itemData$;
     this.dataSource.data = itemData;
   }
 
@@ -97,7 +98,11 @@ export class ViewDataComponent {
   container!: ElementRef;
 
 
-  constructor(private dataGlobalservice: DataGlobalService, private elementRef: ElementRef, private dialogService: DialogService) { }
+  constructor(private dataGlobalservice: DataGlobalService,
+    private elementRef: ElementRef,
+    private dialogService: DialogService,
+    private searchService: SearchTableService
+  ) { }
 
   ngOnInit() {
     this.updateColSize(document.body.clientWidth);
@@ -123,6 +128,22 @@ export class ViewDataComponent {
       }
     })
 
+
+    // this.searchService.cleanTextFilter()
+
+    this.searchService.text$.subscribe(search => {
+      if (search && search.target && search.target instanceof HTMLInputElement) {
+
+        const lowerCaseFilterValue = search.target.value;
+
+        console.log(lowerCaseFilterValue)
+        this.filteredItemData = this.itemData$.filter(item => {
+          const objectValues = Object.values(item);
+          return objectValues.some((value:any) => value.toString().toLowerCase().includes(lowerCaseFilterValue));
+        });
+      }
+    })
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -141,6 +162,10 @@ export class ViewDataComponent {
     } else if (windowWidth < 700 && this.valFormularioGrip) {
       this.colSize = 1; // 1 item por fila en pantallas pequeñas (< 700px)
     }
+  }
+
+  getSearchFilter(text: any) {
+    this.searchService.setTextFilter(text)
   }
 
   getColSize(index: number): string {
@@ -163,7 +188,7 @@ export class ViewDataComponent {
     this.dataGlobalservice.setItemView(null);
   }
 
-  openDialogWithTemplate(template: TemplateRef<any> | null, templateV :TemplateRef<any> | null = null) {
+  openDialogWithTemplate(template: TemplateRef<any> | null, templateV: TemplateRef<any> | null = null) {
     if (template && templateV) {
       console.log(this.formCreateView)
       this.matDialogRef = this.dialogService.openDialogWithTemplate({ template });
@@ -179,14 +204,14 @@ export class ViewDataComponent {
     this.matDialogRef.close()
   }
 
-  viewFormNull(){
+  viewFormNull() {
     Swal.fire({
       title: "Opción no habilitada",
       html: `
        <img src="https://cdn-icons-png.flaticon.com/512/11046/11046410.png" alt="Error" style="width: 100px; height: 100px;">
       `,
       showCloseButton: true,
-      
+
       focusConfirm: false,
       confirmButtonText: `
       <i class="fa-solid fa-person-digging"></i> OK!
@@ -196,8 +221,8 @@ export class ViewDataComponent {
     });
   }
 
-  valFormTablet(){
-    this.valFomularioTable = this.item?true:false;
+  valFormTablet() {
+    this.valFomularioTable = this.item ? true : false;
   }
 
 }

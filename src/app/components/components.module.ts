@@ -15,6 +15,7 @@ import { AddModule } from './product/add/add.module';
 import { ListModule } from './register-product/list/list.module';
 import { AddRegisterModule } from './register-product/add-register/add-register.module';
 import { RegisterProductModule } from './register-product/register-product.module';
+import { PayModule } from './pay/pay.module';
 
 
 
@@ -22,9 +23,22 @@ import { RegisterProductModule } from './register-product/register-product.modul
   declarations: [
   ],
   imports: [
-    CommonModule, LoginModule, DashboardModule, ComponentsRoutingModule, ClientModule,UserModule,InvoiceModule,ProductModule,InventoryModule,AddModule,ListModule,AddRegisterModule,RegisterProductModule
-  ], 
-  exports:[DashboardModule, LoginModule, ClientModule,UserModule,InvoiceModule,ProductModule,InventoryModule,AddModule,ListModule,AddRegisterModule,RegisterProductModule],
+    CommonModule,
+    LoginModule, 
+    DashboardModule, 
+    ComponentsRoutingModule, 
+    ClientModule, 
+    UserModule, 
+    InvoiceModule, 
+    ProductModule, 
+    InventoryModule, 
+    AddModule, 
+    ListModule, 
+    AddRegisterModule, 
+    RegisterProductModule,
+    PayModule
+  ],
+  exports: [DashboardModule, LoginModule, ClientModule, UserModule, InvoiceModule, ProductModule, InventoryModule, AddModule, ListModule, AddRegisterModule, RegisterProductModule,PayModule],
   providers: [DialogService],
 })
 export class ComponentsModule { }

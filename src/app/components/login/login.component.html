@@ -1,58 +1,111 @@
-<div class="container-card">
-  <mat-card class="content-card">
+<div class="container-login">
+  <div class="container-left content-login">
+    <div class="container-card">
+      <mat-card class="content-card" style="background-color: hsla(0, 0%, 100%, .01); backdrop-filter: blur(16px);">
+        <mat-card-header>
+          <div class="content-header-card">
+            <img mat-card-image style="width: 150px; margin: 1.5rem 0; opacity: 0.4;"
+              src="	https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Central Optic logo">
+          </div>
+        </mat-card-header>
+        <div class="header">
+          <h1 class="title" style="
+                                font-family: 'Archivo Narrow', sans-serif;
+                                color: rgb(0, 0, 0); 
+                                margin-bottom:1.5rem; 
+                                font-size: 32px;
+                                font-weight: 500;
+                                opacity: 0.6;"><strong>Inicio de sesión</strong></h1>
+        </div>
+
+        <mat-card-content>
+          <div class="content-form">
+            <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+              <div class="email-input">
+                <mat-form-field class="full-width input" appearance="outline">
+                  <mat-label style="font-family: 'Crimson Text', serif; font-weight: 900;">Usuario</mat-label>
+                  <input formControlName="username" matInput required name="email" [(ngModel)]="email" style="font-family: 'Crimson Text', serif;"/>
+                  <mat-error *ngIf="!loginForm.controls['username'].valid">
+                    El usuario es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div>
+                <span class="aLink">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+
+                <mat-form-field class="full-width input" appearance="outline">
+                  <mat-label style="font-family: 'Crimson Text', serif; font-weight: 900;">Contraseña</mat-label>
+                  <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required
+                    name="password" [(ngModel)]="password" style="font-family: 'Crimson Text', serif;" />
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>
+                      {{hide ? 'visibility_off' : 'visibility'}}
+                    </mat-icon>
+                  </button>
+                  <mat-error *ngIf="!loginForm.controls['password'].valid">
+                    La contraseña es requerida
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="content-btn">
+                <button class="btn" color="primary" type="submit" [disabled]="loginForm.invalid" style="font-family: 'lato', sans-serif; font-weight: 700;
+                font-style: normal;">Iniciar sesión</button>
+              </div>
+
+            </form>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="container-right content-login">
     <mat-card-header>
       <div class="content-header-card">
         <img mat-card-image src="../../assets/images/logo.svg" alt="Central Optic logo">
       </div>
     </mat-card-header>
-    <div class="header">
-      <h1 class="title"><strong>Central Optic</strong></h1>
-      
+    <div class="header" style="margin: 2.5rem 0 0.8rem 0; ">
+      <h1 class="title" style="
+                              font-family: 'Archivo Narrow', sans-serif; font-weight: 900;
+                              color: rgb(226, 226, 226); 
+                              text-shadow: 2px 1px 0 #9983fe, -1px -1px 0 #9983fe, 1px -1px 0 #9983fe, -1px 1px 0 #9983fe;
+                              font-size: 55px;"><strong>Central Optic</strong></h1>
     </div>
-
-    <mat-card-content>
-      <div class="content-form">
-        <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
-          <div class="email-input">
-            <mat-form-field class="full-width input" appearance="outline">
-              <mat-label>Usuario</mat-label>
-              <input formControlName="username" matInput required name="email" [(ngModel)]="email" />
-              <mat-error *ngIf="!loginForm.controls['username'].valid">
-                El usuario es requerido
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div>
-            <span class="aLink">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
-
-            <mat-form-field class="full-width input" appearance="outline">
-              <mat-label>Contraseña</mat-label>
-              <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required name="password"
-                [(ngModel)]="password" />
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>
-                  {{hide ? 'visibility_off' : 'visibility'}}
-                </mat-icon>
-              </button>
-              <mat-error *ngIf="!loginForm.controls['password'].valid">
-                La contraseña es requerida
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="btn">
-            <button mat-flat-button color="primary" type="submit">Iniciar sesión</button>
-          </div>
-
-        </form>
-      </div>
-    </mat-card-content>
-  </mat-card>
+    <div class="header">
+      <h3 style="font-family: 'lato', sans-serif; font-weight: 500; font-size: 20px; color: rgb(226, 226, 226);">
+        <strong>Tu visión es nuestro compromiso</strong>
+      </h3>
+    </div>
+  </div>
 </div>
+
+
+<ng-template #carderror>
+  <div class="container-card">
+    <mat-card class="example-card">
+      <mat-card-header style="background: #EAECEF; border-radius: 1rem 1rem 0 0; display: flex; 
+              justify-content: center; ">
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Asistente Virtual</mat-card-title>
+        <mat-card-subtitle>Engineer Dog</mat-card-subtitle>
+        <!-- <div mat-card-avatar class="example-header-image"></div> -->
+        <i class="cancel-img fa-regular fa-circle-xmark" (click)="cancelDialogResult()"></i>
+      </mat-card-header>
+      <mat-card-content class="contentt">
+        <img class="emoji" mat-card-image src="   https://cdn-icons-png.flaticon.com/512/308/308019.png " alt="Error">
+        <p style="font-size: 18px; max-width: 285px; text-align: center; ">
+          El usuario o contraseña
+          son incorrectas
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>

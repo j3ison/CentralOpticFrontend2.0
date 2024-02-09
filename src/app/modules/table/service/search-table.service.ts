@@ -5,16 +5,16 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SearchTableService {
-  private text = new BehaviorSubject<string>("");
+  private text = new BehaviorSubject<KeyboardEvent>(new KeyboardEvent('keyup'));
   text$ = this.text.asObservable();
   constructor() { }
 
-  setTextFilter(value:string){
+  setTextFilter(value:any){
     this.text.next(value);
   }
 
   cleanTextFilter(){
-    this.text.next('');
+    this.text.next(new KeyboardEvent('keyup'));
   }
   
 }

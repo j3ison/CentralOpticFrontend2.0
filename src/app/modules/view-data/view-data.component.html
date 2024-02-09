@@ -2,7 +2,7 @@
   <div class="header-content">
     <div class="header-search">
       <div class="normal-search">
-        <input matInput type="search" class="search" name="" id="" placeholder="Search...">
+        <input matInput (keyup)="getSearchFilter($event)" type="search" class="search" name="" id="" placeholder="Search...">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
       </div>
     </div>
@@ -16,12 +16,15 @@
   <div class="content">
     <div class="container-grid-items" *ngIf="!typeViewIcon">
       <div [ngClass]="setClassItems()">
-        <div class="row">
-          <ng-container *ngFor="let item of itemData$; let i = index">
+        <div class="row" style="height: 70vh; overflow-y: scroll;">
+          <ng-container *ngFor="let item of filteredItemData | paginate: { itemsPerPage: 8, currentPage: page }; let i = index">
             <div [ngClass]="getColSize(i)" class="mb-3">
               <ng-container *ngTemplateOutlet="itemViewGrid; context: { $implicit: item }"></ng-container>
-            </div>
+            </div>  
           </ng-container>
+        </div>
+        <div style="width: calc(100%); display: flex; align-items: center; justify-content: center; margin-top: 1rem;">
+          <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
         </div>
       </div>
       <div class="content-form" *ngIf="valFormularioGrip">

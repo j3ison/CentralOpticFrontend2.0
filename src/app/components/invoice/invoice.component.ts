@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { Client, DetailInvoice, Exam, InvoiceGet, InvoicePost, Product, StatusInvoice, TypeInvoice } from '../model';
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ViewDataComponent } from 'src/app/modules/view-data/view-data.component';
 
 @Component({
   selector: 'app-invoice',
@@ -33,6 +34,7 @@ export class InvoiceComponent {
 
   searchTerm: string = "";
   private matDialogRef!: MatDialogRef<DialogComponent>;
+  private viewData!: ViewDataComponent;
 
   boolProduct: boolean = true
 
@@ -478,7 +480,7 @@ export class InvoiceComponent {
       });
     } else {
       let fecha1 = new Date();
-      //fecha1.setHours(0, 0, 0, 0)
+      fecha1.setHours(0, 0, 0, 0)
       const data: InvoicePost = {
         numFactura: 0,
         estado_Factura: this.itemInvoice.estado_Factura,
@@ -517,7 +519,19 @@ export class InvoiceComponent {
               monto: element.precioVenta
             }
 
-            this.mydataservices.postData('detallefactura/'+FT,detail);
+            this.mydataservices.postData('detallefactura/'+FT,detail).then(success => {
+              if(success){
+                this.mydataservices.getData("factura").subscribe((respuesta: any) => {
+                  console.log(respuesta.map((obj: any) => this.procesarDatosNulos(obj)));
+                  this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+                  this.listInvoice = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+                }, (error) => {
+                  console.log(error)
+                })
+              }
+            })
+            // this.viewData.refresh();
+            
 
           })
 

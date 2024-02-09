@@ -16,13 +16,13 @@
 
       .normal-search {
         .search {
-          border: none;
+          border: 1px solid #d7d7d7;
           height: 2.375rem;
           padding-left: 2.5rem;
           padding-right: 1.25rem;
           background-color: #f3f3f9;
           box-shadow: none;
-          border-radius: 1.875rem;
+          border-radius: 1rem;
           outline: 0;
         }
 

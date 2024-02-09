@@ -2,10 +2,11 @@ import { Component, Output, EventEmitter, OnInit, HostListener, ViewChild } from
 import { navbarData } from './nav-data';
 import { animate, animation, keyframes, style, transition, trigger } from '@angular/animations';
 import { INavbarData, fadeInOut } from './helper';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { HeaderService } from '../header/service/header.service';
 import { filter } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -20,10 +21,10 @@ interface SideNavToggle {
     fadeInOut,
     trigger('rotate', [
       transition(':enter', [
-        animate('1000ms', 
+        animate('1000ms',
           keyframes([
-            style({transform: 'rotate(0deg)', offset: '0'}),
-            style({transform: 'rotate(2turn)', offset: '1'})
+            style({ transform: 'rotate(0deg)', offset: '0' }),
+            style({ transform: 'rotate(2turn)', offset: '1' })
           ])
         )
       ])
@@ -32,32 +33,39 @@ interface SideNavToggle {
 })
 export class SidenavComponent implements OnInit {
   
+  
+
 
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
   navData = navbarData;
   multiple: boolean = false;
+  name: string = ''
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
-    if(this.screenWidth <= 768 ) {
+    if (this.screenWidth <= 768) {
       this.collapsed = false;
-      this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+      this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
     }
   }
 
-  constructor(public router: Router, private headerService:HeaderService) {}
+  constructor(public router: Router, private headerService: HeaderService, private authService: AuthService,private auth:AuthService) { }
 
   ngOnInit(): void {
-      this.screenWidth = window.innerWidth;
+    this.screenWidth = window.innerWidth;
 
-      this.subscribeToRouteChanges();
+    this.subscribeToRouteChanges();
+
+    this.authService.user$.subscribe(user => {
+      this.name = user?.username ? user?.username : ''
+    })
   }
 
   private subscribeToRouteChanges() {
-    
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // console.log(event.url.substring(1))
@@ -65,7 +73,7 @@ export class SidenavComponent implements OnInit {
         // const match = event.url.match(/\/([^/]+)$/)!!;
         // console.log(event.url.substring(1))
         // console.log(this.navData)
-        
+
         // this.headerService.setTitle(String(this.navData.find(e => e.routeLink===event.url.substring(1) || e?.items?.find(e =>e.routeLink === event.url.substring(1)))?.label))
       }
     });
@@ -73,13 +81,13 @@ export class SidenavComponent implements OnInit {
 
 
 
-  detectRouteChange(data:any[],datab:string) {
-    data.forEach(data =>{
-      if(data.items && data.items.length>0){
+  detectRouteChange(data: any[], datab: string) {
+    data.forEach(data => {
+      if (data.items && data.items.length > 0) {
         this.detectRouteChange(data.items, datab);
       }
 
-      if(!data.items && data.routeLink === datab ){
+      if (!data.items && data.routeLink === datab) {
         this.headerService.setTitle(data.label);
         return
       }
@@ -88,12 +96,12 @@ export class SidenavComponent implements OnInit {
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   closeSidenav(): void {
     this.collapsed = false;
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   handleClick(item: INavbarData): void {
@@ -108,7 +116,7 @@ export class SidenavComponent implements OnInit {
   shrinkItems(item: INavbarData): void {
     if (!this.multiple) {
       this.headerService.setTitle(item.label);
-      for(let modelItem of this.navData) {
+      for (let modelItem of this.navData) {
         if (item !== modelItem && modelItem.expanded) {
           modelItem.expanded = false;
         }
@@ -116,29 +124,38 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  navSublevelMenu(collapse:boolean):string{
-    if(!collapse)
+  navSublevelMenu(collapse: boolean): string {
+    if (!collapse)
       return 'sidenav-sublevel-collapsep';
     return '';
   }
 
-  navTooltipText(text:string){
-    return !this.collapsed?text:''
+  navTooltipText(text: string) {
+    return !this.collapsed ? text : ''
   }
 
+  OnclickLogout() {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        objeto: true
+      }
+    };
 
-  // @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
-  // isMenuOpen: boolean = false;
+    this.router.navigate(['login'], navigationExtras);
+  }
 
-  // onMenuOpened(menu: any) {
-  //   console.log('entro')
-  //   this.isMenuOpen = true;
-  //   // Realiza acciones o lógica adicional cuando el menú se abre
-  // }
+  clickLogout(){
+    this.toggleCollapse()
+    this.auth.logout()
+  }
 
-  // onMenuClosed() {
-  //   this.isMenuOpen = false;
-  //   // Realiza acciones o lógica adicional cuando el menú se cierra
-  // }
-  
+  isMenuOpen: boolean = false;
+
+  onMenuOpened() {
+    this.isMenuOpen = true;
+  }
+
+  onMenuClosed() {
+    this.isMenuOpen = false;
+  }
 }

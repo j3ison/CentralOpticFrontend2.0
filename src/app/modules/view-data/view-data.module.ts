@@ -7,8 +7,7 @@ import { ViewDataComponent } from './view-data.component';
 import { TableModule } from "../table/table.module";
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDividerModule} from '@angular/material/divider';
-
-
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
     declarations: [ViewDataComponent],
     exports: [ViewDataComponent],
@@ -19,7 +18,8 @@ import {MatDividerModule} from '@angular/material/divider';
         MatButtonModule,
         TableModule,
         MatProgressBarModule,
-        MatDividerModule
+        MatDividerModule,
+        NgxPaginationModule
     ]
 })
 export class ViewDataModule { }
