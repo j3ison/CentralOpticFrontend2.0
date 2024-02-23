@@ -5,77 +5,93 @@
  [clickItems]="dataItems">
 </app-view-data> -->
 
-<app-view-data [ItemViewGrid]="customTemplate" 
-    [FormView]="form" [ItemData]="data$" 
-    [columns]="tableColumnsProveedor" 
-    [clickItems]="dataItems" 
-    [FormCreateView]="form"></app-view-data>
+<app-view-data [ItemViewGrid]="customTemplate" [FormView]="form" [ItemData]="data$" [columns]="tableColumnsProveedor"
+  [clickItems]="dataItems" [FormCreateView]="form"></app-view-data>
 
 
 <ng-template #customTemplate let-data>
-    <mat-card class="example-card" (click)="onItemClick(data)">
-        <mat-card-header>
-            <mat-card-title-group>
-                <mat-card-title>{{data.codProducto}}</mat-card-title>
-            </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-            {{data.descripcion}}
-        </mat-card-content>
-    </mat-card>
+  <mat-card class="card-product">
+    <div class="container-card-product">
+      <img class="img-card-product" [src]="imgItems(data.tipoProducto)">
+  
+      <div class="content-body-card-product">
+        <h1 class="text-name-card-product">{{data.descripcion}}</h1>
+        <span class="text-price-card-product">${{data.precioVenta}}</span>
+      </div>
+  
+      <div class="content-footer-card-product">
+        <h2 class="text-type-card-product">{{data.tipoProducto}}</h2>
+      </div>
+    </div>
+  </mat-card>
 </ng-template>
 
+
+
+<!-- <ng-template #customTemplate let-data>
+  <mat-card class="example-card" (click)="onItemClick(data)">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>{{data.codProducto}}</mat-card-title>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+      {{data.descripcion}}
+    </mat-card-content>
+  </mat-card>
+</ng-template> -->
+
 <ng-template #form let-data>
-    <div class="container-form">
-        <form class="content-form">
-          <h1>Actalizar  Producto</h1>
-      
-          <div class="content-form-item">
-            <div class="form">
-              <label class="title">Codigo</label> 
-              <input class="form-data" type="text" [value]="data.codProducto">
-            </div>
-      
-            <div class="form">
-              <label class="title">Descripcion</label>
-              <input class="form-data" type="text" [value]="data.descripcion">
-            </div>
-          </div>
-      
-          <div class="content-form-item">
-            <div class="form">
-              <label class="title">Tipo de producto</label>
-              <input class="form-data" type="text" [value]="data.tipoProducto">
-            </div>
-      
-            <div class="form">
-              <label class="title">Precio Venta</label>
-              <input  class="form-data" type="text" [value]="data.precioVenta">
-            </div>
-      
-            <div class="form">
-              <label class="title">Precio Compra</label>
-              <input  class="form-data" type="text" [value]="data.precioCompra">
-            </div>
-          </div>
-      
-          <div class="content-form-item">
-            <div class="form">
-              <label class="title">Stock Minimo</label>
-              <input  class="form-data" type="text" [value]="data.stockMinimo">
-            </div>
-      
-            <div class="form">
-              <label class="title">Stock Maximo</label>
-              <input  class="form-data" type="text" [value]="data.stockMaximo">
-            </div>
-          </div>
-      
-          <div class="form-button">
-            <button class="btn btn-danger" >Cancelar</button>
-      
-            <button class="btn btn-primary" (click)="onSubmit()">Guardar</button>
-          </div>
-        </form>
+  <div class="container-form">
+    <form class="content-form">
+      <h1>Actalizar Producto</h1>
+
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Codigo</label>
+          <input class="form-data" type="text" [value]="data.codProducto">
+        </div>
+
+        <div class="form">
+          <label class="title">Descripcion</label>
+          <input class="form-data" type="text" [value]="data.descripcion">
+        </div>
       </div>
+
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Tipo de producto</label>
+          <input class="form-data" type="text" [value]="data.tipoProducto">
+        </div>
+
+        <div class="form">
+          <label class="title">Precio Venta</label>
+          <input class="form-data" type="text" [value]="data.precioVenta">
+        </div>
+
+        <div class="form">
+          <label class="title">Precio Compra</label>
+          <input class="form-data" type="text" [value]="data.precioCompra">
+        </div>
+      </div>
+
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Stock Minimo</label>
+          <input class="form-data" type="text" [value]="data.stockMinimo">
+        </div>
+
+        <div class="form">
+          <label class="title">Stock Maximo</label>
+          <input class="form-data" type="text" [value]="data.stockMaximo">
+        </div>
+      </div>
+
+      <div class="form-button">
+        <button class="btn btn-danger">Cancelar</button>
+
+        <button class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+      </div>
+    </form>
+  </div>
 </ng-template>

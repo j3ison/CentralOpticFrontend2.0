@@ -12,6 +12,7 @@ import { Client, DetailInvoice, Exam, InvoiceGet, InvoicePost, Product, StatusIn
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ViewDataComponent } from 'src/app/modules/view-data/view-data.component';
+import { DataGlobalService } from 'src/app/modules/view-data/services/data-global.service';
 
 @Component({
   selector: 'app-invoice',
@@ -78,7 +79,8 @@ export class InvoiceComponent {
     private formBuilder: FormBuilder,
     private elementRef: ElementRef,
     private dialogService: DialogService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dataGlobalservice: DataGlobalService
   ) { }
 
   tableColumnsFactura: TableColumn[] = [
@@ -87,6 +89,7 @@ export class InvoiceComponent {
     { label: 'Empresa Asociada', def: 'empresa_Asociada', dataKey: 'empresa_Asociada' },
     { label: 'Estado de Factura', def: 'estado_Factura', dataKey: 'estado_Factura' },
     { label: 'Fecha Emision', def: 'fecha_Emision', dataKey: 'fecha_Emision' },
+    { label: 'Cliente', def: 'cliente', dataKey: 'cliente' },
     { label: 'Tipo de Venta', def: 'tipoVenta', dataKey: 'tipoVenta' },
     { label: 'Tipo de Factura', def: 'tipo_Factura', dataKey: 'tipo_Factura' },
     // { label: 'Tipo de Venta', def: 'tipoVenta', dataKey: 'tipoVenta' },
@@ -162,7 +165,7 @@ export class InvoiceComponent {
       && option.estadoFactura != 'Anulado'
       && option.estadoFactura != 'Cancelado');
   }
-  
+
   private _filterStatusInvoiceUpdate(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.listStatusInvoice.filter(option => option.estadoFactura.toLowerCase().includes(filterValue));
@@ -180,39 +183,45 @@ export class InvoiceComponent {
 
   ngOnInit(): void {
 
-
-
     this.mydataservices.getData("factura").subscribe((respuesta: any) => {
       console.log(respuesta.map((obj: any) => this.procesarDatosNulos(obj)));
       this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
       this.listInvoice = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+      this.data$ = this.data$.reverse()
     }, (error) => {
       console.log(error)
     })
 
     this.mydataservices.getData("tipofactura").subscribe((respuesta: any) => {
-      console.log(respuesta)
+      // console.log(respuesta)
       this.listTypeInvoice = respuesta
     }, (error) => {
       console.log(error)
     })
 
+    // this.mydataservices.getData("detallefactura").subscribe((respuesta: any) => {
+    //   console.log(respuesta)
+    //   // this.listTypeInvoice = respuesta
+    // }, (error) => {
+    //   console.log(error)
+    // })
+
     this.mydataservices.getData("estadofactura").subscribe((respuesta: any) => {
-      console.log(respuesta)
+      // console.log(respuesta)
       this.listStatusInvoice = respuesta
     }, (error) => {
       console.log(error)
     })
 
     this.mydataservices.getData("cliente").subscribe((respuesta: any) => {
-      console.log(respuesta)
+      // console.log(respuesta)
       this.listClient = respuesta
     }, (error) => {
       console.log(error)
     })
 
     this.mydataservices.getData("producto").subscribe((respuesta: any) => {
-      console.log(respuesta)
+      // console.log(respuesta)
       this.listProducto = respuesta
       this.listProductoFilter = this.listProducto.filter(obj => obj.cantidad > 0 && obj.estado == true)
     }, (error) => {
@@ -220,7 +229,7 @@ export class InvoiceComponent {
     })
 
     this.mydataservices.getData("examen").subscribe((respuesta: any) => {
-      console.log(respuesta)
+      // console.log(respuesta)
       this.listExam = respuesta
     }, (error) => {
       console.log(error)
@@ -248,7 +257,11 @@ export class InvoiceComponent {
     this.authService.user$.subscribe(resp => {
       this.user = resp
     })
-    
+
+    this.dataGlobalservice.$itemView.subscribe(item => {
+      this.itemClick = item
+    })
+
 
   }
 
@@ -354,10 +367,10 @@ export class InvoiceComponent {
   }
 
   imgItems(estadoFactura: string) {
-    return estadoFactura === "Pendiente" ? 'https://cdn-icons-png.flaticon.com/512/7867/7867775.png' :
-      estadoFactura === "Acreditado" ? 'https://cdn-icons-png.flaticon.com/512/2557/2557581.png' :
-        estadoFactura === "Anulado" ? 'https://cdn-icons-png.flaticon.com/512/7867/7867593.png' :
-          'https://cdn-icons-png.flaticon.com/512/4862/4862191.png';
+    return estadoFactura === "Pendiente" ? 'https://cdn-icons-png.flaticon.com/512/2784/2784459.png' :
+      estadoFactura === "Acreditado" ? 'https://cdn-icons-png.flaticon.com/512/583/583985.png' :
+        estadoFactura === "Anulado" ? 'https://cdn-icons-png.flaticon.com/512/929/929457.png' :
+          'https://cdn-icons-png.flaticon.com/512/4302/4302066.png';
   }
 
   saveData(data$: any) {
@@ -505,8 +518,8 @@ export class InvoiceComponent {
 
       this.mydataservices.postData('factura', data).then((success) => {
         if (success) {
-            
-          const numeros = this.listInvoice.map(objeto => objeto.numFactura?objeto.numFactura:0);
+
+          const numeros = this.listInvoice.map(objeto => objeto.numFactura ? objeto.numFactura : 0);
           let FT = Math.max(...numeros) + 1
 
           this.itemListProduct.forEach(element => {
@@ -519,8 +532,8 @@ export class InvoiceComponent {
               monto: element.precioVenta
             }
 
-            this.mydataservices.postData('detallefactura/'+FT,detail).then(success => {
-              if(success){
+            this.mydataservices.postData('detallefactura/' + FT, detail).then(success => {
+              if (success) {
                 this.mydataservices.getData("factura").subscribe((respuesta: any) => {
                   console.log(respuesta.map((obj: any) => this.procesarDatosNulos(obj)));
                   this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
@@ -531,7 +544,7 @@ export class InvoiceComponent {
               }
             })
             // this.viewData.refresh();
-            
+
 
           })
 
@@ -556,18 +569,18 @@ export class InvoiceComponent {
     }
   }
 
-  dataItems:any = null
+  dataItems: any = null
   onItemClick(data: any) {
     this.dataItems = data
   }
 
 
-  updateClick(data:any){
-    console.log((data.estado_Factura == 'Cancelado' || data.estado_Factura == 'Anulado')?true:false)
-    return (data.estado_Factura == 'Cancelado' || data.estado_Factura == 'Anulado')?true:false
+  updateClick(data: any) {
+    // console.log((data.estado_Factura == 'Cancelado' || data.estado_Factura == 'Anulado')?true:false)
+    return (data.estado_Factura == 'Cancelado' || data.estado_Factura == 'Anulado') ? true : false
   }
 
-  saveDataConfirmeUpdate(data:any) {
+  saveDataConfirmeUpdate(data: any) {
     Swal.fire({
       title: 'Confirmar',
       text: '¿Está seguro que desea actualizar el estado de la factura?',
@@ -582,14 +595,14 @@ export class InvoiceComponent {
           "estado_Factura": data.estado_Factura
         }
 
-        this.mydataservices.updateData('factura',estado,data.numFactura).then((success)=>{
+        this.mydataservices.updateData('factura', estado, data.numFactura).then((success) => {
           if (success) {
             Swal.fire({
               icon: 'success',
               title: 'Exito',
               text: 'Los cambios se realizaron correctamente',
             })
-          }else{
+          } else {
             Swal.fire({
               icon: 'error',
               title: 'Ups...',
@@ -610,6 +623,78 @@ export class InvoiceComponent {
   }
 
 
-  
+
+  firstFormGroup = this.formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this.formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  isEditable = true;
+
+  // formCreateItems: FormGroup = this.formBuilder.group(
+  //   {
+  //     'fechaEmision': [this.itemInvoice.fecha_Emision, Validators.required],
+  //     'estadoFactura': ['', Validators.required],
+  //     'tipoFactura': ['', Validators.nullValidator],
+  //     'tipoVenta': ['Piso', Validators.nullValidator],
+  //     'cliente': [this.itemClient.nombres, Validators.required],
+  //     'examen': [this.itemExam.length > 0 ? this.itemExam[0].numExamen : '', Validators.nullValidator],
+  //     'impuesto': [this.itemInvoice.impuesto, Validators.required],
+  //     'descuento': [this.itemInvoice.descuento, Validators.required],
+  //     'descripcion': [this.itemInvoice.descripcion_Credito, Validators.nullValidator],
+  //     // 'Cantidad': [this.itemInvoice.tipo_Factura, Validators.required]
+  //   }
+  // )
+
+  formInfoInvoice: FormGroup = this.formBuilder.group(
+    {
+      'fechaEmision': [this.itemInvoice.fecha_Emision, Validators.required],
+      'estadoFactura': ['Acreditado', Validators.required],
+      'tipoFactura': ['Contado', Validators.nullValidator],
+      'tipoVenta': ['Piso', Validators.nullValidator],
+    }
+  )
+
+  formGetInfoInvoice(fr: string) {
+    return this.formInfoInvoice.get(fr) as FormControl;
+  }
+
+  formDataClient: FormGroup = this.formBuilder.group(
+    {
+      'cliente': [this.itemClient.nombres, Validators.required],
+      'examen': [this.itemExam.length > 0 ? this.itemExam[0].numExamen : '', Validators.nullValidator],
+    }
+  )
+
+  formGetDataClient(fr: string) {
+    return this.formDataClient.get(fr) as FormControl;
+  }
+
+  formDataProduct: FormGroup = this.formBuilder.group(
+    {
+      'impuesto': [this.itemInvoice.impuesto, Validators.required],
+      'descuento': [this.itemInvoice.descuento, Validators.required],
+      'descripcion': [this.itemInvoice.descripcion_Credito, Validators.nullValidator],
+    }
+  )
+
+  formGetDataProduct(fr: string) {
+    return this.formDataProduct.get(fr) as FormControl;
+  }
+
+  itemClick: any = null
+  onItemClickActive(data: any) {
+    
+    if (this.itemClick !== data){
+      this.itemClick = data
+      this.dataGlobalservice.setItemView(data);
+    }else{
+      this.itemClick = null
+      this.dataGlobalservice.setItemView(null);
+    }
+  }
+
+
 
 }

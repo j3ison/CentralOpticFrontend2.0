@@ -1,4 +1,5 @@
 import { Component, TemplateRef } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/modules/dialog/dialog.component';
 import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
@@ -40,5 +41,13 @@ import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
   styleUrls: ['./pay.component.css']
 })
 export class PayComponent {
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  isEditable = true;
 
+  constructor(private _formBuilder: FormBuilder) {}
 }

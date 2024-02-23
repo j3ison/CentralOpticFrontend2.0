@@ -8,15 +8,30 @@
     </div>
 
     <div class="header-icon">
-      <i class="icon fa-regular fa-square-plus" (click)="openDialogWithTemplate(formCreate,formCreateView)"></i>
-      <i class="icon fa-solid " [ngClass]="setTypeViewIcon()" (click)="setTypeView()"></i>
+      <button style="border: none; background-color: transparent;" [disabled]="!item"
+      (click)="openDialogWithTemplate(formUpdate,formView)">
+        <i class="fa-solid fa-pen-to-square" matTooltip="Actualizar" matTooltipPosition="below" 
+        [ngClass]="item?'icon':'icon-disable'" style="cursor: pointer;"></i>
+      </button>
+
+      <button style="border: none; background-color: transparent;" [disabled]="!item" 
+      (click)="openDialogWithTemplate(formInfo,formInfoView)">
+        <i class="fa-solid fa-info" matTooltip="Información" matTooltipPosition="below" style="cursor: pointer;"
+        [ngClass]="item?'icon':'icon-disable'"></i>
+      </button>
+
+      <i class="icon fa-regular fa-square-plus" (click)="openDialogWithTemplate(formCreate,formCreateView)" style="cursor: pointer;"
+      matTooltip="Agregar" matTooltipPosition="below"></i>
+      
+      <i class="icon fa-solid " style="cursor: pointer;" [ngClass]="setTypeViewIcon()" (click)="setTypeView()"></i>
+
     </div>
   </div>
 
   <div class="content">
-    <div class="container-grid-items" *ngIf="!typeViewIcon">
-      <div [ngClass]="setClassItems()">
-        <div class="row" style="height: 70vh; overflow-y: scroll;">
+    <div class="container-grid-items " *ngIf="!typeViewIcon">
+      <div  class="content-items-desactive">
+        <div class="row" style="height: 70vh; overflow-y: auto;">
           <ng-container *ngFor="let item of filteredItemData | paginate: { itemsPerPage: 8, currentPage: page }; let i = index">
             <div [ngClass]="getColSize(i)" class="mb-3">
               <ng-container *ngTemplateOutlet="itemViewGrid; context: { $implicit: item }"></ng-container>
@@ -27,7 +42,7 @@
           <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
         </div>
       </div>
-      <div class="content-form" *ngIf="valFormularioGrip">
+      <div class="content-form" *ngIf="false">
         <div class="content-btn">
           <button class="btn" (click)="openDialogWithTemplate(formInfo,formInfoView)" 
           style="
@@ -56,7 +71,7 @@
       [columns]="tableColumns" 
       [buttonShowInfo]="btnInfo"
       [buttonShowDelete]="btnDelete" 
-      (selectItemsCell)="valFormTablet()"
+      (selectItemsCell)="openDialogWithTemplate(formUpdate,formView)"
       (selectItemsCellInfo)="openDialogWithTemplate(formInfo,formInfoView)"
        ></app-table>
 
@@ -115,6 +130,14 @@
     <ng-container *ngTemplateOutlet="formInfoView; context: { $implicit: item }" ></ng-container>
   </div>
 </ng-template>
+
+
+<ng-template #formUpdate>
+  <div *ngIf="formView != null; else val" class="container-template">
+    <ng-container *ngTemplateOutlet="formView; context: { $implicit: item }"></ng-container>
+  </div>
+</ng-template>
+
 
 <ng-template #val>
   {{ viewFormNull() }}

@@ -9,7 +9,7 @@ export class DataGlobalService {
   $typeViewIcon = this.typeViewIcon.asObservable();
   
 
-  private itemView = new Subject<any>();
+  private itemView = new BehaviorSubject<any>(null);
   $itemView = this.itemView.asObservable();
 
   constructor() { }
@@ -20,6 +20,10 @@ export class DataGlobalService {
 
   setItemView(item:any){
     this.itemView.next(item);
+  }
+
+  getItemView(){
+    return this.$itemView.pipe()
   }
 
 

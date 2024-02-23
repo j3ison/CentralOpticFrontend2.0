@@ -35,9 +35,7 @@ export class TableComponent {
   //Comentario de Jurgen: Pongan la columna de Idcliente tambien
 
   @Input() set data(data: any) {
-
-    this.dataSource.data = data.reverse();
-    
+    this.dataSource.data = data;    
   }
 
   @Input() set columns(columns: TableColumn[]) {
@@ -47,7 +45,7 @@ export class TableComponent {
 
   }
 
-  item = null
+  item:any
   showInfo = false;
   showDelete = false;
 
@@ -75,12 +73,14 @@ export class TableComponent {
   }
 
   ngOnInit(): void {
-
+    // console.log(this.item)
     
 
   }
 
   ngAfterViewInit() {
+
+    // console.log(this.dataGlobalservice.getItemView())
     
     this.dataGlobalservice.$itemView.subscribe(item => {
       this.item = item;
@@ -89,6 +89,7 @@ export class TableComponent {
       }else{
         this.btnClickItemRow = true;
       }
+      this.cdr.detectChanges()
     })
     
     this.dataSource.paginator = this.paginator;
@@ -128,6 +129,7 @@ export class TableComponent {
   }
 
   getActiveClass(active: any): string {
+    // console.log(this.item)
     if(!this.item) return ''
     return active == this.item ? 'active' : '';
   }

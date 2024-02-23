@@ -6,12 +6,12 @@ import { TableColumn } from 'src/app/modules/table/model/table-column';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-inventory',
-   templateUrl: './inventory.component.html',
-   styleUrls: ['./inventory.component.css']
+  templateUrl: './inventory.component.html',
+  styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent {
 
-  tableColumnsProveedor:TableColumn[] = [
+  tableColumnsProveedor: TableColumn[] = [
     { label: 'Codigo', def: 'codProducto', dataKey: 'codProducto' },
     { label: 'Descripcion', def: 'descripcion', dataKey: 'descripcion' },
     { label: 'Tipo', def: 'tipoProducto', dataKey: 'tipoProducto' },
@@ -22,17 +22,17 @@ export class InventoryComponent {
     { label: 'Stock Maximo', def: 'stockMaximo', dataKey: 'stockMaximo' }
   ]
 
-  data$:Observable<any>[] = []
-  dataItems:any = null;
+  data$: Observable<any>[] = []
+  dataItems: any = null;
 
   @Output() eventClickItems = new EventEmitter<void>();
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private mydataservices: MyDataServices) {}
+  constructor(private fb: FormBuilder, private mydataservices: MyDataServices) { }
 
 
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.form = this.fb.group({
       cantidad: [0],
       codProducto: [''],
@@ -53,60 +53,30 @@ export class InventoryComponent {
     })
   }
 
- onSubmit() {
-    // if (this.form.valid) {
-    //   // The form is valid, so send it to the server
-    //   const data = {
-    //     cantidad: this.form.get('cantidad')?.value,
-    //     codProducto: this.form.get('codProducto')?.value,
-    //     descripcion: this.form.get('descripcion')?.value,
-    //     estado: this.form.get('estado')?.value,
-    //     precioCompra: this.form.get('precioCompra')?.value,
-    //     precioVenta: this.form.get('precioVenta')?.value,
-    //     stockMaximo: this.form.get('stockMaximo')?.value,
-    //     stockMinimo: this.form.get('stockMinimo')?.value,
-    //     tipoProducto: this.form.get('tipoProducto')?.value
-    //   };
-      
-
-      
-    //   this.mydataservices.updateData('producto', data, data.codProducto).then((success) => {
-    //     if (success) {
-    //       Swal.fire({
-    //         icon: 'success',
-    //         title: 'Exito',
-    //         text: 'Se ha ingresado el registro correctamente',
-    //       })
-    //     } else {
-    //       console.log(data)
-    //       Swal.fire({
-    //         icon: 'error',
-    //         title: 'Ups...',
-    //         text: 'Algo salió mal!',
-    //         footer: '<a href="">¿Por qué tengo este problema??</a>'
-    //       });
-    //       return;
-    //     }
-    //   });
-    // } else {
-    //   // The form is not valid, so show an error message
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Error!',
-    //     text: 'El formulario no es válido'
-    //   });
-    // }
-
+  onSubmit() {
     Swal.fire({
       icon: 'error',
       title: 'Ups...',
       text: 'Esta opcion aun esta en proceso de desarrollo'
     });
-    
+
   }
-  
-  onItemClick(data:any) {
+
+  onItemClick(data: any) {
     this.dataItems = data
+  }
+
+
+  imgItems(typeProducto: string) {
+    return typeProducto === "Reparaciones" ? 'https://img.freepik.com/premium-photo/midsection-woman-cleaning-sunglasses_1048944-13733713.jpg' :
+      typeProducto === "Acetatos" ? 'https://img.freepik.com/free-photo/front-view-modern-dark-sunglasses-white_140725-18263.jpg' :
+        typeProducto === "Marcos" ? 'https://img.freepik.com/premium-photo/different-colorful-glasses-kinds-showcase-optical-store_143092-3385.jpg' :
+        typeProducto === "Reajustes" ? 'https://img.freepik.com/premium-photo/fixing-eyeglasses-frame-optician-office_403156-725.jpg' :
+        typeProducto === "Accesorios" ? 'https://img.freepik.com/free-photo/front-view-modern-sunglasses-modern-grey-desk-isolated-vision-spectacles-elegance_140725-18277.jpg' :
+        typeProducto === "Monofocales" ? 'https://img.freepik.com/free-photo/pair-glasses-white-surface-with-blue-background_181624-21477.jpg' :
+        typeProducto === "Bifocales" ? 'https://img.freepik.com/free-photo/pair-glasses-white-surface-with-blue-background_181624-21477.jpg' :
+        typeProducto === "Progresivos" ? 'https://img.freepik.com/free-photo/pair-glasses-white-surface-with-blue-background_181624-21477.jpg' :
+          'https://img.freepik.com/free-photo/handsome-man-optics-shop_1157-21985.jpg'; /*Servicios*/ 
   }
 
 }

@@ -115,16 +115,16 @@ export class ViewDataComponent {
       this.item = item;
       if (item) {
         this.valFormularioGrip = true;
-        this.updateColSize(600);
+        // this.updateColSize(600);
 
-        if (this.typeViewIcon && this.valFormularioGrip) {
-          const opcional = document.querySelector('#formulario-table');
-          opcional?.scrollIntoView();
-        }
+        // if (this.typeViewIcon && this.valFormularioGrip) {
+        //   const opcional = document.querySelector('#formulario-table');
+        //   opcional?.scrollIntoView();
+        // }
       } else {
         this.valFomularioTable = false;
         this.valFormularioGrip = false;
-        this.updateColSize(document.body.clientWidth);
+        // this.updateColSize(document.body.clientWidth);
       }
     })
 
@@ -134,7 +134,7 @@ export class ViewDataComponent {
     this.searchService.text$.subscribe(search => {
       if (search && search.target && search.target instanceof HTMLInputElement) {
 
-        const lowerCaseFilterValue = search.target.value;
+        const lowerCaseFilterValue = search.target.value.toLowerCase();
 
         console.log(lowerCaseFilterValue)
         this.filteredItemData = this.itemData$.filter(item => {

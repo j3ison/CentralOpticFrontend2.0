@@ -43,15 +43,22 @@
       .icon {
         font-size: 22px;
         margin: 0 0.5rem;
+        color: #000;
         /* background-image: linear-gradient(to bottom, #170d3e, #2b3e4e, #170d3e);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent; */
       }
 
+      .icon-disable{
+        font-size: 22px;
+        margin: 0 0.5rem;
+        color: #29282895;
+      }
+
       .icon:hover {
-        box-shadow: 0 0 10px rgb(67, 192, 255);
-        background: rgb(128, 255, 252);
+        box-shadow: 0 0 10px #1b85ff;
+        background: #1b85ff67;
         border-radius: 0.2rem;
       }
 
