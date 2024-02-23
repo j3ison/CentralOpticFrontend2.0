@@ -75,6 +75,7 @@ export class AuthService {
           role: respuesta.role,
           token: respuesta.token,
           id: respuesta.id,
+          numEmpleado: respuesta.numEmpleado,
           password: ''
         }
         
