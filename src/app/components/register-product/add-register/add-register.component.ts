@@ -24,9 +24,10 @@ export class AddRegisterComponent {
   ngOnInit() {
     this.today = new Date();
     this.form = this.fb.group({
-      codigoProducto: [''],
-      descripcion: [''],
-      fechaAdquisicion: this.today.toISOString(),
+      codigoProducto: ['2000-01'],
+      nombreEmpresa: ['Dior Acetato'],
+      descripcion: ['Optica'],
+      fechaAdquisicion: ['2023-11-21T23:11:08.647'],
       costo: [0],
       cantidad: [0],
       estado: [true]
@@ -37,7 +38,7 @@ export class AddRegisterComponent {
     if (this.form.valid) {
       // The form is valid, so send it to the server
       const data = {
-        codigoProducto: this.form.get('codProducto')?.value,
+        codigoProducto: this.form.get('codigoProducto')?.value,
         descripcion: this.form.get('descripcion')?.value,
         nombreEmpresa: this.form.get('nombreEmpresa')?.value,
         fechaAdquisicion: this.form.get('fechaAdquisicion')?.value,
@@ -50,11 +51,11 @@ export class AddRegisterComponent {
         if (success) {
   
         } else {
+          console.log(data)
           Swal.fire({
             icon: 'error',
             title: 'Ups...',
             text: 'Algo salió mal!',
-            footer: '<a href="">¿Por qué tengo este problema??</a>'
           });
           return;
         }
