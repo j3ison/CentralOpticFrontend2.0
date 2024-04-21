@@ -166,6 +166,13 @@ export class InvoiceComponent {
       && option.estadoFactura != 'Cancelado');
   }
 
+  // private _filterStatusInvoice(value: string): any[] {
+  //   const filterValue = value.toLowerCase();
+  //   return this.listStatusInvoice.filter(option => option.estadoFactura.toLowerCase().includes(filterValue)
+  //     && option.estadoFactura != 'Anulado'
+  //     && option.estadoFactura != 'Cancelado');
+  // }
+
   private _filterStatusInvoiceUpdate(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.listStatusInvoice.filter(option => option.estadoFactura.toLowerCase().includes(filterValue));
@@ -184,7 +191,7 @@ export class InvoiceComponent {
   ngOnInit(): void {
 
     this.mydataservices.getData("factura").subscribe((respuesta: any) => {
-      console.log(respuesta.map((obj: any) => this.procesarDatosNulos(obj)));
+      // console.log(respuesta.map((obj: any) => this.procesarDatosNulos(obj)));
       this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
       this.listInvoice = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
       this.data$ = this.data$.reverse()
@@ -223,7 +230,7 @@ export class InvoiceComponent {
     this.mydataservices.getData("producto").subscribe((respuesta: any) => {
       // console.log(respuesta)
       this.listProducto = respuesta
-      this.listProductoFilter = this.listProducto.filter(obj => obj.cantidad > 0 && obj.estado == true)
+      this.listProductoFilter = this.listProducto.filter(obj => obj.estado == true)
     }, (error) => {
       console.log(error)
     })
@@ -239,7 +246,7 @@ export class InvoiceComponent {
       startWith(''),
       map(value => this._filterStatusInvoice(value || '')),
     );
-    this.listStatusInvoiceFilterUpdate = (this.formCreateItems.get('estadoFactura') as FormControl).valueChanges.pipe(
+    this.listStatusInvoiceFilterUpdate = (this.formDataUpdate.get('estadoFactura') as FormControl).valueChanges.pipe(
       startWith(''),
       map(value => this._filterStatusInvoiceUpdate(value || '')),
     );
@@ -260,10 +267,15 @@ export class InvoiceComponent {
 
     this.dataGlobalservice.$itemView.subscribe(item => {
       this.itemClick = item
+      if(item){
+        this.itemStatusInvoice = item.estado_Factura
+      }
     })
 
 
-  }
+  } 
+
+  itemStatusInvoice = ''
 
 
 
@@ -319,6 +331,22 @@ export class InvoiceComponent {
       `,
       showCloseButton: true,
 
+      focusConfirm: false,
+      confirmButtonText: `
+      <i class="fa-solid fa-person-digging"></i> OK!
+      `,
+      confirmButtonAriaLabel: "Thumbs up, great!",
+      imageWidth: 120,
+    });
+  }
+
+  viewUpdateCancel() {
+    Swal.fire({
+      title: "La factura no se puede actualizar",
+      html: `
+       <img src="https://cdn-icons-png.flaticon.com/512/11046/11046410.png" alt="Error" style="width: 100px; height: 100px;">
+      `,
+      showCloseButton: true,
       focusConfirm: false,
       confirmButtonText: `
       <i class="fa-solid fa-person-digging"></i> OK!
@@ -592,11 +620,19 @@ export class InvoiceComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         const estado = {
-          "estado_Factura": data.estado_Factura
+          "estado_Factura": this.itemStatusInvoice
         }
 
         this.mydataservices.updateData('factura', estado, data.numFactura).then((success) => {
           if (success) {
+            this.mydataservices.getData("factura").subscribe((respuesta: any) => {
+              console.log(respuesta.map((obj: any) => this.procesarDatosNulos(obj)));
+              this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+              this.listInvoice = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+            }, (error) => {
+              console.log(error)
+            })
+
             Swal.fire({
               icon: 'success',
               title: 'Exito',
@@ -681,6 +717,17 @@ export class InvoiceComponent {
 
   formGetDataProduct(fr: string) {
     return this.formDataProduct.get(fr) as FormControl;
+  }
+
+
+  formDataUpdate: FormGroup = this.formBuilder.group(
+    {
+      'estadoFactura': ['', Validators.required],
+    }
+  )
+
+  formGetDataUpdate(fr: string) {
+    return this.formDataUpdate.get(fr) as FormControl;
   }
 
   itemClick: any = null
