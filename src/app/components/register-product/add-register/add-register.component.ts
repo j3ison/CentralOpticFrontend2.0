@@ -24,10 +24,9 @@ export class AddRegisterComponent {
   ngOnInit() {
     this.today = new Date();
     this.form = this.fb.group({
-      codProducto: ['2000-01'],
-      nombreEmpresa: ['Dior Acetato'],
-      descripcion: ['Optica'],
-      fechaAdquisicion: ['2023-11-21T23:11:08.647'],
+      codProducto: [''],
+      descripcion: [''],
+      fechaAdquisicion: this.today.toISOString(),
       nombreEmpresa: [''],
       costo: [0],
       cantidad: [0],
@@ -59,7 +58,6 @@ export class AddRegisterComponent {
 
           console.log(data);
 
-          console.log(data)
           Swal.fire({
             icon: 'error',
             title: 'Ups...',
