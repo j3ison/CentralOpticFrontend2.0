@@ -1,28 +1,63 @@
-
-.container-card{
+.container-login{
     width: calc(100%);
     height: calc(100%);
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    padding: 0;
+    margin: 0;
+
+    .content-login {
+        width: calc(100%);
+        height: calc(100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container-right {
+        height: calc(100%);
+        background: url('../../../assets/images/login-bg.png');
+        background-size: cover;
+        background-position: center;
+        border-radius: 80px 0 0 80px;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+.content-card::before{
+    background: inherit;
+    backdrop-filter: blur(10px);
+}
+
+.container-card {
+    /* width: calc(100%);
+    height: calc(100%); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .content-card {
     max-width: 5;
-    border-radius: 0.5rem;
-    box-shadow: 0px 0px 5px 0 rgb(84, 130, 170);
+    border-radius: 1rem;
+    box-shadow: 0px 0px 5px 0 rgb(84, 130, 170); 
 }
 
-h1{
+h1 {
     font-size: 35px;
 }
-  
+
 .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
 }
 
-.content-header-card{
+.content-header-card {
     width: calc(100%);
     height: calc(100%);
     display: flex;
@@ -31,15 +66,15 @@ h1{
     padding-bottom: 0.3rem;
 }
 
-.header{
+.header {
     width: calc(100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;   
+    align-items: center;
 }
 
-.title{
+.title {
     background-image: linear-gradient(to bottom, #35127E, #2e91c3);
     /* color: #35127E;     */
     -webkit-background-clip: text;
@@ -50,17 +85,17 @@ h1{
 
 
 
-.content-form{
+.content-form {
     width: calc(100%);
-    padding-left: calc(5%) ;
+    padding-left: calc(5%);
     padding-right: calc(5%);
 }
 
-.input{
+.input {
     width: calc(100%);
 }
 
-.btn{
+.content-btn {
     width: calc(100%);
     display: flex;
     padding-right: -0.5rem;
@@ -68,24 +103,104 @@ h1{
     align-items: flex-end;
 }
 
+.btn {
+    background-color: #6534D9;
+    /* Color de fondo */
+    color: white;
+    /* Color del texto */
+    border: none;
+    /* Sin borde */
+    padding: 10px 20px;
+    /* Relleno interno */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    /* Bordes redondeados */
+    transition: background-color 0.3s ease;
+    /* Transición de color de fondo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra */
+}
 
-.forgot-password{
+.btn:hover {
+    background-color: #4a269e;
+    /* Cambia el color de fondo al pasar el mouse */
+}
+
+.forgot-password {
     padding-left: 0px;
 }
 
-.email-input{
+.email-input {
     padding-top: 10px;
 }
 
-.aLink{
-    float:right;
-    padding-right:60px;
-    text-decoration:none;
+.aLink {
+    float: right;
+    padding-right: 60px;
+    text-decoration: none;
 }
 
-.main-container{
+.main-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+
+.img-small {
+    max-width: 50px;
+    /* max-height: 200px; */
+}
+
+.example-card {
+    border-radius: 1rem;
+    max-width: 400px;
+}
+
+.example-header-image {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/4114/4114739.png');
+    background-size: cover;
+}
+
+.cancel-img{
+    font-size: 28px;
+    margin-top: 0.4rem;
+}
+
+.cancel-img:hover{
+    color: red;
+}
+
+.emoji {
+    width: 250px;
+    padding: 2rem;
+}
+
+
+.contentt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-card {
+    width: calc(100%);
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-template {
+    width: calc(100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

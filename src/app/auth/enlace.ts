@@ -1,0 +1,1 @@
+export const link: string = 'https://localhost:7210/centralopticapi/'; // Poner http://192.168.1.9:8080/centralopticapi/ para la produccion

@@ -3,6 +3,70 @@
     margin-bottom: 8px;
 }
 
+.card-product{
+    max-width: 400px;
+    margin-bottom: 8px;
+    border-radius: 0.5rem;
+    .container-card-product{
+        display: flex;
+        flex-direction: column;
+        width: calc(100%);
+        .img-card-product{
+            width: auto;
+            border-radius: 0.5rem 0.5rem  0 0;
+            border: 1px solid #1978d06d;
+        }
+
+        .content-body-card-product{
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            /* align-items: center; */
+            
+
+            .text-name-card-product{
+                color: #000000;
+                font-family: 'Crimson Text', serif;
+                font-weight: 800;
+                font-size: 17px;
+                padding: 0 8px;
+                text-align: start;
+                line-height: 1;
+                margin: 0;
+            }
+
+            .text-price-card-product{
+                color: #5f9300;
+                height: calc(100%);
+                font-family: 'Archivo Narrow', sans-serif;
+                font-weight: 800;
+                font-size: 18px;
+                padding: 0 10px;
+                /* text-align: center; */
+                margin: 0;
+            }
+        }
+
+        .content-footer-card-product{
+            width: calc(100%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: end;
+            margin-top: 0.2rem;
+
+            .text-type-card-product{
+                margin: 0;
+                margin-right: 1rem;
+                color: #0000006b;
+                font-family: 'Archivo Narrow', serif;
+                font-weight: 800;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
 
 .container-form {
     width: calc(70%);

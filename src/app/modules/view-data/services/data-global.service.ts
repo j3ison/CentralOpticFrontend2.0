@@ -7,8 +7,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class DataGlobalService {
   private typeViewIcon = new BehaviorSubject<boolean>(true);
   $typeViewIcon = this.typeViewIcon.asObservable();
+  
 
-  private itemView = new Subject<any>();
+  private itemView = new BehaviorSubject<any>(null);
   $itemView = this.itemView.asObservable();
 
   constructor() { }
@@ -20,4 +21,11 @@ export class DataGlobalService {
   setItemView(item:any){
     this.itemView.next(item);
   }
+
+  getItemView(){
+    return this.$itemView.pipe()
+  }
+
+
+
 }

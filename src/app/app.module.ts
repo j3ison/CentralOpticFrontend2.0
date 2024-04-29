@@ -11,7 +11,7 @@ import { ComponentsModule } from './components/components.module';
 import { DialogModule } from '@angular/cdk/dialog';
 import { InventoryComponent } from './components/product/inventory/inventory.component';
 import { FormsModule } from '@angular/forms';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
     declarations: [
         AppComponent
@@ -27,7 +27,8 @@ import { FormsModule } from '@angular/forms';
         OverlayModule,
         ModulesModule,
         ComponentsModule,
-        FormsModule
+        FormsModule,
+        NgxPaginationModule
     ]
 })
 export class AppModule { }

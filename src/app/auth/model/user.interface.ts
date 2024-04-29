@@ -11,6 +11,7 @@ export interface UserWithToken extends User {
 
 export interface LoginUser {
   id: number;
+  numEmpleado: number;
   token: string;
   username:string;
   password:string;

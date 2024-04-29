@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DataGlobalService } from '../view-data/services/data-global.service';
+import { SearchTableService } from './service/search-table.service';
 // import * as XLSX from 'xlsx';
 
 @Component({
@@ -34,9 +35,7 @@ export class TableComponent {
   //Comentario de Jurgen: Pongan la columna de Idcliente tambien
 
   @Input() set data(data: any) {
-
-    this.dataSource.data = data.reverse();
-    
+    this.dataSource.data = data;    
   }
 
   @Input() set columns(columns: TableColumn[]) {
@@ -46,7 +45,7 @@ export class TableComponent {
 
   }
 
-  item = null
+  item:any
   showInfo = false;
   showDelete = false;
 
@@ -66,7 +65,7 @@ export class TableComponent {
   @Output() selectItemsCellDelete: EventEmitter<any>;
   @Output() selectItemsCellInfo: EventEmitter<any>;
 
-  constructor( private cdr: ChangeDetectorRef, private dataGlobalservice: DataGlobalService) {
+  constructor( private cdr: ChangeDetectorRef, private dataGlobalservice: DataGlobalService, private search:SearchTableService) {
 
     this.selectItemsCell = new EventEmitter();
     this.selectItemsCellDelete = new EventEmitter();
@@ -74,7 +73,15 @@ export class TableComponent {
   }
 
   ngOnInit(): void {
+    // console.log(this.item)
+    
 
+  }
+
+  ngAfterViewInit() {
+
+    // console.log(this.dataGlobalservice.getItemView())
+    
     this.dataGlobalservice.$itemView.subscribe(item => {
       this.item = item;
       if(item){
@@ -82,12 +89,17 @@ export class TableComponent {
       }else{
         this.btnClickItemRow = true;
       }
+      this.cdr.detectChanges()
+    })
+    
+    this.dataSource.paginator = this.paginator;
+
+    
+    this.search.text$.subscribe(text => {
+      // console.log(text)
+      this.applyFilter(text)
     })
 
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
 
@@ -99,12 +111,25 @@ export class TableComponent {
     return false;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+
+  applyFilter(event:Event){
+
+    if (event && event.target) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+  
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
   }
 
   getActiveClass(active: any): string {
+    // console.log(this.item)
     if(!this.item) return ''
     return active == this.item ? 'active' : '';
   }

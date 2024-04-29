@@ -105,6 +105,81 @@
     }
 }
 
+.card-invoice-active{
+    border: 2px solid #1b85ff;
+    
+}
+
+.card-invoice{
+    max-width: 400px;
+    margin-bottom: 8px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    .container-card-invoice{
+        display: flex;
+        flex-direction: column;
+        width: calc(100%);
+        
+        .content-header-card-invoice{
+            width: calc(100%);
+            height: 40px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(60, 60, 60, 0.4);
+            border-radius: 0.5rem 0.5rem 0 0;
+            border-bottom: 1px solid #000000;
+            
+
+            .content-header-icon{
+                width: 34px;
+                height: 34px;
+                margin: 3px;
+                margin-left: 1rem;
+            }
+
+            .content-header-title{
+                margin: 0;
+                margin-right: 1rem;
+                text-align: center;
+                font-family: 'Archivo Narrow', sans-serif;
+                font-weight: 800;
+                font-size: 20px;
+                color: #fff;
+            }
+        }
+
+        .content-body-card-invoice{
+            width: calc(100%);
+            margin: 0.5rem 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            .text-card-title{
+                margin: 0 0 -0.3rem;
+                color: #000000;
+                font-family: 'Crimson Text', serif;
+                font-size: 20px;
+                /* font-family: 'Archivo Narrow', sans-serif; */
+            }
+
+            .text-card-contet{
+                margin: 0 0 0.5rem;
+                color: #343434;
+                font-family: 'lato', serif;
+                font-size: 14px;
+                font-weight: 600;
+            }
+        }
+
+    }
+}
+
 .container-info {
     width: calc(100%);
     display: flex;
@@ -177,3 +252,334 @@
         }
     }
 }
+
+
+/* code de stepper */
+.mat-stepper-horizontal {
+    width: 1200;
+    /* margin-top: 8px; */
+}
+
+.mat-mdc-form-field {
+    margin-top: 16px;
+}
+
+/* ::ng-deep .mdc-dialog__container{
+
+} */
+
+::ng-deep .mat-stepper-horizontal{
+    width: 1200px;
+    max-height: 800px;
+    overflow-y: auto;
+    border-radius: 0 0 15px 15px;
+}
+
+::ng-deep .mat-horizontal-content-container {
+    padding: 24 !important;
+    /* background-color: rgb(241, 241, 241); */
+    border-radius: 0 0 15px 15px;
+}
+
+
+::ng-deep .mat-step-text-label{
+    font-family: 'Crimson Text', serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+::ng-deep .mat-horizontal-stepper-header-container {
+    /* background: rgb(255, 198, 198); */
+    border-bottom: 1px solid #1b85ff;
+    padding: 20px 8px 20px 8px;
+}
+
+::ng-deep .mat-stepper-horizontal-line {
+
+    border-top-width: 2px !important;
+    border-top-style: solid !important;
+    border-top-color: #1b85ff !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after{
+    border-top-color: rgba(255, 0, 0, 0) !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before{
+    border-top-color: rgba(255, 0, 0, 0) !important;
+    
+}
+/* 
+::ng-deep .ng-star-inserted{
+    border-top-color: rgb(255, 0, 0);
+    border-top-style: dashed !important;
+    border-top-width: 4px solid !important;
+} */
+
+::ng-deep .mat-primary.mat-step-header {
+    /* background-color: rgb(255, 255, 255); */
+    border-radius: 10px;
+    border: 1px solid rgba(155, 175, 194, 0.4);
+    height: 50px;
+}
+
+
+::ng-deep .mat-primary.mat-step-header:hover:not([aria-disabled]),
+::ng-deep .mat-primary.mat-step-header:hover([aria-disabled]) {
+    background-color: rgba(154, 191, 226, 0.74);
+    /* border: 1px solid #1b85ff; */
+}
+
+::ng-deep .mat-primary.mat-step-header.cdk-keyboard-focused,
+::ng-deep .mat-primary.mat-step-header.cdk-program-focused {
+    background-color: rgba(27, 133, 255, 0.25);
+    border: 1px solid rgba(154, 191, 226, 0.336);
+}
+
+
+::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header {
+    &[ng-reflect-selected="false"].mat-step-header {
+        /* background-color: rgba(154, 191, 226, 0.336); */
+        background-color: rgb(255, 255, 255);
+    }
+}
+
+::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header {
+    &[ng-reflect-selected="true"].mat-step-header {
+        background-color: rgba(154, 191, 226, 0.336);
+        border: 1px solid #1b85ff !important;
+        backdrop-filter: blur(5px);
+    }
+}
+
+::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header:has(.mat-step-icon-state-edit) {
+    background-color: rgba(0, 128, 0, 0.267) !important;
+    border: 1px solid green !important;
+    backdrop-filter: blur(5px);
+}
+
+::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header:has(.mat-step-icon-state-done) {
+    background-color: rgba(0, 128, 0, 0.267) !important;
+    border: 1px solid green !important;
+    /* backdrop-filter: blur(5px); */
+}
+
+/* change stepper step box label style*/
+::ng-deep .mat-prymari.mat-step-header.mat-step-label {
+    font-family: 'Crimson Text', serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* label color when tab is selected */
+::ng-deep .mat-primary.mat-step-header .mat-step-label-selected {
+    font-family: 'Crimson Text', serif;
+    color: #0665d2 !important;
+}
+
+/* change stepper step-box active text when tab is done */
+::ng-deep .mat-primary.mat-step-header .mat-step-label.mat-step-label-active {
+    font-family: 'Crimson Text', serif;
+    color: #39a805;
+    font-weight: 600 !important;
+}
+
+/* change stepper step icons circle */
+::ng-deep .mat-primary.mat-step-header .mat-step-icon {
+    background-color: #bdbdbd;
+    color: #fff;
+    transition: all 0.5s ease-in-out;
+    margin: auto 7px auto 0;
+    outline: 2px solid #bdbdbd;
+    outline-offset: 1px;
+}
+
+/* change stepper step selected icons circle*/
+
+::ng-deep .mat-primary.mat-step-header .mat-step-icon-selected {
+    background-color: #1b85ff;
+    color: #fff;
+    outline: 2px solid #1b85ff;
+    outline-offset: 2px;
+}
+
+
+/* change stapper step edit icon circle image (edit mode)*/
+::ng-deep .mat-primary.mat-step-header .mat-step-icon-state-edit {
+    background-color: #39a805;
+    color: #fff;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_check.svg/768px-White_check.svg.png");
+    background-size: 13px;
+    background-position-y: 5px;
+    background-position-x: 5px;
+    transition: all 0.5s ease-in-out;
+    transform: rotate(20deg);
+    background-repeat: no-repeat;
+    outline: 2px solid #39a805;
+    outline-offset: 2px;
+}
+
+/* remove Bydefault icon in step */
+::ng-deep .mat-step-icon .mat-icon {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 4px;
+    background-color: #39a805;
+    color: #fff;
+    outline: 2px solid #39a805;
+    outline-offset: 2px;
+    border-radius: 50%;
+    /* transform: rotate(20deg); */
+    /* margin: auto 7px auto 0; */
+}
+
+
+::ng-deep .mat-primary.mat-step-header .mat-step-icon-state-done {
+    background-color: #39a805;
+    color: #fff;
+    outline: 2px solid #39a805;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_check.svg/768px-White_check.svg.png");
+    background-size: 13px;
+    background-position-y: 5px;
+    background-position-x: 5px;
+    transition: all 0.5s ease-in-out;
+    transform: rotate(20deg);
+    background-repeat: no-repeat;
+    /* outline-offset: 2px; */
+}
+
+::ng-deep .step-content-btn-first{
+    width: calc(100%);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+    /* step-btn-next{
+        font-family: 'lato', sans-serif;
+        color: #39a805;
+    } */
+} 
+
+
+
+/* ::ng-deep .mat-ripple .mat-mdc-button-ripple{
+    color: #fff;
+    background: rgb(25, 120, 208);
+    border-color: rgb(0, 174, 240);
+} */
+
+::ng-deep .mat-mdc-button{
+    /* color: #39a805; */
+    font-family: 'lato', sans-serif; 
+    
+    
+    border-radius: 5rem;
+    /* padding: 3px 8px !important; */
+} 
+
+.step-btn-next{
+    background: rgb(25, 120, 208) !important;
+    border-color: rgb(0, 174, 240) !important;
+    color: #fff !important;
+    padding: 8px 17px;
+    border-radius: 10px;
+    margin-left: 2rem ;
+    /* background: rgb(208, 25, 25) !important; */
+}
+
+.step-btn-back{
+    padding: 8px 17px;
+    border-radius: 10px;
+    color: #fff !important;
+    background: rgb(187, 45, 59) !important;
+}
+
+::ng-deep .mdc-button__label{
+    /* color: #39a805; */
+    /* color: #fff; */
+    
+    font-size: 16px;
+    font-weight: 600;
+    margin: 5px !important;
+    
+
+    .icon-step{
+        /* font-weight: 400; */
+        font-size: 17px;
+    }
+}
+
+
+.container-form-step{
+    width: calc(100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* min-height: 60vh; */
+    max-height: 80vh;
+    overflow-y: auto;
+    /* background: #1b85ff; */
+    margin: 10px 0 10px 0;
+
+    .content-form-item{
+        width: calc(100%);
+            display: flex;
+            flex-direction: row;
+            font-family: 'Lato';
+
+            .form {
+                width: calc(100%);
+                display: flex;
+                flex-direction: column;
+                margin: 1rem;
+
+                .title {
+                    color: black;
+                    font-size: 18px;
+                    margin: 0 0 0.4rem 0;
+                    font-family: 'Crimson Text', serif; 
+                    font-weight: 900;
+                }
+
+                .form-data {
+                    border: none;
+                    height: 2.375rem;
+                    padding-left: 1.25rem;
+                    padding-right: 1.25rem;
+                    font-family: 'Crimson Text', serif;
+                    background-color: #f0f0f0;
+                    box-shadow: none;
+                    border-radius: 0.4rem 0.6rem 0.6rem 0.4rem;
+                    outline: 0;
+                }
+
+                .fa-solid {
+                    width: 1rem;
+                    position: relative;
+                    font-size: 1rem;
+                    line-height: 2.375rem;
+                    left: calc(100% - 2rem);
+                    top: -2.39rem;
+                    color: #000000;
+                    margin-bottom: -2rem;
+                }
+
+                .form-field-date {
+                    margin-top: 1rem;
+                    height: 4.5rem;
+                }
+
+            }
+
+            .form-text {
+                width: 100%;
+            }
+    }
+    
+}
+
+
+
+

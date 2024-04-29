@@ -1,12 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Lato", sans-serif; }
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Edu+TAS+Beginner:wght@400;600;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+/* html, body { height: 100%; } */
+/* body {
+    margin: 0;
+    font-family: Roboto, "Lato", sans-serif;
+} */
 
-.reduced-height{
+/* .reduced-height {
     height: calc(100% - 92px);
 }
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+} */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+boby{
+    position: relative;
+    background: rgb(245, 247, 251);
+
+}
+
