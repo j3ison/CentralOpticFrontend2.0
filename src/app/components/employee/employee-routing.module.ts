@@ -4,6 +4,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { UserComponent } from './user/user.component';
 import { isLoggedInGuard } from 'src/app/auth/guards/is-logged-in.guard';
 import { hasRole } from 'src/app/auth/guards/has-role.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,12 @@ const routes: Routes = [
     component:UserComponent,
     canMatch: [isLoggedInGuard],
     canActivate: [hasRole([ 'Super Administrador'])],
+    canLoad: [hasRole([ 'Super Administrador'])]
+  },{
+    path :'profile',
+    component:ProfileComponent,
+    canMatch: [isLoggedInGuard],
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Venta','Optometrista'])],
     canLoad: [hasRole([ 'Super Administrador'])]
   }
 ];

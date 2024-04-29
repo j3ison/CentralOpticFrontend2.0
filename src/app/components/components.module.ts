@@ -20,8 +20,7 @@ import { PayModule } from './pay/pay.module';
 
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     LoginModule, 
@@ -38,7 +37,18 @@ import { PayModule } from './pay/pay.module';
     RegisterProductModule,
     PayModule
   ],
-  exports: [DashboardModule, LoginModule, ClientModule, UserModule, InvoiceModule, ProductModule, InventoryModule, AddModule, ListModule, AddRegisterModule, RegisterProductModule,PayModule],
+  exports: [DashboardModule, 
+    LoginModule, 
+    ClientModule, 
+    UserModule, 
+    InvoiceModule, 
+    ProductModule, 
+    InventoryModule, 
+    AddModule, 
+    ListModule, 
+    AddRegisterModule, 
+    RegisterProductModule,
+    PayModule],
   providers: [DialogService],
 })
 export class ComponentsModule { }

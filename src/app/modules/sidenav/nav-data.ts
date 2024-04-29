@@ -44,7 +44,13 @@ export const navbarData: INavbarData[] = [
                 // ],
                 role: ['Super Administrador']
 
-            }
+            },
+            // {
+            //     routeLink: 'employee/employee',
+            //     icon: 'fa-solid fa-id-badge',
+            //     label: 'Perfil',
+            //     role: ['Super Administrador','Administrador','Venta','Optometrista']
+            // }
         ],
         role: ['Super Administrador']
     }, {

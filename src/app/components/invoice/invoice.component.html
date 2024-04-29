@@ -1,12 +1,95 @@
-<app-view-data [ItemViewGrid]="item" [FormView]="formUpdate" [ItemData]="data$" [FormInfoView]="itemInfo"
+<app-view-data [ItemViewGrid]="item" [FormView]="itemUpdate" [ItemData]="data$" [FormInfoView]="itemInfo"
     [columns]="tableColumnsFactura" [clickItems]="dataItems" [FormCreateView]="formCreate"></app-view-data>
+
+
+<ng-template #itemUpdate let-data>
+    <mat-card class="card-invoice-update"
+        *ngIf="data.estado_Factura !=='Cancelado' && data.estado_Factura !=='Anulado' ; else valUpdate">
+        <div class="container-card-invoice-update">
+            <div class="content-header-card-invoice-update">
+                <h1 class="content-header-title"> Actualización del Estado de la factura : 1 </h1>
+            </div>
+            <div class="content-body-card-invoice-update">
+                <div class="content-container-text">
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Emisor
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.emisor}}</span>
+                    </div>
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Cliente
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.cliente}}</span>
+                    </div>
+                </div>
+                <div class="content-container-text">
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Fecha
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.fecha_Emision}}</span>
+                    </div>
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Descripción Crediticia
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.descripcion_Credito}}</span>
+                    </div>
+                </div>
+                <form class="form-update" [formGroup]="formDataUpdate">
+                    <div class="form">
+
+                        <label class="title">
+                            <strong>
+                                Estado de Factura*
+                            </strong>
+                        </label>
+                        <input class="form-data" type="text" formControlName="estadoFactura"
+                            [(ngModel)]="itemStatusInvoice" [matAutocomplete]="auto">
+                        <i class="fa-solid fa-chevron-down"></i>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of listStatusInvoiceFilterUpdate | async"
+                                [value]="option.estadoFactura">
+                                <img mat-card-sm-image [src]="imgItems(option.estadoFactura)" style="width: 24px;
+                                        height: 24px;
+                                        margin: 0 2rem 0 1rem;">
+                                {{option.estadoFactura}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div class="alert 1alert-danger mt-1"
+                            [hidden]="formGetDataUpdate('estadoFactura').valid || (formGetDataUpdate('estadoFactura').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+
+                    <div style="width: calc(100%); display: flex; justify-content: flex-end; margin: 1rem 0; ">
+                        <button class="btn btn-primary" #btnEnviar (click)="saveDataConfirmeUpdate(data)">
+                            Actualizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </mat-card>
+</ng-template>
+
 
 
 
 
 <ng-template #item let-data>
-
-    <mat-card class="card-invoice" [ngClass]="itemClick?.numFactura===data.numFactura?'card-invoice-active':''" (click)="onItemClickActive(data)" >
+    <mat-card class="card-invoice" [ngClass]="itemClick?.numFactura===data.numFactura?'card-invoice-active':''"
+        (click)="onItemClickActive(data)">
         <div class="container-card-invoice">
             <div class="content-header-card-invoice">
                 <!-- imagen y id de la factura -->
@@ -19,7 +102,7 @@
                         Tipo de Factura:
                     </strong>
                 </h2>
-                <span class="text-card-contet">{{data.estado_Factura}}</span>
+                <span class="text-card-contet">{{data.tipo_Factura}}</span>
 
                 <h2 class="text-card-title">
                     <strong>
@@ -37,18 +120,22 @@
 
                 <h2 class="text-card-title">
                     <strong>
-                        Descripcion Crediticia:
+                        Descripción Crediticia:
                     </strong>
                 </h2>
                 <span class="text-card-contet">{{data.descripcion_Credito}}</span>
 
-                <div style="display: flex; justify-content: flex-end; align-items: end; width: calc(100%); margin-right: 5px;">
-                    <span class="text-card-contet" style="color: #ABA9AA; padding-right: 5px;">{{data.fecha_Emision}}</span>
+                <div
+                    style="display: flex; justify-content: flex-end; align-items: end; width: calc(100%); margin-right: 5px;">
+                    <span class="text-card-contet"
+                        style="color: #ABA9AA; padding-right: 5px;">{{data.fecha_Emision}}</span>
                 </div>
             </div>
         </div>
     </mat-card>
 </ng-template>
+
+
 
 
 
@@ -671,6 +758,27 @@
     </div>
 </ng-template>
 
+<ng-template #valUpdate>
+    <div class="container-card">
+        <mat-card class="example-card">
+            <mat-card-header style="border-bottom: 1px solid #000000;">
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Asistente Virtual</mat-card-title>
+                <mat-card-subtitle>Engineer Dog</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="contentt">
+                <img class="emoji" mat-card-image src="	https://cdn-icons-png.flaticon.com/512/7933/7933285.png"
+                    alt="Error">
+                <h1 style="font-family: 'Crimson Text', serif; text-align: center;" >
+                    <strong>
+                        Lo siento, la factura no puede ser actualizada en este momento.
+                    </strong>
+                </h1>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-template>
+
 <!-- 
 <ng-template #item let-data>
     <mat-card class="example-card" (click)="onItemClick(data)">
@@ -761,10 +869,12 @@
                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                 <mat-option *ngFor="let option of listStatusInvoiceFilter | async"
                                     [value]="option.estadoFactura" style="font-family: 'Crimson Text', serif;">
+                                    <img mat-card-sm-image [src]="imgItems(option.estadoFactura)" style="width: 24px;
+                                    height: 24px;
+                                    margin: 0 2rem 0 1rem;">
                                     {{option.estadoFactura}}
                                 </mat-option>
                             </mat-autocomplete>
-                            <!-- <i class="fa-solid fa-address-card"></i> -->
                             <div class="alert 1alert-danger mt-1"
                                 [hidden]="formGetInfoInvoice('estadoFactura').valid || (formGetInfoInvoice('estadoFactura').pristine)">
                                 El campo no puede estar Vacio.

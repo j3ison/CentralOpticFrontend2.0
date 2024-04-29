@@ -15,7 +15,7 @@
                     </div>
                 </div> -->
 
-                <div class="head-notification"*akoShowForRoles="roleNotification" matTooltip="Notificaciones" 
+                <div class="head-notification" *akoShowForRoles="roleNotification" matTooltip="Notificaciones" 
                 [cdkMenuTriggerFor]="notification" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()">
                     <i class="icon-notification fa-regular fa-bell" ></i>
                     <div *ngIf="notificationItems" class="circle-indicador pulse">
