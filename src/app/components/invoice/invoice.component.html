@@ -84,9 +84,6 @@
 </ng-template>
 
 
-
-
-
 <ng-template #item let-data>
     <mat-card class="card-invoice" [ngClass]="itemClick?.numFactura===data.numFactura?'card-invoice-active':''"
         (click)="onItemClickActive(data)">

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ProviderModule} from './provider/provider.module';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
@@ -16,11 +17,13 @@ import { ListModule } from './register-product/list/list.module';
 import { AddRegisterModule } from './register-product/add-register/add-register.module';
 import { RegisterProductModule } from './register-product/register-product.module';
 import { PayModule } from './pay/pay.module';
+import { LabModule } from './lab/lab.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     LoginModule, 
@@ -35,7 +38,9 @@ import { PayModule } from './pay/pay.module';
     ListModule, 
     AddRegisterModule, 
     RegisterProductModule,
-    PayModule
+    PayModule,
+    ProviderModule,
+    LabModule
   ],
   exports: [DashboardModule, 
     LoginModule, 
@@ -48,7 +53,9 @@ import { PayModule } from './pay/pay.module';
     ListModule, 
     AddRegisterModule, 
     RegisterProductModule,
-    PayModule],
+    PayModule,ProviderModule,
+    LabModule
+  ],
   providers: [DialogService],
 })
 export class ComponentsModule { }

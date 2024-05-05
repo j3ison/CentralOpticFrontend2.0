@@ -1,4 +1,4 @@
-<app-view-data [ItemData]="data$" [columns]="tableColumnsCliente" [ItemViewGrid]="item"
+<app-view-data [ItemData]="data$" [FormView]="formUpdateClient" [columns]="tableColumnsCliente" [ItemViewGrid]="item"
     [FormCreateView]="formcreate"></app-view-data>
 
 
@@ -71,8 +71,6 @@
 </ng-template>
 
 
-
-
 <ng-template #formcreate>
     <div class="container-form-create">
         <form class="content-form" [formGroup]="formCreateClient">
@@ -86,27 +84,9 @@
                 </div>
     
                 <div class="form">
-                    <label class="title">Estado de Factura*</label>
-                    <input class="form-data" type="text" formControlName="AssociatedCompany" [matAutocomplete]="auto" [(ngModel)]="itemCreate.empresa_Asociada">
-                    <i class="form-icon fa-solid fa-chevron-down"></i>
-    
-                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option.nombre"
-                            style="font-family: 'Crimson Text', serif; color: black;">
-                            {{option.nombre}}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <div class="alert alert-danger mt-1"
-                        [hidden]="formGetCreateClient('AssociatedCompany').valid || (formGetCreateClient('AssociatedCompany').pristine)">
-                        El campo no puede estar Vacio.
-                    </div>
-                </div>
-    
-                <div class="form">
                     <mat-form-field class="form-field-date">
                         <mat-label class="title">Fecha de nacimiento</mat-label>
                         <input matInput [matDatepicker]="datepicker" formControlName="birthday" [(ngModel)]="itemCreate.fechaNac">
-    
                         <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                         <mat-datepicker #datepicker>
                         </mat-datepicker>
@@ -188,175 +168,85 @@
 </ng-template>
 
 
-<mat-stepper labelPosition="bottom" linear #stepper>
-    <mat-step  [editable]="true" >
-        <!-- <mat-step [stepControl]="formInfoInvoice" [editable]="isEditable"> -->
-        <form [formGroup]="formUpdateClient">
-        <!-- <form [formGroup]="formInfoInvoice"> -->
-            <ng-template matStepLabel>Datos de la factura</ng-template>
+<ng-template #formUpdateClient>
+    <form>
+        <ng-template matStepLabel>Información del cliente</ng-template>
 
-            <div class="container-form-step">
+        <div class="container-form-step">
+            <div class="content-form-update">
                 <div class="content-form-item">
                     <div class="form">
-                        <label class="title" >Cedula</label>
-                        <input class="form-data" type="text" formControlName="identityCard" [(ngModel)]="itemCreate.cedula">
-                        <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
-                        <!-- <i class="fa-solid fa-pencil"></i> -->
+                        <h1 class="title">Telefono Actual (1)</h1>
+                        <input class="form-data" type="text">
+                        <i class="fa-solid fa-phone-volume"></i>
                     </div>
-        
-                    <div class="form">
-                        <label class="title">Estado de Factura*</label>
-                        <input class="form-data" type="text" formControlName="AssociatedCompany" [matAutocomplete]="auto" [(ngModel)]="itemCreate.empresa_Asociada">
-                        <i class="form-icon fa-solid fa-chevron-down"></i>
-        
-                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option.nombre"
-                                style="font-family: 'Crimson Text', serif; color: black;">
-                                {{option.nombre}}
-                            </mat-option>
-                        </mat-autocomplete>
-                        <div class="alert alert-danger mt-1"
-                            [hidden]="formGetCreateClient('AssociatedCompany').valid || (formGetCreateClient('AssociatedCompany').pristine)">
-                            El campo no puede estar Vacio.
-                        </div>
-                    </div>
-        
-                    <div class="form">
-                        <mat-form-field class="form-field-date">
-                            <mat-label class="title">Fecha de nacimiento</mat-label>
-                            <input matInput [matDatepicker]="datepicker" formControlName="birthday" [(ngModel)]="itemCreate.fechaNac">
-        
-                            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-                            <mat-datepicker #datepicker>
-                            </mat-datepicker>
-                        </mat-form-field>
-                    </div>
+                </div>
+                <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                    <i class="fa-solid fa-phone-slash icon-phone-" style="color: red;"></i>
+                    <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                    <i class="fa-solid fa-phone" style="color: #39a805;"></i>
                 </div>
                 <div class="content-form-item">
                     <div class="form">
-                        <label class="title">Nombres*</label>
-                        <input class="form-data" type="text" formControlName="name" [(ngModel)]="itemCreate.nombres">
-                        <i class="form-icon fa-solid fa-pencil"></i>
-                        <div class="alert alert-danger mt-1"
-                            [hidden]="formGetCreateClient('name').valid || (formGetCreateClient('name').pristine)">
-                            El campo no puede estar Vacio.
-                        </div>
-                    </div>
-                    <div class="form">
-                        <label class="title">Apellidos*</label>
-                        <input class="form-data" type="text" formControlName="lastName" [(ngModel)]="itemCreate.apellidos">
-                        <i class="form-icon fa-solid fa-pencil"></i>
-                        <div class="alert alert-danger mt-1"
-                            [hidden]="formGetCreateClient('lastName').valid || (formGetCreateClient('lastName').pristine)">
-                            El campo no puede estar Vacio.
-                        </div>
-        
+                        <h1 class="title">Telefono Nuevo (1)</h1>
+                        <input class="form-data" type="text">
+                        <i class="fa-solid fa-phone-volume"></i>
                     </div>
                 </div>
-        
-        
-        
+            </div>  
+        </div>
+
+        <div class="container-form-step">
+            <div class="content-form-update">
                 <div class="content-form-item">
-        
-                    <mat-form-field class="form">
-                        <mat-label class="title">Dirección</mat-label>
-                        <textarea class="form-data" formControlName="address" matInput [(ngModel)]="itemCreate.direccion"></textarea>
-                    </mat-form-field>
+                    <div class="form">
+                        <h1 class="title">Telefono Actual (2)</h1>
+                        <input class="form-data" type="text">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </div>
                 </div>
-            </div>
+                <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                    <i class="fa-solid fa-phone-slash icon-phone-" style="color: red;"></i>
+                    <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                    <i class="fa-solid fa-phone" style="color: #39a805;"></i>
+                </div>
+                <div class="content-form-item">
+                    <div class="form">
+                        <h1 class="title">Telefono Nuevo (2)</h1>
+                        <input class="form-data" type="text">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </div>
+                </div>
+            </div>  
+        </div>
 
-            <div class="step-content-btn-first">
-                <button mat-button matStepperNext class="step-btn-next">
-                    Siguiente
-                    <i class="icon-step fa-solid fa-right-to-bracket"></i>
-                </button>
-            </div>
-        </form>
-    </mat-step>
-
-    <mat-step  [editable]="true">
-    <!-- <mat-step [stepControl]="formDataClient" [editable]="true"> -->
-        <form>
-            <ng-template matStepLabel>Información del cliente</ng-template>
-
-            <div class="container-form-step">
-                <div class="content-form-update">
-                    <div class="content-form-item">
-                        <div class="form">
-                            <h1 class="title">Telefono Actual (1)</h1>
-                            <input class="form-data" type="text">
-                            <i class="fa-solid fa-phone-volume"></i>
-                        </div>
+        <div class="container-form-step">
+            <div class="content-form-update">
+                <div class="content-form-item">
+                    <div class="form">
+                        <h1 class="title">Correo Actual (1)</h1>
+                        <input class="form-data" type="text">
+                        <i class="fa-solid fa-envelope"></i>
                     </div>
-                    <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
-                        <i class="fa-solid fa-phone-slash icon-phone-" style="color: red;"></i>
-                        <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
-                        <i class="fa-solid fa-phone" style="color: #39a805;"></i>
+                </div>
+                <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                    <i class="fa-regular fa-envelope" style="color: red;"></i>
+                    <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                    <i class="fa-regular fa-envelope" style="color: #39a805;"></i>
+                </div>
+                <div class="content-form-item">
+                    <div class="form">
+                        <h1 class="title">Correo Nuevo (1)</h1>
+                        <input class="form-data" type="text">
+                        <i class="fa-solid fa-envelope"></i>
                     </div>
-                    <div class="content-form-item">
-                        <div class="form">
-                            <h1 class="title">Telefono Nuevo (1)</h1>
-                            <input class="form-data" type="text">
-                            <i class="fa-solid fa-phone-volume"></i>
-                        </div>
-                    </div>
-                </div>  
-            </div>
-
-            <div class="container-form-step">
-                <div class="content-form-update">
-                    <div class="content-form-item">
-                        <div class="form">
-                            <h1 class="title">Telefono Actual (2)</h1>
-                            <input class="form-data" type="text">
-                            <i class="fa-solid fa-phone-volume"></i>
-                        </div>
-                    </div>
-                    <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
-                        <i class="fa-solid fa-phone-slash icon-phone-" style="color: red;"></i>
-                        <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
-                        <i class="fa-solid fa-phone" style="color: #39a805;"></i>
-                    </div>
-                    <div class="content-form-item">
-                        <div class="form">
-                            <h1 class="title">Telefono Nuevo (2)</h1>
-                            <input class="form-data" type="text">
-                            <i class="fa-solid fa-phone-volume"></i>
-                        </div>
-                    </div>
-                </div>  
-            </div>
-
-            <div class="container-form-step">
-                <div class="content-form-update">
-                    <div class="content-form-item">
-                        <div class="form">
-                            <h1 class="title">Correo Actual (1)</h1>
-                            <input class="form-data" type="text">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
-                    </div>
-                    <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
-                        <i class="fa-regular fa-envelope" style="color: red;"></i>
-                        <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
-                        <i class="fa-regular fa-envelope" style="color: #39a805;"></i>
-                    </div>
-                    <div class="content-form-item">
-                        <div class="form">
-                            <h1 class="title">Correo Nuevo (1)</h1>
-                            <input class="form-data" type="text">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
-                    </div>
-                </div>  
-            </div>
+                </div>
+            </div>  
+        </div>
 
 
-        </form>
-    </mat-step>
-</mat-stepper>
-
-
+    </form>
+</ng-template>
 
 
 <!-- <i class="fa-person-to-portal fa-xl">i</i> -->

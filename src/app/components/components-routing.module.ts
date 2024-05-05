@@ -8,6 +8,9 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { PayComponent } from './pay/pay.component';
 import { EyeExamComponent } from './eye-exam/eye-exam.component';
 import { OrderComponent } from './order/order.component';
+import { ProviderModule } from './provider/provider.module';
+import { LabComponent } from './lab/lab.component';
+import { ProviderComponent } from './provider/provider.component';
 //import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
@@ -28,6 +31,13 @@ const routes: Routes = [
     canMatch: [isLoggedInGuard],
     canActivate: [hasRole(['Administrador', 'Super Administrador'])],
     canLoad: [hasRole(['Administrador', 'Super Administrador'])]
+  },
+  {
+    path :'provider',
+    component: ProviderComponent,
+    canMatch: [isLoggedInGuard],
+    canActivate: [hasRole(['Administrador', 'Super Administrador'])],
+    canLoad: [hasRole(['Administrador', 'Super Administrador'])]
   },{
     path :'invoice',
     component:InvoiceComponent,
@@ -44,21 +54,23 @@ const routes: Routes = [
     canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista'])],
     canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista'])]
   },{
+    path :'lab',
+    component:LabComponent,
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista'])]
+  },{
     path :'product',
     loadChildren:() => import('./product/product.module').then(m => m.ProductModule),
     canMatch: [isLoggedInGuard],
     canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
     canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
-  },
-  {
+  },{
     path :'register-product',
     loadChildren:() => import('./register-product/register-product.module').then(m => m.RegisterProductModule),
     canMatch: [isLoggedInGuard],
     canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
     canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
-  },
-  
-  {
+  },{
     path :'order',
     component:OrderComponent,
     canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],

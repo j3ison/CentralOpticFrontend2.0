@@ -116,9 +116,6 @@ export class InvoiceComponent {
     { label: 'Precio de Venta', def: 'precioVenta', dataKey: 'precioVenta' }
   ];
 
-
-
-
   displayedColumnsEyesRig: string[] = ['sphDe', 'cylDe', 'ejeDe', 'addDe', 'dpDe', 'altDe'];
   displayedColumnsEyesLef: string[] = ['sphIz', 'cylIz', 'ejeIz', 'addIz', 'dpIz', 'altIz'];
   dispayedColumnsProducts: string[] = ['codProducto', 'descripcion', 'cantidad', 'precioVenta', 'accion'];

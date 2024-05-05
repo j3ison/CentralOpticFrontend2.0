@@ -53,7 +53,14 @@ export const navbarData: INavbarData[] = [
             // }
         ],
         role: ['Super Administrador']
-    }, {
+    },
+    {
+        routeLink: 'provider',
+        icon: 'fa-solid fa-id-card',
+        label: 'Proveedor',
+        role: ['Administrador', 'Super Administrador', 'Venta']
+    },
+    {
         routeLink: 'invoice',
         icon: 'fa-solid fa-file-invoice',
         label: 'Factura',
@@ -68,7 +75,14 @@ export const navbarData: INavbarData[] = [
         icon: 'fa-solid fa-hospital-user',
         label: 'Examen de vista',
         role: ['Administrador', 'Super Administrador', 'Optometrista']
-    },{
+    },
+    {
+        routeLink: 'lab',
+        icon: 'fa-solid fa-flask',
+        label: 'Laboratorio',
+        role: ['Administrador', 'Super Administrador', 'Optometrista']
+    },
+    {
         routeLink: 'product',
         icon: 'fa-solid fa-glasses',
         label: 'Producto',

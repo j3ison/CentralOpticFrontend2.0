@@ -25,10 +25,6 @@ export class ClientComponent {
     }
   }
 
-
-
-
-
   itemCreate: {
     codigo_Cliente?: any;
     cedula: any;
