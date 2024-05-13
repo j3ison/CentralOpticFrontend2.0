@@ -1,3 +1,7 @@
-<button (click)="click()"> boton </button>
+<app-view-data [ItemData]="data$" [FormView]="formUpdate" [columns]="tableColumnsEmpleado" [ItemViewGrid]="item"
+[FormCreateView]="formcreate"></app-view-data>
 
 
+<ng-template #item let-data ></ng-template>
+<ng-template #formcreate ></ng-template>
+<ng-template #formUpdate ></ng-template>

@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmployeeComponent } from './employee.component';
 import { TableModule } from "../../../modules/table/table.module";
-
+import { ViewDataModule } from 'src/app/modules/view-data/view-data.module';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -11,7 +12,10 @@ import { TableModule } from "../../../modules/table/table.module";
     ],
     imports: [
         CommonModule,
-        TableModule
-    ]
+        TableModule,
+        ViewDataModule,
+        MatInputModule,
+    ],
+    exports:[EmployeeComponent]
 })
 export class EmployeeModule { }
