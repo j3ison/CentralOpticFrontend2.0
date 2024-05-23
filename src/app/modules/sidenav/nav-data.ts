@@ -23,7 +23,7 @@ export const navbarData: INavbarData[] = [
     {
         routeLink: 'employee',
         icon: 'fa-solid fa-users-line',
-        label: 'Empleado',
+        label: 'Administración',
         items: [
             {
                 routeLink: 'employee/employee',
@@ -35,22 +35,20 @@ export const navbarData: INavbarData[] = [
                 routeLink: 'employee/user',
                 icon: 'fa-solid fa-user-lock',
                 label: 'Usuarios',
-                // items: [
-                //     {
-                //         routeLink: 'employee/user/user',
-                //         icon: 'fa-solid fa-user-lock',
-                //         label: 'Usuarios',
-                //     }
-                // ],
                 role: ['Super Administrador']
-
             },
-            // {
-            //     routeLink: 'employee/employee',
-            //     icon: 'fa-solid fa-id-badge',
-            //     label: 'Perfil',
-            //     role: ['Super Administrador','Administrador','Venta','Optometrista']
-            // }
+            {
+                routeLink: 'employee/roll',
+                icon: 'fa-solid fa-shield-halved',
+                label: 'Roll',
+                role: ['Super Administrador']
+            },
+            {
+                routeLink: 'employee/profile',
+                icon: 'fa-solid fa-id-card-clip',
+                label: 'Perfil',
+                role: ['Super Administrador','Administrador','Venta','Optometrista']
+            }
         ],
         role: ['Super Administrador']
     },
@@ -88,53 +86,56 @@ export const navbarData: INavbarData[] = [
         label: 'Producto',
         items: [
             {
-                routeLink: 'product/inventory',
+                routeLink: 'product/product',
                 icon: 'fa-solid fa-warehouse',
-                label: 'Inventario',
+                label: 'Productos',
                 role: ['Administrador', 'Super Administrador', 'Venta']
             },
             {
-                routeLink: 'product/add',
+                routeLink: 'product/supplier',
                 icon: 'fa-solid fa-plus',
-                label: 'Agregar Producto',
+                label: 'Proveedores',
                 role: ['Administrador', 'Super Administrador', 'Venta']
 
             }
         ],
         role: ['Administrador', 'Super Administrador', 'Venta']
-    },  {
-        routeLink: 'register-product',
-        icon: 'fa-sharp fa-solid fa-cabinet-filing',
-        label: 'Registrar Producto',
-        items: [
-            {
-                routeLink: 'register-product/list',
-                icon: 'fa-solid fa-list',
-                label: 'Lista de registros',
-                role: ['Super Administrador']
-            },
-            {
-                routeLink: 'register-product/addRegister',
-                icon: 'fa-solid fa-plus',
-                label: 'Agregar Registro',
-                // items: [
-                //     {
-                //         routeLink: 'employee/user/user',
-                //         icon: 'fa-solid fa-user-lock',
-                //         label: 'Usuarios',
-                //     }
-                // ],
-                role: ['Super Administrador']
+    },  
+    
+    // {
+    //     routeLink: 'register-product',
+    //     icon: 'fa-sharp fa-solid fa-cabinet-filing',
+    //     label: 'Registrar Producto',
+    //     items: [
+    //         {
+    //             routeLink: 'register-product/list',
+    //             icon: 'fa-solid fa-list',
+    //             label: 'Lista de registros',
+    //             role: ['Super Administrador']
+    //         },
+    //         {
+    //             routeLink: 'register-product/addRegister',
+    //             icon: 'fa-solid fa-plus',
+    //             label: 'Agregar Registro',
+    //             // items: [
+    //             //     {
+    //             //         routeLink: 'employee/user/user',
+    //             //         icon: 'fa-solid fa-user-lock',
+    //             //         label: 'Usuarios',
+    //             //     }
+    //             // ],
+    //             role: ['Super Administrador']
 
-            }
-        ],
-        role: ['Super Administrador']
-    },{
+    //         }
+    //     ],
+    //     role: ['Super Administrador']
+    // }
+    {
         routeLink: 'order',
         icon: 'fa-solid fa-truck-field',
         label: 'Orden Pedido',
         role: ['Administrador', 'Super Administrador']
-    }
+    },
     /*,
     {    <i class=""></i>
         routeLink: 'empleado',

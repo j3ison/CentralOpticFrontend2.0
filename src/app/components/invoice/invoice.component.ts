@@ -73,6 +73,8 @@ export class InvoiceComponent {
   typeShopFilter!: Observable<string[]>;
   itemTypeShop: string = 'Piso'
 
+  itemInvoiceDetail:any[] = []
+
   user: any;
 
   constructor(private mydataservices: MyDataServices,
@@ -192,6 +194,7 @@ export class InvoiceComponent {
       this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
       this.listInvoice = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
       this.data$ = this.data$.reverse()
+      console.log(this.data$)
     }, (error) => {
       console.log(error)
     })
@@ -265,6 +268,12 @@ export class InvoiceComponent {
     this.dataGlobalservice.$itemView.subscribe(item => {
       this.itemClick = item
       if(item){
+        this.mydataservices.getData("detallefactura/"+item.numFactura).subscribe((respuesta: any) => {
+          console.log(respuesta)
+          this.itemInvoiceDetail = respuesta
+        }, (error) => {
+          console.log(error)
+        })
         this.itemStatusInvoice = item.estado_Factura
       }
     })
@@ -356,13 +365,13 @@ export class InvoiceComponent {
   resultDataTableExam($event: any) {
     this.itemExam = [$event]
     this.itemInvoice.numExamen = $event.numExamen
-    console.log($event)
+    // console.log($event)
     this.cancelDialogResult();
   }
 
   resultDataTableClient($event: any) {
     this.itemClient = $event
-    console.log($event)
+    // console.log($event)
     this.cancelDialogResult();
   }
 

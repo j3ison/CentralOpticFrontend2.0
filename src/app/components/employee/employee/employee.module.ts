@@ -18,4 +18,4 @@ import { MatInputModule } from '@angular/material/input';
     ],
     exports:[EmployeeComponent]
 })
-export class EmployeeModule { }
+export class EmployeeModule1 { }

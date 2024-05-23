@@ -523,233 +523,290 @@
 
 
 <ng-template #itemInfo let-data>
-
-
-    <div class="container-info" style="margin-top: 0.5rem;">
-        <div class="content-header-info" style="margin-top: 1rem;">
-            <img mat-card-image src="../../assets/images/logo.svg" alt="Central Optic logo"
-                style="width: 150px; height: 100px;">
-            <div class="content-content-hearder-title" style="margin-left: 2rem;">
-                <h2 class="content-content-header-title" style="font-size: 22px;">CENTRAL OPTIC</h2>
-                <h4 class="content-content-header-subtitle" style="font-size: 16px;">Tu vision es Nuestro compromiso
-                </h4>
+    <div class="container-container-info">
+        <div class="container-info" style="margin-top: 0.5rem;">
+            <div class="content-header-info" style="margin-top: 1rem;">
+                <img mat-card-image src="../../assets/images/logo.svg" alt="Central Optic logo"
+                    style="width: 150px; height: 100px;">
+                <div class="content-content-hearder-title" style="margin-left: 2rem;">
+                    <h2 class="content-content-header-title" style="font-size: 22px;">CENTRAL OPTIC</h2>
+                    <h4 class="content-content-header-subtitle" style="font-size: 16px;">Tu vision es Nuestro compromiso
+                    </h4>
+                </div>
             </div>
-        </div>
 
-        <h3 class="ruc" style="font-size: 18px; margin-top: 0.5rem; margin-bottom: 0.5rem;">RUC:{{data.numero_Ruc}}</h3>
-        <h3 class="ruc" style="font-size: 18px; margin-top: 0rem;">Emisor:{{data.emisor}}</h3>
+            <h3 class="ruc" style="font-size: 18px; margin-top: 0.5rem; margin-bottom: 0.5rem;">RUC:{{data.numero_Ruc}}
+            </h3>
+            <h3 class="ruc" style="font-size: 18px; margin-top: 0rem;">Emisor:{{data.emisor}}</h3>
 
-        <div class="content-body">
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Estado de la Factura:</strong></h3>
-                <span class="body-subtitle">{{data.estado_Factura}}</span>
+            <div class="content-body">
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Estado de la Factura:</strong></h3>
+                    <span class="body-subtitle">{{data.estado_Factura}}</span>
+                </div>
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Tipo de Factura:</strong></h3>
+                    <span class="body-subtitle">{{data.tipo_Factura}}</span>
+                </div>
             </div>
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Tipo de Factura:</strong></h3>
-                <span class="body-subtitle">{{data.tipo_Factura}}</span>
+            <div class="content-body">
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Cliente:</strong></h3>
+                    <span class="body-subtitle">{{data.cliente}}</span>
+                </div>
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Empresa Asociada:</strong></h3>
+                    <span class="body-subtitle">{{data.empresa_Asociada}}</span>
+                </div>
             </div>
-        </div>
-        <div class="content-body">
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Cliente:</strong></h3>
-                <span class="body-subtitle">{{data.cliente}}</span>
-            </div>
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Empresa Asociada:</strong></h3>
-                <span class="body-subtitle">{{data.empresa_Asociada}}</span>
-            </div>
-        </div>
 
-        <div style="width: calc(95%);
-                display: flex;
-                flex-direction: column;
-                align-items: center; ">
-            <!-- <div style="width: calc(100%);
+            <div style="width: calc(95%);
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
+                    align-items: center; ">
+                <!-- <div style="width: calc(100%);
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: space-between;">
+                        <h2>Productos</h2>
+                    </div> -->
+                <!-- <table mat-table [dataSource]="data" class="mat-elevation-z8">
+            
+                        <ng-container matColumnDef="codProducto">
+                            <th mat-header-cell *matHeaderCellDef> Codigo </th>
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.codProducto}} </td>
+                            <td mat-footer-cell *matFooterCellDef> Subtotal </td>
+                        </ng-container>
+            
+                        <ng-container matColumnDef="descripcion">
+                            <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.descripcion}} </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+            
+                        <ng-container matColumnDef="cantidad">
+                            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                            <td mat-cell *matCellDef="let transaction">
+                                <div *ngIf="transaction.estado">
+                                    {{transaction.cantidad}}
+                                </div>
+                                <div *ngIf="!transaction.estado">
+                                    <form [formGroup]="formDataCount">
+                                        <input formControlName="cantidad" type="number" class="form-control"
+                                            [(ngModel)]="transaction.cantidad">
+                                    </form>
+                                </div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+            
+                        <ng-container matColumnDef="precioVenta">
+                            <th mat-header-cell *matHeaderCellDef> Precio </th>
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.precioVenta | currency}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+                        </ng-container>
+            
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsProductsInfo" class="example-first-header-row">
+                        </tr>
+            
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsProductsInfo;"></tr>
+            
+                        <tr mat-footer-row *matFooterRowDef="displayedColumnsProductsInfo" class="example-first-footer-row"></tr>
+            
+                    </table> -->
+            </div>
+
+            <div class="content-body">
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Descuento:</strong></h3>
+                    <span class="body-subtitle">{{data.descuento}}</span>
+                </div>
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Impuesto:</strong></h3>
+                    <span class="body-subtitle">{{data.impuesto}}</span>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Total:</strong></h3>
+                    <span class="body-subtitle">{{data.total}}</span>
+                </div>
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Descripcion de credito:</strong>
+                    </h3>
+                    <span class="body-subtitle">{{data.descripcion_Credito}}</span>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Paciente:</strong></h3>
+                    <span class="body-subtitle">{{data.paciente}}</span>
+                </div>
+                <div class="content-body-1">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Observacion:</strong></h3>
+                    <span class="body-subtitle">{{data.observacion}}</span>
+                </div>
+            </div>
+
+            <!--  -->
+            <!-- <h2>Medidas del Examen del paciente</h2> -->
+            <div style="width: calc(95%);
+                    display: flex;
+                    flex-direction: column;
                     align-items: center;
-                    justify-content: space-between;">
-                    <h2>Productos</h2>
-                </div> -->
-            <!-- <table mat-table [dataSource]="data" class="mat-elevation-z8">
-        
-                    <ng-container matColumnDef="codProducto">
-                        <th mat-header-cell *matHeaderCellDef> Codigo </th>
-                        <td mat-cell *matCellDef="let transaction"> {{transaction.codProducto}} </td>
-                        <td mat-footer-cell *matFooterCellDef> Subtotal </td>
-                    </ng-container>
-        
-                    <ng-container matColumnDef="descripcion">
-                        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-                        <td mat-cell *matCellDef="let transaction"> {{transaction.descripcion}} </td>
-                        <td mat-footer-cell *matFooterCellDef> </td>
-                    </ng-container>
-        
-                    <ng-container matColumnDef="cantidad">
-                        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-                        <td mat-cell *matCellDef="let transaction">
-                            <div *ngIf="transaction.estado">
-                                {{transaction.cantidad}}
-                            </div>
-                            <div *ngIf="!transaction.estado">
-                                <form [formGroup]="formDataCount">
-                                    <input formControlName="cantidad" type="number" class="form-control"
-                                        [(ngModel)]="transaction.cantidad">
-                                </form>
-                            </div>
-                        </td>
-                        <td mat-footer-cell *matFooterCellDef> </td>
-                    </ng-container>
-        
-                    <ng-container matColumnDef="precioVenta">
-                        <th mat-header-cell *matHeaderCellDef> Precio </th>
-                        <td mat-cell *matCellDef="let transaction"> {{transaction.precioVenta | currency}} </td>
-                        <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
-                    </ng-container>
-        
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsProductsInfo" class="example-first-header-row">
-                    </tr>
-        
-                    <tr mat-row *matRowDef="let row; columns: displayedColumnsProductsInfo;"></tr>
-        
-                    <tr mat-footer-row *matFooterRowDef="displayedColumnsProductsInfo" class="example-first-footer-row"></tr>
-        
-                </table> -->
-        </div>
+                    ">
+                <h3 style="margin: 1rem 0;">
+                    <strong>
+                        Ojo Derecho
+                    </strong>
+                </h3>
+                <div class="content-form-item" style="margin-bottom: 1.5rem;">
+                    <table mat-table [dataSource]="[data]" class="mat-elevation-z8" style="width: 40rem;">
 
-        <div class="content-body">
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Descuento:</strong></h3>
-                <span class="body-subtitle">{{data.descuento}}</span>
+
+                        <ng-container matColumnDef="sphDe">
+                            <th mat-header-cell *matHeaderCellDef> Sph </th>
+                            <td mat-cell *matCellDef="let element"> {{element.sphDe}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="cylDe">
+                            <th mat-header-cell *matHeaderCellDef> Cyl </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cylDe}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ejeDe">
+                            <th mat-header-cell *matHeaderCellDef> Eje </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ejeDe}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="addDe">
+                            <th mat-header-cell *matHeaderCellDef> Add </th>
+                            <td mat-cell *matCellDef="let element"> {{element.addDe}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dpDe">
+                            <th mat-header-cell *matHeaderCellDef> D/P </th>
+                            <td mat-cell *matCellDef="let element"> {{element.dpDe}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="altDe">
+                            <th mat-header-cell *matHeaderCellDef> Alt </th>
+                            <td mat-cell *matCellDef="let element"> {{element.altDe}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsEyesRig"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsEyesRig;"></tr>
+                    </table>
+                </div>
             </div>
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Impuesto:</strong></h3>
-                <span class="body-subtitle">{{data.impuesto}}</span>
+
+            <div style="width: calc(95%);
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                padding-bottom: 1rem;
+                                ">
+                <h3 style="margin: 1rem 0;">
+                    <strong>
+                        Ojo Izquierdo
+                    </strong>
+                </h3>
+                <div class="content-form-item" style="margin-bottom: 1rem;">
+                    <table mat-table [dataSource]="[data]" class="mat-elevation-z8" style="width: 40rem;">
+
+
+                        <ng-container matColumnDef="sphIz">
+                            <th mat-header-cell *matHeaderCellDef> Sph </th>
+                            <td mat-cell *matCellDef="let element"> {{element.sphIz}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="cylIz">
+                            <th mat-header-cell *matHeaderCellDef> Cyl </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cylIz}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ejeIz">
+                            <th mat-header-cell *matHeaderCellDef> Eje </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ejeIz}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="addIz">
+                            <th mat-header-cell *matHeaderCellDef> Add </th>
+                            <td mat-cell *matCellDef="let element"> {{element.addIz}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dpIz">
+                            <th mat-header-cell *matHeaderCellDef> D/P </th>
+                            <td mat-cell *matCellDef="let element"> {{element.dpIz}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="altIz">
+                            <th mat-header-cell *matHeaderCellDef> Alt </th>
+                            <td mat-cell *matCellDef="let element"> {{element.altIz}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsEyesLef"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsEyesLef;"></tr>
+                    </table>
+                </div>
             </div>
-        </div>
-
-        <div class="content-body">
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Total:</strong></h3>
-                <span class="body-subtitle">{{data.total}}</span>
-            </div>
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Descripcion de credito:</strong></h3>
-                <span class="body-subtitle">{{data.descripcion_Credito}}</span>
-            </div>
-        </div>
-
-        <div class="content-body">
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Paciente:</strong></h3>
-                <span class="body-subtitle">{{data.paciente}}</span>
-            </div>
-            <div class="content-body-1">
-                <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;"><strong>Observacion:</strong></h3>
-                <span class="body-subtitle">{{data.observacion}}</span>
-            </div>
-        </div>
-
-        <!--  -->
-        <!-- <h2>Medidas del Examen del paciente</h2> -->
-        <div style="width: calc(95%);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                ">
-            <h3 style="margin: 1rem 0;">
-                <strong>
-                    Ojo Derecho
-                </strong>
-            </h3>
-            <div class="content-form-item" style="margin-bottom: 1.5rem;">
-                <table mat-table [dataSource]="[data]" class="mat-elevation-z8" style="width: 40rem;">
 
 
-                    <ng-container matColumnDef="sphDe">
-                        <th mat-header-cell *matHeaderCellDef> Sph </th>
-                        <td mat-cell *matCellDef="let element"> {{element.sphDe}} </td>
-                    </ng-container>
+            <div class="content-body" style="width: calc(95%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 1rem;">
+                <div class="content-body-1" >
+                    <h3 class="body-title" style="margin: 0 0.2rem 25px 0; font-size: 24px;">
+                        <strong>Productos comprados</strong></h3>
+                </div>
+                 
+                <div class="content-body-detail">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0; font-size: 19px; color: #4e4e4e;">
+                        <strong>Articulos:</strong></h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0; font-size: 19px; color: #4e4e4e;"><strong>Cantidad:</strong>
+                    </h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0; font-size: 19px; color: #4e4e4e;"><strong>Precio
+                            unitario:</strong></h3>
+                </div>
 
-                    <ng-container matColumnDef="cylDe">
-                        <th mat-header-cell *matHeaderCellDef> Cyl </th>
-                        <td mat-cell *matCellDef="let element"> {{element.cylDe}} </td>
-                    </ng-container>
+                <div class="content-body-detail" *ngFor="let detail of itemInvoiceDetail">
 
-                    <ng-container matColumnDef="ejeDe">
-                        <th mat-header-cell *matHeaderCellDef> Eje </th>
-                        <td mat-cell *matCellDef="let element"> {{element.ejeDe}} </td>
-                    </ng-container>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;">{{detail.descripcion}}</h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;">{{detail.cantidad}}</h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0.1px 0;">{{detail.precio_Unitario}}</h3>
+                </div>
 
-                    <ng-container matColumnDef="addDe">
-                        <th mat-header-cell *matHeaderCellDef> Add </th>
-                        <td mat-cell *matCellDef="let element"> {{element.addDe}} </td>
-                    </ng-container>
+                <div class="content-body-detail">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;">
+                        <strong>Sub-Total</strong></h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;"><strong></strong></h3>
 
-                    <ng-container matColumnDef="dpDe">
-                        <th mat-header-cell *matHeaderCellDef> D/P </th>
-                        <td mat-cell *matCellDef="let element"> {{element.dpDe}} </td>
-                    </ng-container>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;">
+                        <!-- <strong>{{(data.total + (data.total * data.impuesto) + (data.total * data.descuento))}}</strong> -->
+                        <strong>{{itemClick.subtotal}}</strong>
+                    </h3>
 
-                    <ng-container matColumnDef="altDe">
-                        <th mat-header-cell *matHeaderCellDef> Alt </th>
-                        <td mat-cell *matCellDef="let element"> {{element.altDe}} </td>
-                    </ng-container>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;">
+                        <strong>Descuento</strong></h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;"><strong></strong></h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;">{{data.descuento}}</h3>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsEyesRig"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumnsEyesRig;"></tr>
-                </table>
-            </div>
-        </div>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;">
+                        <strong>Impuesto</strong></h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;"><strong></strong></h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;">{{data.impuesto}}</h3>
 
-        <div style="width: calc(95%);
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            padding-bottom: 5rem;
-                            ">
-            <h3 style="margin: 1rem 0;">
-                <strong>
-                    Ojo Izquierdo
-                </strong>
-            </h3>
-            <div class="content-form-item" style="margin-bottom: 1rem;">
-                <table mat-table [dataSource]="[data]" class="mat-elevation-z8" style="width: 40rem;">
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;">
+                        <strong>Total</strong></h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;"><strong></strong></h3>
+                    <h3 class="body-title" style="margin: 0 0.2rem 0 0;"><strong>{{data.total}}</strong></h3>
+                </div>
 
-
-                    <ng-container matColumnDef="sphIz">
-                        <th mat-header-cell *matHeaderCellDef> Sph </th>
-                        <td mat-cell *matCellDef="let element"> {{element.sphIz}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="cylIz">
-                        <th mat-header-cell *matHeaderCellDef> Cyl </th>
-                        <td mat-cell *matCellDef="let element"> {{element.cylIz}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="ejeIz">
-                        <th mat-header-cell *matHeaderCellDef> Eje </th>
-                        <td mat-cell *matCellDef="let element"> {{element.ejeIz}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="addIz">
-                        <th mat-header-cell *matHeaderCellDef> Add </th>
-                        <td mat-cell *matCellDef="let element"> {{element.addIz}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="dpIz">
-                        <th mat-header-cell *matHeaderCellDef> D/P </th>
-                        <td mat-cell *matCellDef="let element"> {{element.dpIz}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="altIz">
-                        <th mat-header-cell *matHeaderCellDef> Alt </th>
-                        <td mat-cell *matCellDef="let element"> {{element.altIz}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsEyesLef"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumnsEyesLef;"></tr>
-                </table>
             </div>
         </div>
     </div>
@@ -766,7 +823,7 @@
             <mat-card-content class="contentt">
                 <img class="emoji" mat-card-image src="	https://cdn-icons-png.flaticon.com/512/7933/7933285.png"
                     alt="Error">
-                <h1 style="font-family: 'Crimson Text', serif; text-align: center;" >
+                <h1 style="font-family: 'Crimson Text', serif; text-align: center;">
                     <strong>
                         Lo siento, la factura no puede ser actualizada en este momento.
                     </strong>

@@ -8,9 +8,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-
-
-
+        
         .content-form-item {
             width: calc(100%);
             display: flex;
@@ -235,7 +233,7 @@
                     .icon {
                         margin-top: 2px;
                         margin-left: 1rem;
-                        text-align: center; 
+                        text-align: center;
                         color: #34343472;
                     }
 
@@ -276,6 +274,7 @@
 
 ::ng-deep .mat-horizontal-content-container {
     padding: 24 !important;
+    /* min-height: 109px !important; */
     /* background-color: rgb(241, 241, 241); */
     border-radius: 0 0 15px 15px;
 }
@@ -321,7 +320,8 @@
     /* background-color: rgb(255, 255, 255); */
     border-radius: 10px;
     border: 1px solid rgba(155, 175, 194, 0.4);
-    height: 50px;
+    height: 109px !important;
+    /* height: 50px; */
 }
 
 
@@ -514,14 +514,12 @@
 .container-form-step {
     width: calc(100%);
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    /* min-height: 60vh; */
     max-height: 80vh;
     overflow-y: auto;
-    /* background: #1b85ff; */
-    margin: 10px 0 10px 0;
+    margin: 0 0 10px 0;
 
     .content-form-item {
         width: calc(100%);
@@ -533,7 +531,7 @@
             width: calc(100%);
             display: flex;
             flex-direction: column;
-            margin: 1rem;
+            margin: 10px 1rem;
 
             .title {
                 color: black;
@@ -578,7 +576,7 @@
         }
     }
 
-    .content-form-update{
+    .content-form-update {
         width: calc(100%);
         display: flex;
         flex-direction: row;
@@ -586,7 +584,109 @@
         justify-content: center;
 
     }
+}
 
 
+.container-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 750px;
+    height: auto;
+    padding: 10px;
+    /* border: 1px solid #000000; */
 
+    .title-info {
+        color: black;
+        font-size: 22px;
+        margin: 0 0 0.4rem 0;
+        font-family: 'Crimson Text', serif;
+        font-weight: 900;
+        width: calc(100%);
+        text-align: start;
+    }
+
+    .block-content-info {
+        width: calc(100%);
+        height: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        background: #DDDDDD;
+        border-radius: 4px;
+
+        .block-title-info {
+            color: rgb(41, 41, 41);
+            font-size: 18px;
+            font-family: 'Crimson Text', serif;
+            font-weight: 600;
+            height: 1rem;
+            padding-left: 10px;
+        }
+    }
+
+    .content-texts-info {
+        display: flex;
+        flex-direction: column;
+        width: calc(100%);
+        padding-left: 40px;
+        margin-top: 10px;
+        /* align-items: center; */
+        justify-content: center;
+
+        .info-profile {
+            width: calc(70%);
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 0px;
+
+            .info-text-profile {
+                color: black;
+                font-size: 16px;
+                margin: 0 0 0.8rem 0;
+                font-family: 'Crimson Text', serif;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .body-content-info {
+        width: calc(100%);
+        display: flex;
+        flex-direction: row;
+        padding: 5px;
+
+
+        .content-img-info {
+            width: 280px;
+
+            .img-info {
+                width: calc(95%);
+            }
+        }
+
+        .content-texts-info {
+            display: flex;
+            flex-direction: column;
+            width: calc(100%);
+            margin-left: 10px;
+            /* align-items: center; */
+            justify-content: center;
+
+            .info-profile {
+                display: grid;
+                grid-template-columns: 3fr 3fr;
+                gap: 80px;
+
+                .info-text-profile {
+                    color: black;
+                    font-size: 16px;
+                    margin: 0 0 0.8rem 0;
+                    font-family: 'Crimson Text', serif;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
 }

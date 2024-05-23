@@ -2,25 +2,17 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MyDataServices } from 'src/app/auth/mydata.service';
 import { TableColumn } from 'src/app/modules/table/model/table-column';
-import { Product } from '../../model';
-import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-roll',
+  templateUrl: './roll.component.html',
+  styleUrls: ['./roll.component.css']
 })
-export class UserComponent {
-
+export class RollComponent {
   tableColumnsProveedor: TableColumn[] = [
-    { label: 'ID Usuario', def: 'idUsuario', dataKey: 'idUsuario' },
-    { label: 'Nombre', def: 'nombres', dataKey: 'nombres' },
-    { label: 'Apellidos', def: 'apellidos', dataKey: 'apellidos' },
-    { label: 'Correo', def: 'correo', dataKey: 'correo' },
-    { label: 'Estado', def: 'estado', dataKey: 'estado' },
+    { label: 'ID Rol', def: 'idRol', dataKey: 'idRol' },
     { label: 'Rol', def: 'rol', dataKey: 'rol' },
-    { label: 'Nombre de Usuario', def: 'nombreUsuario', dataKey: 'nombreUsuario' },
-    { label: 'Clave', def: 'clave', dataKey: 'clave' },
+    { label: 'Descripcion', def: 'descripcion', dataKey: 'descripcion' }
   ]
 
   data$: Observable<any>[] = []
@@ -36,19 +28,8 @@ export class UserComponent {
 
     this.mydataservices.getData("rol").subscribe((respuesta: any) => {
 
-      // this.data$ = respuesta
-      console.log(respuesta)
 
-    }, (error) => {
-
-      console.log(error)
-    })
-
-    
-    this.mydataservices.getData("usuario").subscribe((respuesta: any) => {
-
-      respuesta.map((obj: any) => this.procesarDatosNulos(obj));
-      this.data$= respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+      this.data$ = respuesta
       console.log(respuesta)
 
     }, (error) => {
@@ -57,24 +38,9 @@ export class UserComponent {
     })
 
 
+
   }
 
-
-
-  procesarDatosNulos(data: any): any {
-    const datosProcesados = { ...data };
-    // Iterar sobre las propiedades del objeto y reemplazar los valores null
-    for (const key in datosProcesados) {
-      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
-        datosProcesados[key] = "Dato no existente";
-      }else if(datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true){
-        datosProcesados[key] = "Activo";
-      }else if(datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false){
-        datosProcesados[key] = "Inactivo";
-      }
-    }
-    return datosProcesados;
-  }
 
   // d() {
   //   const data = {

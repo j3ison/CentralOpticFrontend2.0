@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProviderComponent } from './provider.component';
+import { RollComponent } from './roll.component';
 import { ViewDataModule } from 'src/app/modules/view-data/view-data.module';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -16,30 +16,28 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+
 @NgModule({
-    declarations: [
-        ProviderComponent
-    ],
-    exports: [
-        ProviderComponent
-    ],
-    imports: [
-        CommonModule,
-        ViewDataModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatTableModule,
-        MatCardModule,
-        ReactiveFormsModule,
-        FormsModule,
-        MatAutocompleteModule,
-        MatProgressBarModule,
-        MatDividerModule,
-        MatStepperModule,
-        MatTooltipModule
-    ]
+  declarations: [
+    RollComponent
+  ],
+  imports: [
+    CommonModule,
+    ViewDataModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatAutocompleteModule,
+    MatProgressBarModule,
+    MatDividerModule,
+    MatStepperModule,
+    MatTooltipModule
+  ]
 })
-export class ProviderModule { }
+export class RollModule { }

@@ -56,7 +56,7 @@
 }
 
 .logo {
-    background: #fff;
+    background: #cecece; 
     text-align: center;
     width: 3rem;
     min-width: 3rem;
@@ -70,11 +70,15 @@
 
 .logo-text {
     margin-left: 1.5rem;
-    font-family: 'Archivo Narrow', sans-serif; 
+    font-family: 'Archivo Narrow', sans-serif;
     font-weight: 900;
-    font-size: 28px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 1;
     /* font-weight: 700; */
+    /* color: #446281;  */
     color: #fff;
+
 }
 
 .btn-close {
@@ -117,7 +121,10 @@
     display: flex;
     align-items: center;
     height: 3rem;
+    min-width: 50px;
+    /* color: #446281;  */
     color: #f3f3f3;
+
     text-decoration: none;
     border-radius: 0.525rem;
     transition: all .3s ease;
@@ -155,12 +162,20 @@
 }
 
 .active {
+
+    /* padding: 10px 20px; */
+    /* border-radius: 8px; */
+    /* background: #cce5ff; */
+
+
     background-color: #3da1ff;
 
     .menu-collapse-icon,
     .sidenav-link-icon,
     .sidenav-link-text {
         color: #000000;
+        /* color: #2d7bc9; */
+
     }
 }
 
@@ -194,7 +209,7 @@
 
             .sublevel-link-icon {
                 font-size: 900;
-                width: 2rem;
+                width: 2rem !important;
                 min-width: 2rem;
                 margin: 0 0.5rem;
                 text-align: center;
