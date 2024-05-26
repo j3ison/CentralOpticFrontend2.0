@@ -1,7 +1,57 @@
 <app-view-data [ItemData]="data$" [FormView]="formUpdate" [columns]="tableColumnsEmpleado" [ItemViewGrid]="item"
-[FormCreateView]="formcreate"></app-view-data>
+[FormCreateView]="formcreate" [FormInfoView]="itemInfo"></app-view-data>
 
 
 <ng-template #item let-data ></ng-template>
 <ng-template #formcreate ></ng-template>
 <ng-template #formUpdate ></ng-template>
+
+<ng-template #itemInfo>
+    <div class="container-info">
+        <h1 class="title-info">{{itemClick.nombres + ' ' + itemClick.apellidos}}</h1>
+        <div class="block-content-info">
+            <h2 class="block-title-info">Informacion Basica</h2>
+        </div>
+        <div class="body-content-info">
+            <div class="content-img-info">
+                <img class="img-info" src="https://cdn-icons-png.flaticon.com/512/15430/15430330.png" alt="imagen cliente">
+            </div>
+    
+            <div class="content-texts-info">
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Cedula :</strong></span>
+                    <span class="info-text-profile">{{itemClick.cedula}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Fecha de nacimiento :</strong></span>
+                    <span class="info-text-profile">{{itemClick.fechaNac}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Edad :</strong></span>
+                    <span class="info-text-profile">{{itemClick.edad}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Dirección :</strong></span>
+                    <span class="info-text-profile">{{itemClick.direccion}}</span>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="block-content-info">
+            <h1 class="block-title-info">Contactos</h1>
+        </div>
+    
+        <div class="content-texts-info">
+            <div class="info-profile">
+                <span class="info-text-profile"><strong>Telefonos : </strong></span>
+                <span class="info-text-profile">{{itemClick.telefonos}}</span>
+            </div>
+            <div class="info-profile">
+                <span class="info-text-profile"><strong>Correo :</strong></span>
+                <span class="info-text-profile">{{itemClick.correos}}</span>
+            </div>
+        </div>
+        
+    </div>
+</ng-template>
