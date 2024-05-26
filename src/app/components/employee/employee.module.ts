@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { EmployeeInfoModule } from './employee/employeeInfo.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { MatDialogModule } from '@angular/material/dialog';
   imports: [
     CommonModule,
     EmployeeRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    EmployeeInfoModule
   ],
   providers: [DialogService],
 })
