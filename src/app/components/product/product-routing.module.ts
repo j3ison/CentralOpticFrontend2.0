@@ -4,17 +4,18 @@ import { isLoggedInGuard } from 'src/app/auth/guards/is-logged-in.guard';
 import { hasRole } from 'src/app/auth/guards/has-role.guard';
 import { InventoryComponent } from './inventory/inventory.component';
 import { AddComponent } from './add/add.component';
+import { SupplierComponent } from './supplier/supplier.component';
 
 const routes: Routes = [
   {
-    path: 'inventory',
+    path: 'product',
     component:InventoryComponent,
     canMatch: [isLoggedInGuard],
     canActivate: [hasRole(['Administrador', 'Super Administrador'])],
     canLoad: [hasRole(['Administrador', 'Super Administrador'])]
   },{
-    path :'add',
-    component:AddComponent,
+    path :'supplier',
+    component:SupplierComponent,
     canMatch: [isLoggedInGuard],
     canActivate: [hasRole([ 'Administrador','Super Administrador'])],
     canLoad: [hasRole([ 'Administrador','Super Administrador'])]

@@ -19,7 +19,7 @@
     position: relative;
     top: 0;
     transition: all .5s ease;
-    background: url('/src/assets/images/background.svg') ;
+    /* background: url('../../../assets/images/background.svg') ; */
     padding: 3rem;
 }
 

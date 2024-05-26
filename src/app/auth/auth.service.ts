@@ -7,6 +7,7 @@ import { Acceso, LoginCredentials, Role } from './model';
 import { ApiService } from './api.service';
 import { Token } from '@angular/compiler';
 import { CookieService } from 'ngx-cookie-service';
+import { MyDataServices } from './mydata.service';
 
 // const USER_LOCAL_COOKIESERVICE_KEY = 'userData';
 const USER_LOCAL_STORAGE_KEY = 'userData';
@@ -40,19 +41,26 @@ const USER_LOCAL_STORAGE_KEY = 'userData';
 })
 export class AuthService {
 
-  private acceso:Acceso ={
+  private acceso: Acceso = {
     nombreUsuario: '',
     clave: ''
   }
 
-  private user = new BehaviorSubject<LoginUser | null>(null);
+
+
+  user = new BehaviorSubject<LoginUser | null>(null);
   user$ = this.user.asObservable();
   isLoggedIn$: Observable<boolean> = this.user$.pipe(map(Boolean));
 
+  _user: any = null;
+  _employee: any = null;
+
+
   constructor(//private httpClient: HttpClient, 
     private router: Router,
-    private apiService:ApiService,
-    private cookieService: CookieService) {
+    private apiService: ApiService,
+    private cookieService: CookieService,
+    private myDataService: MyDataServices) {
 
     this.loadUserFromLocalStorage();
   }
@@ -65,30 +73,46 @@ export class AuthService {
     return new Promise<boolean>((resolve, reject) => {
 
       this.apiService.postAcceso('acceso', this.acceso)
-      .subscribe( (respuesta:any) => {
-  
-        console.log(respuesta)
-  
-        // if(login){
-        const login:LoginUser = {
-          username: credentials.username,
-          role: respuesta.role,
-          token: respuesta.token,
-          id: respuesta.id,
-          numEmpleado: respuesta.numEmpleado,
-          password: ''
-        }
-        
-        this.pushNewUser(login)
-        this.saveTokenToLocalStore(login)
-        this.redirectToDashboard()
+        .subscribe((respuesta: any) => {
 
-        resolve(true);
-  
-      }, (error) => { 
-  
-        resolve(false);
-      })    
+          console.log(respuesta)
+
+          // if(login){
+          const login: LoginUser = {
+            username: credentials.username,
+            role: respuesta.role,
+            token: respuesta.token,
+            id: respuesta.id,
+            numEmpleado: respuesta.numEmpleado,
+            password: ''
+          }
+
+          this.pushNewUser(login)
+          this.saveTokenToLocalStore(login)
+          this.redirectToDashboard()
+
+          this.myDataService.getData('usuario/'+login.id).subscribe(respuesta =>{
+            if(respuesta){
+              this._user = respuesta
+              console.log(this._user)
+            }
+          })
+
+          this.myDataService.getData('empleado/'+login.numEmpleado).subscribe(respuesta =>{
+            if(respuesta){
+              this._employee = respuesta
+              console.log(this._employee)
+            }
+          })
+
+
+
+          resolve(true);
+
+        }, (error) => {
+
+          resolve(false);
+        })
     })
   }
 
@@ -118,10 +142,10 @@ export class AuthService {
     //console.log(userFromLocal);
 
     //const UserLogin:LoginUser = JSON.parse(userFromLocal) as LoginUser;
-    userFromLocal && this.pushNewUser(JSON.parse(userFromLocal) as LoginUser );
-   
+    userFromLocal && this.pushNewUser(JSON.parse(userFromLocal) as LoginUser);
+
   }
-  
+
   private saveTokenToLocalStore(userToken: LoginUser): void {
     this.cookieService.set(USER_LOCAL_STORAGE_KEY, JSON.stringify(userToken))
     // localStorage.setItem(USER_LOCAL_STORAGE_KEY, userToken);
