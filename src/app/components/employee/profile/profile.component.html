@@ -1,6 +1,6 @@
-<div class="container-profile" >
+<!-- <div class="container-profile" >
     <div class="content-header-profile">
-        <h1 class="header-name-profile">{{itemUser.nombres }}</h1>
+        <h1 class="header-name-profile">{{itemUser[0]?.nombres }}</h1>
         <div class="content-rigt-profile">
             <h3 class="header-id-profile"></h3>
             <button class="edit-profile"></button>
@@ -49,14 +49,87 @@
 
 
     </div>
+</div> -->
+
+
+<div class="container">
 </div>
+<div class="container-profile">
+    <div class="container-content">
+        <img class="content-img" src="" alt="">
 
-<ng-container [ngTemplateOutlet]="itemInfo"></ng-container>
+        <h1 class="content-name">{{itemUser[0]?.nombres + itemUser[0]?.apellidos}}</h1>
+        <div class="content-text">
+            <span class="text"><strong>Cedula</strong></span>
+            <span class="text"></span>
+        </div>
+        <div class="content-text">
+            <span class="text"><strong>Contactos</strong></span>
+            <span class="text"></span>
+        </div>
 
+        <div *ngFor="let phone of itemEmploye[0]?.telefonos.split(' ,'); let i = index">
+            <div class="content-text">
+                <span class="text"><strong *ngIf="i===0">Telefono</strong></span>
+                <span class="text">{{phone}}</span>
+            </div>
+        </div>
 
-<ng-template #itemInfo>
-    <div>
-        a
-        {{itemUser.nombres }}
+        <div *ngFor="let mail of itemEmploye[0]?.correos.split(' ,'); let i = index">
+            <div class="content-text">
+                <span class="text"><strong *ngIf="i===0">Correo</strong></span>
+                <span class="text">{{mail}}</span>
+            </div>
+        </div>
     </div>
-</ng-template>
+
+    <div class="container-content-rigth">
+        <div class="container-content">
+            <div class="content-text">
+                <span class="text"><strong>Información de Empleado </strong></span>
+                <span class="text">{{' '+itemEmploye[0]?.numEmpleado}}</span>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="content-text">
+                <span class="text"><strong>Estado del Empleado</strong></span>
+                <span class="text">{{itemEmploye[0]?.estado}}</span>
+            </div>
+            <div class="content-text">
+                <span class="text"><strong>Fecha de Nacimiento</strong></span>
+                <span class="text">{{itemEmploye[0]?.fechaNac}}</span>
+            </div>
+            <div class="content-text">
+                <span class="text"><strong>Edad</strong></span>
+                <span class="text">{{itemEmploye[0].edad}}</span>
+            </div>
+            <div class="content-text">
+                <span class="text"><strong>Dirección</strong></span>
+                <span class="text">{{itemEmploye[0]?.direccion}}</span>
+            </div>
+        </div>
+
+        <div class="container-content">
+            <div class="content-text">
+                <span class="text"><strong>Información de Usuario</strong></span>
+                <span class="text">{{itemUser[0]?.idUsuario}}</span>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="content-text">
+                <span class="text"><strong>Nombre de usuario</strong></span>
+                <span class="text">{{itemUser[0]?.nombreUsuario}}</span>
+            </div>
+            <div class="content-text">
+                <span class="text"><strong>Clave de usuario</strong></span>
+                <span class="text">{{itemUser[0]?.clave}}</span>
+            </div>
+            <div class="content-text">
+                <span class="text"><strong>Rol de usuario</strong></span>
+                <span class="text">{{itemUser[0]?.rol}}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -38,6 +38,9 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatProgressBarModule,
     MatDividerModule,
     MatStepperModule
+  ], 
+  exports:[
+    SubTabletComponent
   ]
 })
 export class InvoiceModule { }
