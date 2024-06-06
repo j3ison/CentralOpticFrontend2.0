@@ -15,10 +15,14 @@ import { DataGlobalService } from 'src/app/modules/view-data/services/data-globa
 })
 export class EmployeeComponent {
   respuesta: any;
-  itemClick: any;
+ // itemClick: any;
 
   constructor(private mydataservices: MyDataServices,
-    private dataGlobalservice: DataGlobalService
+    private formBuilder: FormBuilder,
+    private dataGlobalservice: DataGlobalService,
+    private elementRef: ElementRef,
+    private dialogService: DialogService,
+    private authService: AuthService,
   ) { }
 
   data$: Observable<any>[] = []
@@ -35,7 +39,7 @@ export class EmployeeComponent {
     { label: 'Número de Empleado', def: 'numEmpleado', dataKey: 'numEmpleado' },
     { label: 'Teléfonos', def: 'telefonos', dataKey: 'telefonos' }
   ];
-
+  itemClick: any = null;
   ngOnInit() {
     this.mydataservices.getData("empleado").subscribe((respuesta: any) => {
       console.log(respuesta)
@@ -46,11 +50,128 @@ export class EmployeeComponent {
     })
 
     this.dataGlobalservice.$itemView.subscribe(item => {
+      
       this.itemClick = item
+      
       if (item) {
+
+        this.itemInfoUpdate = {
+          codigo: item.codigo_Empleado,
+          cedula: item.cedula !== 'Dato no existente' ? item.cedula : '',
+          nombre: item.nombres,
+          apellido: item.apellidos,
+          direccion: item.direccion !== 'Dato no existente' ? item.direccion : '',
+          fechaNac: item.fechaNac !== 'Dato no existente' ? item.fechaNac : ''
+        }
+
+        if (item.telefonos !== "Dato no existente") {
+          let subarray = item.telefonos.split(', ').map((fruta: string) => fruta.trim());
+          this.itemContactUpdate.phone1 = subarray[0]
+          this.itemContactUpdate.phone2 = subarray[1] ? subarray[1] : ''
+
+        }
+
+        if (item.correos !== "Dato no existente") {
+          let subarray = item.correos.split(', ').map((fruta: string) => fruta.trim());
+          this.itemContactUpdate.mail1 = subarray[0]
+          this.itemContactUpdate.mail2 = subarray[1] ? subarray[1] : ''
+        }
       }
+
     })
   }
+
+//Para actualizar informacion
+itemCreate: {
+  codigo_Empleado?: any;
+  cedula: any;
+  nombres: string;
+  apellidos: string;
+  direccion?: any;
+  fechaNac?: any;
+  correos1?: any;
+  correos2?: any;
+  telefonos1?: any;
+  telefonos2?: any;
+} = {
+    nombres: '',
+    apellidos: '',
+    cedula: null
+  }
+
+formCreateEmployee: FormGroup = this.formBuilder.group(
+  {
+    'identityCard': ['', Validators.nullValidator],
+    'name': ['', Validators.required],
+    'lastName': ['', Validators.required],
+    'AssociatedCompany': ['Central Optic', Validators.required],
+    'address': ['', Validators.nullValidator],
+    'birthday': ['', Validators.nullValidator],
+    'phone1': ['', Validators.nullValidator],
+    'phone2': ['', Validators.nullValidator],
+    'mail1': ['', Validators.nullValidator],
+    'mail2': ['', Validators.nullValidator],
+  }
+)
+
+formGetCreateEmployee(fr: string) {
+  return this.formCreateEmployee.get(fr) as FormControl;
+}
+
+
+itemInfoUpdate = {
+  codigo: '',
+  cedula: '',
+  nombre: '',
+  apellido: '',
+  direccion: '',
+  fechaNac: ''
+}
+
+formInfoUpdateEmployee: FormGroup = this.formBuilder.group(
+  {
+    'identityCard': ['', Validators.nullValidator],
+    'name': ['', Validators.required],
+    'lastName': ['', Validators.required],
+    'address': ['', Validators.nullValidator],
+    'birthday': ['', Validators.nullValidator]
+  }
+)
+
+formGetUpdateEmployee(fr: string) {
+  return this.formInfoUpdateEmployee.get(fr) as FormControl;
+}
+
+itemContactUpdate = {
+  phone1: '',
+  phone2: '',
+  mail1: '',
+  mail2: ''
+}
+
+itemContactUpdateNew = {
+  phone1: '',
+  phone2: '',
+  mail1: '',
+  mail2: ''
+}
+
+formContactUpdateEmployee: FormGroup = this.formBuilder.group(
+  {
+    'phone1': ['', Validators.nullValidator],
+    'phone2': ['', Validators.nullValidator],
+    'mail1': ['', Validators.nullValidator],
+    'mail2': ['', Validators.nullValidator],
+    'phone1v': ['', Validators.nullValidator],
+    'phone2v': ['', Validators.nullValidator],
+    'mail1v': ['', Validators.nullValidator],
+    'mail2v': ['', Validators.nullValidator],
+  }
+)
+
+formGetContactUpdateEmployee(fr: string) {
+  return this.formContactUpdateEmployee.get(fr) as FormControl;
+}
 
 
   // Declaracion de funciones auxiliares  
@@ -88,6 +209,343 @@ export class EmployeeComponent {
         timer: 1000
       });
     });
+  }
+  
+  // Para realizar post a la endpoint de employee
+
+  // Formateamos todo antes de enviar
+  saveDataCreate() {
+    let data = {
+      nombres: this.itemCreate.nombres,
+      apellidos: this.itemCreate.apellidos,
+      cedula: this.itemCreate.cedula,
+      direccion: this.itemCreate.direccion,
+      fechaNac: this.itemCreate.fechaNac
+    }
+
+    this.mydataservices.postData('empleado', data).then((success) => {
+      if (success) {
+        this.mydataservices.getData("empleado").subscribe((respuesta: any[]) => {
+          // console.log(respuesta)
+          let todoslosdatos = respuesta
+          this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+          this.data$ = this.data$.reverse()
+
+          // console.log(respuesta)
+
+          let result = todoslosdatos.find((obj: any) =>
+            obj.nombres == this.itemCreate.nombres
+            && obj.apellidos == this.itemCreate.apellidos
+            // (this.itemCreate.cedula && obj.cedula == this.itemCreate.cedula)
+          )
+
+          console.log(result)
+
+          if (this.itemCreate.telefonos1 && result) {
+            let contact = {
+              codigo_Empleado: result.codigo_Empleado,
+              telefonoNuevo: this.itemCreate.telefonos1.toString()
+            }
+
+            console.log(contact)
+
+            this.mydataservices.postData('telefonoempleado', contact).then((success) => {
+              if (success) {
+
+                this.mydataservices.getData("empleado").subscribe((respuesta: any[]) => {
+                  // console.log(respuesta)
+                  this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+                  this.data$ = this.data$.reverse()
+                })
+
+
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Ups...',
+                  text: 'Se ha producido un error al intentar guardar el primer teléfono del empleado.',
+                  footer: '<a href="">¿Por qué tengo este problema??</a>'
+                })
+              }
+            })
+
+
+          }
+
+          if (this.itemCreate.telefonos2 && result) {
+            let contact = {
+              codigo_Empleado: result.codigo_Empleado,
+              telefonoNuevo: this.itemCreate.telefonos2.toString()
+            }
+
+            this.mydataservices.postData('telefonoempleado', contact).then((success) => {
+              if (success) {
+
+                this.mydataservices.getData("empleado").subscribe((respuesta: any[]) => {
+                  // console.log(respuesta)
+                  this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+                  this.data$ = this.data$.reverse()
+                })
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Ups...',
+                  text: 'Se ha producido un error al intentar guardar el segundo teléfono del empleado.',
+                  footer: '<a href="">¿Por qué tengo este problema??</a>'
+                })
+              }
+            })
+
+          }
+
+          if (this.itemCreate.correos1 && result) {
+            let contact = {
+              codigo_Empleado: result.codigo_Empleado,
+              correoNuevo: this.itemCreate.correos1
+            }
+
+            this.mydataservices.postData('correoempleado', contact).then((success) => {
+              if (success) {
+
+                this.mydataservices.getData("empleado").subscribe((respuesta: any[]) => {
+                  // console.log(respuesta)
+                  this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+                  this.data$ = this.data$.reverse()
+                })
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Ups...',
+                  text: 'Se ha producido un error al intentar guardar el primer correo del emplead.',
+                  footer: '<a href="">¿Por qué tengo este problema??</a>'
+                })
+              }
+            })
+          }
+
+          if (this.itemCreate.correos2 && result) {
+            let contact = {
+              codigo_Empleado: result.codigo_Empleado,
+              correoNuevo: this.itemCreate.correos2
+            }
+
+            this.mydataservices.postData('correoempleado', contact).then((success) => {
+              if (success) {
+
+                this.mydataservices.getData("empleado").subscribe((respuesta: any[]) => {
+                  // console.log(respuesta)
+                  this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+                  this.data$ = this.data$.reverse()
+                })
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Ups...',
+                  text: 'Se ha producido un error al intentar guardar el segundo correo del empleado.',
+                  footer: '<a href="">¿Por qué tengo este problema??</a>'
+                })
+              }
+            })
+
+          }
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: '¡La información ha sido guardada exitosamente!',
+          })
+
+        }, (error) => {
+          console.log(error)
+        })
+      } else {
+
+      }
+    })
+
+    console.log(data)
+  }
+
+// Preguntamos antes de enviar
+
+  saveDataConfirmed() {
+    Swal.fire({
+      title: 'Confirmar',
+      text: '¿Está seguro que desea guardar la información?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.saveDataCreate()
+        // this.formUpdateData.reset()
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          'Los datos siguen a salvo:)',
+          'error'
+        )
+      }
+    });
+  }
+
+  saveDataUpdateConfirmed() {
+    Swal.fire({
+      title: 'Confirmar',
+      text: '¿Está seguro que desea actualizar la información?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Actualizar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.saveDataUpdate()
+        this.mydataservices.getData("empleado").subscribe((respuesta: any) => {
+          console.log(respuesta)
+          this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+          this.data$ = this.data$.reverse()
+        }, (error) => {
+          console.log(error)
+        })
+        this.formContactUpdateEmployee.reset()
+        this.formInfoUpdateEmployee.reset()
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          'Los datos siguen a salvo:)',
+          'error'
+        )
+      }
+    });
+  }
+
+  saveDataUpdate() {
+    let data = {
+      cedula: this.itemInfoUpdate.cedula !== '' ?this.itemInfoUpdate.cedula:null,
+      nombres: this.itemInfoUpdate.nombre,
+      apellidos: this.itemInfoUpdate.apellido,
+      direccion: this.itemInfoUpdate.direccion !== ''?this.itemInfoUpdate.direccion:null,
+      fechaNac: this.itemInfoUpdate.fechaNac !== '' ?this.itemInfoUpdate.fechaNac:null,
+    }
+
+    this.mydataservices.updateData('empleado', data, this.itemInfoUpdate.codigo).then((success) => {
+      if (success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Exito',
+          text: 'Los cambios se realizaron correctamente',
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ups...',
+          text: 'Algo salió mal!',
+          footer: '<a href="">¿Por qué tengo este problema??</a>'
+        })
+      }
+    })
+
+    if (this.itemContactUpdateNew.phone1 !== '' && this.itemContactUpdate.phone1 !== '') {
+      let phone = {
+        codigo_Empleado: this.itemInfoUpdate.codigo,
+        telefonoAnterior: this.itemContactUpdate.phone1,
+        telefonoNuevo: this.itemContactUpdateNew.phone1
+      }
+
+      this.mydataservices.updateData('telefonoempleado', phone, '').then((success) => {
+        if (success) {
+          console.log('funciono telefono 1')
+        }
+      })
+    } else if (this.itemContactUpdateNew.phone1 !== '') {
+      let phone = {
+        codigo_Empleado: this.itemInfoUpdate.codigo,
+        telefonoNuevo: this.itemContactUpdateNew.phone1
+      }
+      this.mydataservices.postData('telefonoEmpleado', phone).then((success) => {
+        if (success) {
+          console.log('funciono new telefono 1')
+        }
+      })
+    }
+
+    if (this.itemContactUpdateNew.phone2 !== '' && this.itemContactUpdate.phone2 !== '') {
+      let phone = {
+        codigo_Empleado: this.itemInfoUpdate.codigo,
+        telefonoAnterior: this.itemContactUpdate.phone2,
+        telefonoNuevo: this.itemContactUpdateNew.phone2
+      }
+
+      this.mydataservices.updateData('telefonoempleado', phone, '').then((success) => {
+        if (success) {
+          console.log('funciono telefono 2')
+        }
+      })
+    } else if (this.itemContactUpdateNew.phone2 !== '') {
+      let phone = {
+        codigo_Empleado: this.itemInfoUpdate.codigo,
+        telefonoNuevo: this.itemContactUpdateNew.phone2
+      }
+      this.mydataservices.postData('telefonoempleado', phone).then((success) => {
+        if (success) {
+          console.log('funciono new telefono 2')
+        }
+      })
+    }
+
+    //////
+
+    if (this.itemContactUpdateNew.mail1 !== '' && this.itemContactUpdate.mail1 !== '') {
+      let mail = {
+        codigo_Empleado: this.itemInfoUpdate.codigo,
+        correoAnterior: this.itemContactUpdate.mail1,
+        correoNuevo: this.itemContactUpdateNew.mail1
+      }
+
+      this.mydataservices.updateData('correoempleado', mail, '').then((success) => {
+        if (success) {
+          console.log('funciono telefono 1')
+        }
+      })
+    } else if (this.itemContactUpdateNew.mail1 !== '') {
+      let mail = {
+        codigo_Empleado: this.itemInfoUpdate.codigo,
+        correoNuevo: this.itemContactUpdateNew.mail1
+      }
+      this.mydataservices.postData('correoEmpleado', mail).then((success) => {
+        if (success) {
+          console.log('funciono new telefono 1')
+        }
+      })
+    }
+
+    if (this.itemContactUpdateNew.mail2 !== '' && this.itemContactUpdate.mail2 !== '') {
+      let mail = {
+        codigo_Empleado: this.itemInfoUpdate.codigo,
+        correoAnterior: this.itemContactUpdate.mail2,
+        correoNuevo: this.itemContactUpdateNew.mail2
+      }
+
+      this.mydataservices.updateData('correoempleado', mail, '').then((success) => {
+        if (success) {
+          console.log('funciono telefono 2')
+        }
+      })
+    } else if (this.itemContactUpdateNew.mail2 !== '') {
+      let mail = {
+        codigo_Empleado: this.itemInfoUpdate.codigo,
+        correoNuevo: this.itemContactUpdateNew.mail2
+      }
+      this.mydataservices.postData('correoempleado', mail).then((success) => {
+        if (success) {
+          console.log('funciono new telefono 2')
+        }
+      })
+    }
+
   }
 
 }
