@@ -15,8 +15,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-
+import { SubTabletComponent } from '../invoice/modules/sub-tablet/sub-tablet.component'
+import { InvoiceModule } from '../invoice/invoice.module';
 @NgModule({
   declarations: [
     PayComponent
@@ -37,7 +37,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatProgressBarModule,
     MatDividerModule,
     MatStepperModule,
-    MatTooltipModule
+    MatTooltipModule,
+    InvoiceModule
   ],
   exports: [
     PayComponent
