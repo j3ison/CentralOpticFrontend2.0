@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { MyDataServices } from 'src/app/auth/mydata.service';
 import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
 import { DataGlobalService } from 'src/app/modules/view-data/services/data-global.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-employee',
@@ -56,7 +57,7 @@ export class EmployeeComponent {
       if (item) {
 
         this.itemInfoUpdate = {
-          codigo: item.codigo_Empleado,
+          codigo: item.numEmpleado,
           cedula: item.cedula !== 'Dato no existente' ? item.cedula : '',
           nombre: item.nombres,
           apellido: item.apellidos,
@@ -424,9 +425,9 @@ formGetContactUpdateEmployee(fr: string) {
 
   saveDataUpdate() {
     let data = {
-      cedula: this.itemInfoUpdate.cedula !== '' ?this.itemInfoUpdate.cedula:null,
       nombres: this.itemInfoUpdate.nombre,
       apellidos: this.itemInfoUpdate.apellido,
+      cedula: this.itemInfoUpdate.cedula !== '' ?this.itemInfoUpdate.cedula:null,
       direccion: this.itemInfoUpdate.direccion !== ''?this.itemInfoUpdate.direccion:null,
       fechaNac: this.itemInfoUpdate.fechaNac !== '' ?this.itemInfoUpdate.fechaNac:null,
     }
