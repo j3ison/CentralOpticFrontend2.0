@@ -561,6 +561,8 @@ export class ClientComponent {
     })
 
     if (this.itemContactUpdateNew.phone1 !== '' && this.itemContactUpdate.phone1 !== '') {
+      console.log(this.itemContactUpdateNew.phone1)
+      console.log(this.itemContactUpdate.phone1)
       let phone = {
         codigo_Cliente: this.itemInfoUpdate.codigo,
         telefonoAnterior: this.itemContactUpdate.phone1,
@@ -592,6 +594,7 @@ export class ClientComponent {
       }
 
       this.mydataservices.updateData('telefonocliente', phone, '').then((success) => {
+
         if (success) {
           console.log('funciono telefono 2')
         }
