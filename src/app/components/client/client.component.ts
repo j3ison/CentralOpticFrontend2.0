@@ -661,10 +661,6 @@ export class ClientComponent {
       })
     }
 
-
-
-
-
   }
 
 
