@@ -549,4 +549,59 @@ formGetContactUpdateEmployee(fr: string) {
 
   }
 
+  // Funciones terciarias para la animacion de iconos
+
+  // Animaciones del icono del telefono
+  twoPhone: boolean = false;
+  iconAddPhone: boolean = false;
+  iconSubPhone: boolean = false;
+
+  classIconPhone() {
+    return this.twoPhone ?
+      !this.iconSubPhone ? 'fa-solid fa-minus' : 'fa-solid fa-circle-minus'
+      :
+      !this.iconAddPhone ? 'fa-solid fa-plus' : 'fa-solid fa-circle-plus'
+  }
+
+  iconChangeEnterPhone() {
+    this.iconAddPhone = true
+    this.iconSubPhone = true
+  }
+
+  iconChangeOverPhone() {
+    this.iconAddPhone = false
+    this.iconSubPhone = false
+  }
+
+  clickPhone() {
+    this.twoPhone = !this.twoPhone
+  }
+
+  // Animaciones del icono del correo
+
+  twoMail: boolean = false;
+  iconAddMail: boolean = false;
+  iconSubMail: boolean = false;
+
+  classIconMail() {
+    return this.twoMail ?
+      !this.iconAddMail ? 'fa-solid fa-minus' : 'fa-solid fa-circle-minus'
+      :
+      !this.iconSubMail ? 'fa-solid fa-plus' : 'fa-solid fa-circle-plus'
+  }
+
+  iconChangeEnterMail() {
+    this.iconAddMail = true
+    this.iconSubMail = true
+  }
+
+  iconChangeOverMail() {
+    this.iconSubMail = false
+    this.iconAddMail = false
+  }
+
+  clickMail() {
+    this.twoMail = !this.twoMail
+  }
+
 }
