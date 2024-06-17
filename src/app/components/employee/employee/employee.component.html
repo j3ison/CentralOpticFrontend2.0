@@ -3,7 +3,120 @@
 
 
 
-<ng-template #formcreate ></ng-template>
+<ng-template #formcreate>
+    <div class="container-form-create">
+        <form class="content-form" [formGroup]="formCreateEmployee">
+            <h1>Formulario Empleado</h1>
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Cedula</label>
+                    <input class="form-data" type="text" formControlName="identityCard" [(ngModel)]="itemCreate.cedula">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                </div>
+
+                <!-- <div class="form">
+                    <label class="title">Empresa Asociada*</label>
+                    <input class="form-data" type="text" formControlName="AssociatedCompany" [matAutocomplete]="auto"
+                        [(ngModel)]="itemCreate.empresa_Asociada">
+                    <i class="form-icon fa-solid fa-chevron-down"></i>
+
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option.nombre"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option.nombre}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateClient('AssociatedCompany').valid || (formGetCreateClient('AssociatedCompany').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div> -->
+
+                <div class="form">
+                    <mat-form-field class="form-field-date">
+                        <mat-label class="title">Fecha de nacimiento</mat-label>
+                        <input matInput [matDatepicker]="datepicker" formControlName="birthday"
+                            [(ngModel)]="itemCreate.fechaNac">
+
+                        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker>
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Nombres*</label>
+                    <input class="form-data" type="text" formControlName="name" [(ngModel)]="itemCreate.nombres">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateEmployee('name').valid || (formGetCreateEmployee('name').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+                <div class="form">
+                    <label class="title">Apellidos*</label>
+                    <input class="form-data" type="text" formControlName="lastName" [(ngModel)]="itemCreate.apellidos">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateEmployee('lastName').valid || (formGetCreateEmployee('lastName').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="content-form-item">
+
+                <mat-form-field class="form">
+                    <mat-label class="title">Dirección</mat-label>
+                    <textarea class="form-data" formControlName="address" matInput
+                        [(ngModel)]="itemCreate.direccion"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="content-form-item">
+                <div class="form">
+                    <div class="form-title">
+                        <label class="title">Telefono</label>
+                        <i class="icon" [ngClass]="classIconPhone()" (mouseenter)="iconChangeEnterPhone()"
+                            (mouseout)="iconChangeOverPhone()" (click)="clickPhone()"></i>
+                    </div>
+                    <input class="form-data" type="number" formControlName="phone1" [(ngModel)]="itemCreate.telefonos1">
+                    <i class="form-icon fa-solid fa-mobile-screen-button"></i>
+
+                    <input *ngIf="twoPhone" class="form-data" type="number" formControlName="phone2"
+                        [(ngModel)]="itemCreate.telefonos2">
+                    <i *ngIf="twoPhone" class="form-icon fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <div class="form">
+                    <div class="form-title">
+                        <label class="title" style="text-align: center;">Correo</label>
+                        <i class="icon" [ngClass]="classIconMail()" (mouseenter)="iconChangeEnterMail()"
+                            (mouseout)="iconChangeOverMail()" (click)="clickMail()"></i>
+                    </div>
+                    <input class="form-data" type="email" formControlName="mail1" [(ngModel)]="itemCreate.correos1">
+                    <i class="form-icon fa-regular fa-envelope fa-solid"></i>
+
+                    <input *ngIf="twoMail" class="form-data" type="email" formControlName="mail2"
+                        [(ngModel)]="itemCreate.correos2">
+                    <i *ngIf="twoMail" class="form-icon fa-regular fa-envelope fa-solid"></i>
+                </div>
+            </div>
+
+            <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
+                <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
+                    [disabled]="formCreateEmployee.invalid" (click)="saveDataConfirmed()">
+                    Guardar
+                    <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</ng-template>
 
 <ng-template #item let-data>
     <mat-card class="card-invoice" [ngClass]="itemClick?.codigo_Empleado===data.codigo_Empleado?'card-invoice-active':''"
@@ -42,7 +155,7 @@
                 </div>
                 <div *ngFor="let correo of data.correos.split(',')" matTooltip="Copiar Correo Electronico"
                     matTooltipPosition="right" (click)="copyToClipboard(correo)">
-                    <span class="text-card-contet"> 
+                    <span class="text-card-contet">
                         <i class="fa-regular fa-envelope" style="margin-right: 5px; background: linear-gradient(135deg, rgb(66, 133, 244), rgb(234, 67, 53), rgb(251, 188, 4), rgb(52, 168, 83));
                         -webkit-background-clip: text;
                         background-clip: text;
@@ -55,7 +168,7 @@
                         <i class="fa-solid fa-cake-candles" style="
                         background: linear-gradient(to bottom, rgb(255, 219, 99),rgb(255, 219, 99),rgb(255, 219, 99), rgb(234, 67, 53),
                         rgb(143, 224, 255),rgb(189, 237, 255),rgb(143, 224, 255),
-                        rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201), 
+                        rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),
                         rgb(243, 162, 80),rgb(243, 162, 80),rgb(243, 162, 80),rgb(243, 162, 80));
                         -webkit-background-clip: text;
                         background-clip: text;
@@ -79,7 +192,7 @@
             <div class="content-img-info">
                 <img class="img-info" src="https://cdn-icons-png.flaticon.com/512/15430/15430330.png" alt="imagen empleado">
             </div>
-    
+
             <div class="content-texts-info">
                 <div class="info-profile">
                     <span class="info-text-profile"><strong>Cedula :</strong></span>
@@ -97,14 +210,14 @@
                     <span class="info-text-profile"><strong>Dirección :</strong></span>
                     <span class="info-text-profile">{{itemClick.direccion}}</span>
                 </div>
-                
+
             </div>
         </div>
-        
+
         <div class="block-content-info">
             <h1 class="block-title-info">Contactos</h1>
         </div>
-    
+
         <div class="content-texts-info">
             <div class="info-profile">
                 <span class="info-text-profile"><strong>Telefonos : </strong></span>
@@ -115,7 +228,7 @@
                 <span class="info-text-profile">{{itemClick.correos}}</span>
             </div>
         </div>
-        
+
     </div>
 </ng-template>
 
