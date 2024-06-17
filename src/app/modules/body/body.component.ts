@@ -23,7 +23,7 @@ export class BodyComponent implements OnInit{
 
     let styleClass = 'this.screenWidth';
     
-    if((this.router.url=='/login')){
+    if((this.router.url=='/login' || this.router.url=='/email-service' || this.router.url=='/change-password')){
       styleClass='body-full'
       this.renderer.removeClass(document.body, 'reduced-height');
     }else if(this.collapsed && this.screenWidth > 834){

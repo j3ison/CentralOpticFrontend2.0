@@ -29,14 +29,14 @@ export class AppComponent implements OnInit{
   }
 
   onNavDesative():boolean{
-    if(this.router.url=='/login'){
+    if(this.router.url=='/login' || this.router.url=='/email-service' || this.router.url=='/change-password'){
       return false
     }
     return true
   } 
 
   onHeaderDesactive():boolean{
-    if(this.router.url=='/login'){
+    if(this.router.url=='/login' || this.router.url=='/email-service' || this.router.url=='/change-password'){
       return false
     }
     return true
