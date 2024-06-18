@@ -67,5 +67,9 @@ export class LoginComponent implements OnInit {
     this.matDialogRef.close()
   }
 
+  email_emit(){
+    this.router.navigateByUrl('/email-service');
+  }
+
 
 }

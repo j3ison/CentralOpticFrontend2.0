@@ -1,0 +1,29 @@
+<div style="width: calc(100%); height: calc(100%); display: flex; justify-content: center; align-items: center;">
+    <div style="margin: 10px;
+    padding: 10px;
+    display: flex;
+    width: 450px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;">
+        <h1 style=" width: calc(100%);
+        text-align: center;
+        font-family: 'Crimson Text', serif; font-weight: 600;
+        font-size: 24px;"> Ingrese su email</h1>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                aria-describedby="basic-addon1" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <div style="display: flex; width: calc(100%); align-items: center; justify-content: flex-end;">
+            <button class="btn btn-outline-success" (click)="sendResetEmail(email)">Enviar</button>
+        </div>
+    </div>
+</div>

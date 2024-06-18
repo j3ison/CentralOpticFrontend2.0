@@ -1,11 +1,4 @@
-<!-- <app-view-data [ItemViewGrid]="customTemplate" 
-[FormView]="form" [ItemData]="data$" 
- [ItemData]="data$" 
- [columns]="tableColumnsProveedor" 
- [clickItems]="dataItems">
-</app-view-data> -->
-
-<app-view-data [ItemViewGrid]="customTemplate" [FormView]="form" [ItemData]="data$" [columns]="tableColumnsProveedor"
+<app-view-data [ItemViewGrid]="customTemplate" [FormView]="formupdate" [ItemData]="data$" [columns]="tableColumnsInventory"
   [clickItems]="dataItems" [FormCreateView]="form"></app-view-data>
 
 
@@ -26,72 +19,143 @@
   </mat-card>
 </ng-template>
 
-
-
-<!-- <ng-template #customTemplate let-data>
-  <mat-card class="example-card" (click)="onItemClick(data)">
-    <mat-card-header>
-      <mat-card-title-group>
-        <mat-card-title>{{data.codProducto}}</mat-card-title>
-      </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content>
-      {{data.descripcion}}
-    </mat-card-content>
-  </mat-card>
-</ng-template> -->
-
-<ng-template #form let-data>
+<ng-template #form>
   <div class="container-form">
-    <form class="content-form">
-      <h1>Actalizar Producto</h1>
+    <form class="content-form" [formGroup]="formCreate">
+      <h1 *ngIf="item">Actualizar Producto</h1>
+      <h1 *ngIf="!item">Agregar Producto</h1>
 
       <div class="content-form-item">
         <div class="form">
           <label class="title">Codigo</label>
-          <input class="form-data" type="text" [value]="data.codProducto">
+          <input class="form-data" type="text" formControlName="codProducto" >
         </div>
 
         <div class="form">
           <label class="title">Descripcion</label>
-          <input class="form-data" type="text" [value]="data.descripcion">
+          <input class="form-data" type="text" formControlName="descripcion" >
         </div>
       </div>
 
       <div class="content-form-item">
         <div class="form">
           <label class="title">Tipo de producto</label>
-          <input class="form-data" type="text" [value]="data.tipoProducto">
+          <input class="form-data" type="text" formControlName="tipoProducto"  [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of listTypeProduct | async" [value]="option.tipoProducto"
+                style="font-family: 'Crimson Text', serif; color: black;">
+                {{option.tipoProducto}}
+            </mat-option>
+        </mat-autocomplete>
         </div>
 
         <div class="form">
           <label class="title">Precio Venta</label>
-          <input class="form-data" type="text" [value]="data.precioVenta">
+          <input class="form-data" type="text" formControlName="precioVenta">
         </div>
 
         <div class="form">
           <label class="title">Precio Compra</label>
-          <input class="form-data" type="text" [value]="data.precioCompra">
+          <input class="form-data" type="text" formControlName="precioCompra">
         </div>
       </div>
 
       <div class="content-form-item">
         <div class="form">
+          <label class="title">Cantidad</label>
+          <input class="form-data" type="text" formControlName="cantidad">
+        </div>
+
+        <div class="form">
           <label class="title">Stock Minimo</label>
-          <input class="form-data" type="text" [value]="data.stockMinimo">
+          <input class="form-data" type="text" formControlName="stockMinimo">
         </div>
 
         <div class="form">
           <label class="title">Stock Maximo</label>
-          <input class="form-data" type="text" [value]="data.stockMaximo">
+          <input class="form-data" type="text"formControlName="stockMaximo">
         </div>
       </div>
 
       <div class="form-button">
         <button class="btn btn-danger">Cancelar</button>
 
-        <button class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+        <button class="btn btn-primary" (click)="saveDataConfirmed()" [disabled]="formCreate.invalid">Guardar</button>
       </div>
     </form>
   </div>
 </ng-template>
+
+<ng-template #formupdate>
+  <div class="container-form">
+    <form class="content-form" [formGroup]="formUpdate">
+      <h1 *ngIf="item">Actualizar Producto</h1>
+      <h1 *ngIf="!item">Agregar Producto</h1>
+
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Codigo</label>
+          <input class="form-data" type="text" formControlName="codProducto" readonly>
+        </div>
+
+        <div class="form">
+          <label class="title">Descripcion</label>
+          <input class="form-data" type="text" formControlName="descripcion" >
+        </div>
+
+        <div class="form">
+          <label class="title">Estado</label>
+          <input class="form-data" type="text"formControlName="estado">
+        </div>
+      </div>
+
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Tipo de producto</label>
+          <input class="form-data" type="text" formControlName="tipoProducto"  [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of listTypeProduct | async" [value]="option.tipoProducto"
+                style="font-family: 'Crimson Text', serif; color: black;">
+                {{option.tipoProducto}}
+            </mat-option>
+        </mat-autocomplete>
+        </div>
+
+        <div class="form">
+          <label class="title">Precio Venta</label>
+          <input class="form-data" type="text"formControlName="precioVenta">
+        </div>
+
+        <div class="form">
+          <label class="title">Precio Compra</label>
+          <input class="form-data" type="text" formControlName="precioCompra">
+        </div>
+      </div>
+
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Cantidad</label>
+          <input class="form-data" type="text" formControlName="cantidad">
+        </div>
+
+        <div class="form">
+          <label class="title">Stock Minimo</label>
+          <input class="form-data" type="text" formControlName="stockMinimo">
+        </div>
+
+        <div class="form">
+          <label class="title">Stock Maximo</label>
+          <input class="form-data" type="text"formControlName="stockMaximo">
+        </div>
+      </div>
+
+      <div class="form-button">
+        <button class="btn btn-danger">Cancelar</button>
+
+        <button class="btn btn-primary" (click)="saveDataConfirmedUpdate()" [disabled]="formUpdate.invalid">Guardar</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+

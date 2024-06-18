@@ -55,6 +55,11 @@
                 </mat-form-field>
               </div>
 
+              <div style="width: calc(100%); display: flex; justify-content: flex-end; margin-top: 3px; margin-bottom: 15px;">
+                <span style="font-family: 'Crimson Text', serif; font-size: 16px; color: #686868; font-weight: 900; cursor: pointer;" 
+                class="password-forgot" (click)="email_emit()">¿Has olvidado tu contraseña?</span>
+              </div>
+
               <div class="content-btn">
                 <button class="btn" color="primary" type="submit" [disabled]="loginForm.invalid" style="font-family: 'lato', sans-serif; font-weight: 700;
                 font-style: normal;">Iniciar sesión</button>

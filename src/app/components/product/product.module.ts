@@ -9,10 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { ProductComponent } from './product/product.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import {MatCardModule} from '@angular/material/card';
+import { SupplierModule } from './supplier/supplier.module';
 
 @NgModule({
   declarations: [
-    ProductComponent, SupplierComponent
+    ProductComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +21,8 @@ import {MatCardModule} from '@angular/material/card';
     MatDialogModule,
     ViewDataModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    SupplierModule
   ],
   providers: [DialogService],
 })

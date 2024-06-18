@@ -1,134 +1,88 @@
-<!-- <div class="container-profile" >
-    <div class="content-header-profile">
-        <h1 class="header-name-profile">{{itemUser[0]?.nombres }}</h1>
-        <div class="content-rigt-profile">
-            <h3 class="header-id-profile"></h3>
-            <button class="edit-profile"></button>
-        </div>
-    </div>
-    <div class="content-body-profile">
-        <div class="block-header-profile">
-            <h2 class="block-header-title-profile"> Información basica</h2>
-        </div>
-        <div class="content-content-body-profile">
-            <img src="" alt="" class="img-profile">
-            <div class="content-info-profile">
-                <div class="block-header-profile">
-                    <h2 class="block-header-title-profile">Información de Usuario</h2>
-                </div>
-                <div class="info-profile">
-                    <span class="info-text-profile"><strong></strong></span>
-                    <span class="info-text-profile"></span>
-                </div>
-                <div class="info-profile">
-                    <span class="info-text-profile"><strong></strong></span>
-                    <span class="info-text-profile"></span>
-                </div>
-                <div class="info-profile">
-                    <span class="info-text-profile"><strong></strong></span>
-                    <span class="info-text-profile"></span>
-                </div>
-                <div class="block-header-profile">
-                    <h2 class="block-header-title-profile">Información de Empleado</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content-contact-profile">
-        <div class="block-header-profile">
-            <h2 class="block-header-title-profile">Información de contacto</h2>
-        </div>
-        <div class="info-profile">
-            <span class="info-text-profile"><strong></strong></span>
-            <span class="info-text-profile"></span>
-        </div>
-        <div class="info-profile">
-            <span class="info-text-profile"><strong></strong></span>
-            <span class="info-text-profile"></span>
-        </div>
-
-
-    </div>
-</div> -->
-
-
 <div class="container">
-</div>
-<div class="container-profile">
-    <div class="container-content">
-        <img class="content-img" src="" alt="">
+    <div class="container-profile">
+        <div class="container-content profile-card">
+            <img class="content-img" src="'../../../../../../assets/images/Profile.png" alt="">
 
-        <h1 class="content-name">{{itemUser[0]?.nombres + itemUser[0]?.apellidos}}</h1>
-        <div class="content-text">
-            <span class="text"><strong>Cedula</strong></span>
-            <span class="text"></span>
-        </div>
-        <div class="content-text">
-            <span class="text"><strong>Contactos</strong></span>
-            <span class="text"></span>
-        </div>
-
-        <div *ngFor="let phone of itemEmploye[0]?.telefonos.split(' ,'); let i = index">
+            <h1 class="content-name" style="font-family: 'Crimson Text', serif; font-weight: 900;
+            font-size: 28px;">{{itemUser[0]?.nombres + itemUser[0]?.apellidos}}</h1>
             <div class="content-text">
-                <span class="text"><strong *ngIf="i===0">Telefono</strong></span>
-                <span class="text">{{phone}}</span>
+                <span class="text"><strong>Cedula</strong></span>
+                <span class="text">{{itemEmploye[0]?.cedula}}</span>
             </div>
-        </div>
-
-        <div *ngFor="let mail of itemEmploye[0]?.correos.split(' ,'); let i = index">
             <div class="content-text">
-                <span class="text"><strong *ngIf="i===0">Correo</strong></span>
-                <span class="text">{{mail}}</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-content-rigth">
-        <div class="container-content">
-            <div class="content-text">
-                <span class="text"><strong>Información de Empleado </strong></span>
-                <span class="text">{{' '+itemEmploye[0]?.numEmpleado}}</span>
+                <span class="text"><strong>Contactos</strong></span>
+                <span class="text"></span>
             </div>
 
-            <div class="separator"></div>
+            <div *ngFor="let phone of itemEmploye[0]?.telefonos.split(' ,'); let i = index" style="width: calc(100%);">
+                <div class="content-text">
+                    <span class="text"><strong *ngIf="i===0">Telefono</strong></span>
+                    <span class="text">{{phone}}</span>
+                </div>
+            </div>
 
-            <div class="content-text">
-                <span class="text"><strong>Estado del Empleado</strong></span>
-                <span class="text">{{itemEmploye[0]?.estado}}</span>
+            <div *ngFor="let mail of itemEmploye[0]?.correos.split(' ,'); let i = index" style="width: calc(100%);">
+                <div class="content-text">
+                    <span class="text"><strong *ngIf="i===0">Correo</strong></span>
+                    <span class="text">{{mail}}</span>
+                </div>
             </div>
-            <div class="content-text">
-                <span class="text"><strong>Fecha de Nacimiento</strong></span>
-                <span class="text">{{itemEmploye[0]?.fechaNac}}</span>
-            </div>
-            <div class="content-text">
-                <span class="text"><strong>Edad</strong></span>
-                <span class="text">{{itemEmploye[0].edad}}</span>
-            </div>
-            <div class="content-text">
-                <span class="text"><strong>Dirección</strong></span>
-                <span class="text">{{itemEmploye[0]?.direccion}}</span>
-            </div>
+
+            <!-- <input matInput (keyup)="getSearchFilter($event)" type="search" class="search" name="" id="" placeholder="Search..."> -->
+            <!-- <input matInput  type="search" class="search" name="" id="" placeholder="Search..."> -->
+
+            <button class="btn btn-outline-warning" style="margin-top: 5px;">Editar</button>
         </div>
 
-        <div class="container-content">
-            <div class="content-text">
-                <span class="text"><strong>Información de Usuario</strong></span>
-                <span class="text">{{itemUser[0]?.idUsuario}}</span>
+        <div class="container-content-rigth">
+            <div class="container-content">
+                <div class="content-text" style="margin-bottom: 1.5rem; border-bottom: 1px solid #000;">
+                    <span class="text" style="font-size: 18px;"><strong>Información de Empleado </strong></span>
+                    <span class="text" tyle="font-size: 18px;">{{' '+itemEmploye[0]?.numEmpleado}}</span>
+                </div>
+
+
+
+                <div class="separator"></div>
+
+                <div class="content-text">
+                    <span class="text"><strong>Estado del Empleado</strong></span>
+                    <span class="text">{{itemEmploye[0]?.estado}}</span>
+                </div>
+                <div class="content-text">
+                    <span class="text"><strong>Fecha de Nacimiento</strong></span>
+                    <span class="text">{{itemEmploye[0]?.fechaNac}}</span>
+                </div>
+                <div class="content-text">
+                    <span class="text"><strong>Edad</strong></span>
+                    <span class="text">{{itemEmploye[0]?.edad}}</span>
+                </div>
+                <div class="content-text">
+                    <span class="text"><strong>Dirección</strong></span>
+                    <span class="text">{{itemEmploye[0]?.direccion}}</span>
+                </div>
             </div>
 
-            <div class="separator"></div>
+            <div class="container-content">
+                <div class="content-text" style="margin-bottom: 1.5rem; border-bottom: 1px solid #000;">
+                    <span class="text" tyle="font-size: 18px;"><strong>Información de Usuario</strong></span>
+                    <span class="text" tyle="font-size: 18px;">{{itemUser[0]?.idUsuario}}</span>
+                </div>
 
-            <div class="content-text">
-                <span class="text"><strong>Nombre de usuario</strong></span>
-                <span class="text">{{itemUser[0]?.nombreUsuario}}</span>
-            </div>
-            <div class="content-text">
-                <span class="text"><strong>Clave de usuario</strong></span>
-                <span class="text">{{itemUser[0]?.clave}}</span>
-            </div>
-            <div class="content-text">
-                <span class="text"><strong>Rol de usuario</strong></span>
-                <span class="text">{{itemUser[0]?.rol}}</span>
+                <div class="separator"></div>
+
+                <div class="content-text">
+                    <span class="text"><strong>Nombre de usuario</strong></span>
+                    <span class="text">{{itemUser[0]?.nombreUsuario}}</span>
+                </div>
+                <div class="content-text">
+                    <span class="text"><strong>Clave de usuario</strong></span>
+                    <span class="text">{{itemUser[0]?.clave}}</span>
+                </div>
+                <div class="content-text">
+                    <span class="text"><strong>Rol de usuario</strong></span>
+                    <span class="text">{{itemUser[0]?.rol}}</span>
+                </div>
             </div>
         </div>
     </div>

@@ -18,12 +18,12 @@ import { AddRegisterModule } from './register-product/add-register/add-register.
 import { RegisterProductModule } from './register-product/register-product.module';
 import { PayModule } from './pay/pay.module';
 import { LabModule } from './lab/lab.module';
-
-
+import { EmailServiceComponent } from './email-service/email-service.component';
+import { EmailServiceModule } from './email-service/email-service.module';
+import { ChangePasswordModule } from './change-password/change-password.module';
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     LoginModule, 
@@ -40,7 +40,8 @@ import { LabModule } from './lab/lab.module';
     RegisterProductModule,
     PayModule,
     ProviderModule,
-    LabModule
+    LabModule,
+    ChangePasswordModule
   ],
   exports: [DashboardModule, 
     LoginModule, 
@@ -54,7 +55,9 @@ import { LabModule } from './lab/lab.module';
     AddRegisterModule, 
     RegisterProductModule,
     PayModule,ProviderModule,
-    LabModule
+    LabModule,
+    EmailServiceModule,
+    ChangePasswordModule
   ],
   providers: [DialogService],
 })

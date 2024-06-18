@@ -6,6 +6,7 @@ import { isLoggedInGuard } from 'src/app/auth/guards/is-logged-in.guard';
 import { hasRole } from 'src/app/auth/guards/has-role.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { RollComponent } from './roll/roll.component';
+import { EmailServiceComponent } from '../email-service/email-service.component';
 
 const routes: Routes = [
   {
