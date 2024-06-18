@@ -1,10 +1,7 @@
-
-
-<app-view-data [ItemViewGrid]="customTemplate" 
-    [FormView]="form" [ItemData]="data$" 
+<app-view-data [ItemViewGrid]="item" [ItemData]="data$" 
     [columns]="tableColumnsProveedor" 
     [clickItems]="dataItems" 
-    [FormCreateView]="form"></app-view-data>
+    [FormCreateView]="formcreate"></app-view-data>
 
     
 
@@ -24,34 +21,176 @@
     </mat-card>
 </ng-template>
 
+<ng-template #item let-data>
+    <mat-card class="card-invoice" [ngClass]="itemClick?.idUsuario===data.idUsuario?'card-invoice-active':''"
+        (click)="onItemClickActive(data)">
+        <div class="container-card-invoice">
+            <div class="content-header-card-invoice">
+                <!-- imagen y id de la factura -->
+                <img mat-card-sm-image src="	https://img.freepik.com/free-photo/user-front-side-with-white-background_187299-40007.jpg"
+                    class="content-header-icon">
+                <h1 class="content-header-title">{{data.cedula}}</h1>
+            </div>
+            <div class="content-body-card-invoice">
+                <h2 class="text-card-title">
+                    <strong>
+                        Nombre del Empleado:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.nombres + ' ' + data.apellidos }}</span>
 
-<ng-template #form let-data>
-    <div class="container-form">
-        <form class="content-form">
-            <h1>Formulario Usuarios</h1>
+                <h2 class="text-card-title">
+                    <strong>
+                        Estado:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.estado}}</span>
+
+                <h2 class="text-card-title">
+                    <strong>
+                        Nombre Usuario:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.nombreUsuario}}</span>
+
+                <h2 class="text-card-title">
+                    <strong>
+                        Contacto:
+                    </strong>
+                </h2>
+                
+                <div *ngFor="let correo of data.correo?.split(',')" matTooltip="Copiar Correo Electronico"
+                    matTooltipPosition="right" (click)="copyToClipboard(correo)">
+                    <span class="text-card-contet"> 
+                        <i class="fa-regular fa-envelope" style="margin-right: 5px; background: linear-gradient(135deg, rgb(66, 133, 244), rgb(234, 67, 53), rgb(251, 188, 4), rgb(52, 168, 83));
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        color: transparent;"></i>{{correo}}</span>
+                </div>
+
+                <h2 class="text-card-title">
+                    <strong>
+                        Rol:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.rol}}</span>
+            </div>
+        </div>
+    </mat-card>
+</ng-template>
+
+
+<ng-template #formcreate>
+    <div class="container-form-create">
+        <form class="content-form" [formGroup]="formCreateClient">
+            <h1>Formulario Cliente</h1>
+            
             <div class="content-form-item">
                 <div class="form">
-                    <label class="title">rol</label>
-                    <input class="form-data" type="text" [value]="data.rol">
-                    <i class="fa-solid fa-address-book"></i>
+                    <label class="title">Nombre</label>
+                    <input class="form-data" type="text" formControlName="nombres" [(ngModel)]="itemCreate.nombres">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+                <div class="form">
+                    <label class="title">Apellido*</label>
+                    <input class="form-data" type="text" formControlName="apellidos" [(ngModel)]="itemCreate.apellidos">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateClient('apellidos').valid || (formGetCreateClient('apellidos').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+
                 </div>
             </div>
+
             <div class="content-form-item">
-                <mat-form-field class="form">
-                    <mat-label>Descripción</mat-label>
-                    <textarea matInput placeholder=""></textarea>
-                </mat-form-field>
+
+                <div class="form">
+                    <label class="title">Empleado</label>
+                    <input class="form-data" type="text" formControlName="numero_Empleado" [(ngModel)]="itemEmployee.numEmpleado">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge" (click)="openDialogWithTemplate(tableEmployee)"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+
+                <div class="form">
+                    <label class="title">Rol*</label>
+                    <input class="form-data" type="text" formControlName="rol" [matAutocomplete]="auto"
+                        [(ngModel)]="itemCreate.rol">
+                    <i class="form-icon fa-solid fa-chevron-down"></i>
+
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option.rol"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option.rol}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateClient('rol').valid || (formGetCreateClient('rol').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
             </div>
-            <div class="form-button">
-                <button class="btn btn-danger" #btnEnviar>
-                    Cancelar
-                </button>
-    
-                <button class="btn btn-primary" #btnEnviar>
+
+
+
+            <div class="content-form-item">
+
+                <div class="form">
+                    <label class="title">Nombre de usuario</label>
+                    <input class="form-data" type="text" formControlName="nombreUsuario" [(ngModel)]="itemCreate.nombreUsuario">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+                <div class="form">
+                    <label class="title">Clave</label>
+                    <input class="form-data" type="password" formControlName="clave" [(ngModel)]="itemCreate.nombreUsuario">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+            </div>
+
+            <div class="content-form-item">
+
+                <div class="form">
+                    <label class="title">Estado</label>
+                    <input class="form-data" type="text" formControlName="estado" [(ngModel)]="itemCreate.estado" readonly>
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+                
+                <div class="form">
+                    <div class="form-title">
+                        <label class="title" style="text-align: center;">Correo</label>
+                        <i class="icon" [ngClass]="classIconMail()" (mouseenter)="iconChangeEnterMail()"
+                            (mouseout)="iconChangeOverMail()" (click)="clickMail()"></i>
+                    </div>
+                    <input class="form-data" type="email" formControlName="mail1" [(ngModel)]="itemCreate.correos1">
+                    <i class="form-icon fa-regular fa-envelope fa-solid"></i>
+
+                    <input *ngIf="twoMail" class="form-data" type="email" formControlName="mail2"
+                        [(ngModel)]="itemCreate.correos2">
+                    <i *ngIf="twoMail" class="form-icon fa-regular fa-envelope fa-solid"></i>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
+                <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
+                    [disabled]="formCreateClient.invalid" (click)="saveDataConfirmed()">
                     Guardar
+                    <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
                 </button>
             </div>
-    
+
         </form>
     </div>
+</ng-template>
+
+<ng-template #tableEmployee>
+    <app-sub-tablet [data]="dataEmployee" [columns]=" tableColumnsEmployee"
+    (selectItemsCell)="resultDataTableProduct($event)" (cancelTable)="cancelDialogResult()">
+    </app-sub-tablet>
 </ng-template>

@@ -7,6 +7,7 @@ import { RollModule } from './roll/roll.module';
 import { ProfileModule } from './profile/profile.module';
 import { ViewDataModule } from 'src/app/modules/view-data/view-data.module';
 import { EmployeeModule1 } from './employee/employeeInfo.module';
+import { UserModule } from './user/user.module';
 @NgModule({
   declarations: [],
   imports: [
@@ -16,7 +17,8 @@ import { EmployeeModule1 } from './employee/employeeInfo.module';
     RollModule, 
     ProfileModule,
     ViewDataModule,
-    EmployeeModule1
+    EmployeeModule1,
+    UserModule
   ],
   providers: [DialogService],
 })

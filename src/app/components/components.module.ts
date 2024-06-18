@@ -21,7 +21,7 @@ import { LabModule } from './lab/lab.module';
 import { EmailServiceComponent } from './email-service/email-service.component';
 import { EmailServiceModule } from './email-service/email-service.module';
 import { ChangePasswordModule } from './change-password/change-password.module';
-
+import { EmployeeModule } from './employee/employee.module';
 @NgModule({
   declarations: [],
   imports: [
@@ -30,7 +30,6 @@ import { ChangePasswordModule } from './change-password/change-password.module';
     DashboardModule, 
     ComponentsRoutingModule, 
     ClientModule, 
-    UserModule, 
     InvoiceModule, 
     ProductModule, 
     InventoryModule, 
@@ -41,12 +40,12 @@ import { ChangePasswordModule } from './change-password/change-password.module';
     PayModule,
     ProviderModule,
     LabModule,
-    ChangePasswordModule
+    ChangePasswordModule,
+    EmployeeModule
   ],
   exports: [DashboardModule, 
     LoginModule, 
     ClientModule, 
-    UserModule, 
     InvoiceModule, 
     ProductModule, 
     InventoryModule, 
@@ -57,7 +56,8 @@ import { ChangePasswordModule } from './change-password/change-password.module';
     PayModule,ProviderModule,
     LabModule,
     EmailServiceModule,
-    ChangePasswordModule
+    ChangePasswordModule,
+    EmployeeModule
   ],
   providers: [DialogService],
 })

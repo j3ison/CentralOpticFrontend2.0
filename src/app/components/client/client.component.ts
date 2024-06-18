@@ -560,7 +560,7 @@ export class ClientComponent {
       }
     })
 
-    if (this.itemContactUpdateNew.phone1 !== '' && this.itemContactUpdate.phone1 !== '') {
+    if (this.itemContactUpdateNew.phone1 && this.itemContactUpdateNew.phone1 !== '' && this.itemContactUpdate.phone1 !== '') {
       console.log(this.itemContactUpdateNew.phone1)
       console.log(this.itemContactUpdate.phone1)
       let phone = {
@@ -574,7 +574,7 @@ export class ClientComponent {
           console.log('funciono telefono 1')
         }
       })
-    } else if (this.itemContactUpdateNew.phone1 !== '') {
+    } else if ( this.itemContactUpdateNew.phone1 && this.itemContactUpdateNew?.phone1 !== '' ) {
       let phone = {
         codigo_Cliente: this.itemInfoUpdate.codigo,
         telefonoNuevo: this.itemContactUpdateNew.phone1
@@ -586,7 +586,7 @@ export class ClientComponent {
       })
     }
 
-    if (this.itemContactUpdateNew.phone2 !== '' && this.itemContactUpdate.phone2 !== '') {
+    if (this.itemContactUpdateNew.phone2 && this.itemContactUpdateNew.phone2 !== '' && this.itemContactUpdate.phone2 !== '') {
       let phone = {
         codigo_Cliente: this.itemInfoUpdate.codigo,
         telefonoAnterior: this.itemContactUpdate.phone2,
@@ -599,7 +599,7 @@ export class ClientComponent {
           console.log('funciono telefono 2')
         }
       })
-    } else if (this.itemContactUpdateNew.phone2 !== '') {
+    } else if (this.itemContactUpdateNew.phone2 && this.itemContactUpdateNew.phone2 !== '') {
       let phone = {
         codigo_Cliente: this.itemInfoUpdate.codigo,
         telefonoNuevo: this.itemContactUpdateNew.phone2
@@ -613,7 +613,7 @@ export class ClientComponent {
 
     //////
 
-    if (this.itemContactUpdateNew.mail1 !== '' && this.itemContactUpdate.mail1 !== '') {
+    if ( this.itemContactUpdateNew.mail1 && this.itemContactUpdateNew.mail1 !== '' && this.itemContactUpdate.mail1 !== '') {
       let mail = {
         codigo_Cliente: this.itemInfoUpdate.codigo,
         correoAnterior: this.itemContactUpdate.mail1,
@@ -625,7 +625,7 @@ export class ClientComponent {
           console.log('funciono telefono 1')
         }
       })
-    } else if (this.itemContactUpdateNew.mail1 !== '') {
+    } else if (this.itemContactUpdateNew.mail1 && this.itemContactUpdateNew.mail1 !== '') {
       let mail = {
         codigo_Cliente: this.itemInfoUpdate.codigo,
         correoNuevo: this.itemContactUpdateNew.mail1
@@ -637,7 +637,7 @@ export class ClientComponent {
       })
     }
 
-    if (this.itemContactUpdateNew.mail2 !== '' && this.itemContactUpdate.mail2 !== '') {
+    if (this.itemContactUpdateNew.mail2 && this.itemContactUpdateNew.mail2 !== '' && this.itemContactUpdate.mail2 !== '') {
       let mail = {
         codigo_Cliente: this.itemInfoUpdate.codigo,
         correoAnterior: this.itemContactUpdate.mail2,
@@ -649,7 +649,7 @@ export class ClientComponent {
           console.log('funciono telefono 2')
         }
       })
-    } else if (this.itemContactUpdateNew.mail2 !== '') {
+    } else if (this.itemContactUpdateNew.mail2 && this.itemContactUpdateNew.mail2 !== '') {
       let mail = {
         codigo_Cliente: this.itemInfoUpdate.codigo,
         correoNuevo: this.itemContactUpdateNew.mail2
