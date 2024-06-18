@@ -248,6 +248,27 @@
                             <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
                         </div>
 
+
+
+                        <div class="form">
+                            <label class="title">Estado*</label>
+                            <input class="form-data" type="text" formControlName="state" [matAutocomplete]="auto"
+                                [(ngModel)]="itemInfoUpdate.state">
+                            <i class="form-icon fa-solid fa-chevron-down"></i>
+
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option"
+                                    style="font-family: 'Crimson Text', serif; color: black;">
+                                    {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <div class="alert alert-danger mt-1"
+                                [hidden]="formGetUpdateEmployee('state').valid || (formGetUpdateEmployee('state').pristine)">
+                                El campo no puede estar Vacio.
+                            </div>
+                        </div>
+
+
                         <div class="form">
                             <mat-form-field class="form-field-date">
                                 <mat-label class="title">Fecha de nacimiento</mat-label>
