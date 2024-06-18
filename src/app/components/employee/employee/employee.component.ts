@@ -244,7 +244,7 @@ formGetContactUpdateEmployee(fr: string) {
 
           if (this.itemCreate.telefonos1 && result) {
             let contact = {
-              codigo_Empleado: result.codigo_Empleado,
+              codigo_Empleado: result.numEmpleado,
               telefonoNuevo: this.itemCreate.telefonos1.toString()
             }
 
@@ -275,7 +275,7 @@ formGetContactUpdateEmployee(fr: string) {
 
           if (this.itemCreate.telefonos2 && result) {
             let contact = {
-              codigo_Empleado: result.codigo_Empleado,
+              codigo_Empleado: result.numEmpleado,
               telefonoNuevo: this.itemCreate.telefonos2.toString()
             }
 
