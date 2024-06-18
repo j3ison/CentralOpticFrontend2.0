@@ -2,7 +2,7 @@ import { Component, ElementRef } from '@angular/core';
 import { TableColumn } from 'src/app/modules/table/model/table-column';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, of, startWith } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MyDataServices } from 'src/app/auth/mydata.service';
 import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EmployeeComponent {
   respuesta: any;
+  itemUser: any;
  // itemClick: any;
 
   constructor(private mydataservices: MyDataServices,
@@ -40,6 +41,9 @@ export class EmployeeComponent {
     { label: 'Número de Empleado', def: 'numEmpleado', dataKey: 'numEmpleado' },
     { label: 'Teléfonos', def: 'telefonos', dataKey: 'telefonos' }
   ];
+  strignValues: any[] = ['Activo','Inactivo'];
+  listAssociatedCompanyFilter: Observable<string[]> = of(['Activo', 'Inactivo']);
+  
   itemClick: any = null;
   ngOnInit() {
     this.mydataservices.getData("empleado").subscribe((respuesta: any) => {
@@ -61,6 +65,7 @@ export class EmployeeComponent {
           cedula: item.cedula !== 'Dato no existente' ? item.cedula : '',
           nombre: item.nombres,
           apellido: item.apellidos,
+          state: item.estado ? 'Activo':'Inactivo',
           direccion: item.direccion !== 'Dato no existente' ? item.direccion : '',
           fechaNac: item.fechaNac !== 'Dato no existente' ? item.fechaNac : ''
         }
@@ -123,6 +128,7 @@ formGetCreateEmployee(fr: string) {
 itemInfoUpdate = {
   codigo: '',
   cedula: '',
+  state: '',
   nombre: '',
   apellido: '',
   direccion: '',
@@ -134,6 +140,7 @@ formInfoUpdateEmployee: FormGroup = this.formBuilder.group(
     'identityCard': ['', Validators.nullValidator],
     'name': ['', Validators.required],
     'lastName': ['', Validators.required],
+    'state': ['', Validators.required],
     'address': ['', Validators.nullValidator],
     'birthday': ['', Validators.nullValidator]
   }
@@ -244,7 +251,7 @@ formGetContactUpdateEmployee(fr: string) {
 
           if (this.itemCreate.telefonos1 && result) {
             let contact = {
-              codigo_Empleado: result.codigo_Empleado,
+              numEmpleado: result.numEmpleado,
               telefonoNuevo: this.itemCreate.telefonos1.toString()
             }
 
@@ -275,7 +282,7 @@ formGetContactUpdateEmployee(fr: string) {
 
           if (this.itemCreate.telefonos2 && result) {
             let contact = {
-              codigo_Empleado: result.codigo_Empleado,
+              numEmpleado: result.numEmpleado,
               telefonoNuevo: this.itemCreate.telefonos2.toString()
             }
 
@@ -301,7 +308,7 @@ formGetContactUpdateEmployee(fr: string) {
 
           if (this.itemCreate.correos1 && result) {
             let contact = {
-              codigo_Empleado: result.codigo_Empleado,
+              numEmpleado: result.numEmpleado,
               correoNuevo: this.itemCreate.correos1
             }
 
@@ -326,7 +333,7 @@ formGetContactUpdateEmployee(fr: string) {
 
           if (this.itemCreate.correos2 && result) {
             let contact = {
-              codigo_Empleado: result.codigo_Empleado,
+              numEmpleado: result.numEmpleado,
               correoNuevo: this.itemCreate.correos2
             }
 
@@ -428,6 +435,7 @@ formGetContactUpdateEmployee(fr: string) {
       nombres: this.itemInfoUpdate.nombre,
       apellidos: this.itemInfoUpdate.apellido,
       cedula: this.itemInfoUpdate.cedula !== '' ?this.itemInfoUpdate.cedula:null,
+      estado: this.itemInfoUpdate.state == 'Activo' ?true:false,
       direccion: this.itemInfoUpdate.direccion !== ''?this.itemInfoUpdate.direccion:null,
       fechaNac: this.itemInfoUpdate.fechaNac !== '' ?this.itemInfoUpdate.fechaNac:null,
     }
@@ -451,7 +459,7 @@ formGetContactUpdateEmployee(fr: string) {
 
     if (this.itemContactUpdateNew.phone1 !== '' && this.itemContactUpdate.phone1 !== '') {
       let phone = {
-        codigo_Empleado: this.itemInfoUpdate.codigo,
+        numEmpleado: this.itemInfoUpdate.codigo,
         telefonoAnterior: this.itemContactUpdate.phone1,
         telefonoNuevo: this.itemContactUpdateNew.phone1
       }
@@ -463,7 +471,7 @@ formGetContactUpdateEmployee(fr: string) {
       })
     } else if (this.itemContactUpdateNew.phone1 !== '') {
       let phone = {
-        codigo_Empleado: this.itemInfoUpdate.codigo,
+        numEmpleado: this.itemInfoUpdate.codigo,
         telefonoNuevo: this.itemContactUpdateNew.phone1
       }
       this.mydataservices.postData('telefonoEmpleado', phone).then((success) => {
@@ -475,7 +483,7 @@ formGetContactUpdateEmployee(fr: string) {
 
     if (this.itemContactUpdateNew.phone2 !== '' && this.itemContactUpdate.phone2 !== '') {
       let phone = {
-        codigo_Empleado: this.itemInfoUpdate.codigo,
+        numEmpleado: this.itemInfoUpdate.codigo,
         telefonoAnterior: this.itemContactUpdate.phone2,
         telefonoNuevo: this.itemContactUpdateNew.phone2
       }
@@ -487,7 +495,7 @@ formGetContactUpdateEmployee(fr: string) {
       })
     } else if (this.itemContactUpdateNew.phone2 !== '') {
       let phone = {
-        codigo_Empleado: this.itemInfoUpdate.codigo,
+        numEmpleado: this.itemInfoUpdate.codigo,
         telefonoNuevo: this.itemContactUpdateNew.phone2
       }
       this.mydataservices.postData('telefonoempleado', phone).then((success) => {
@@ -501,7 +509,7 @@ formGetContactUpdateEmployee(fr: string) {
 
     if (this.itemContactUpdateNew.mail1 !== '' && this.itemContactUpdate.mail1 !== '') {
       let mail = {
-        codigo_Empleado: this.itemInfoUpdate.codigo,
+        numEmpleado: this.itemInfoUpdate.codigo,
         correoAnterior: this.itemContactUpdate.mail1,
         correoNuevo: this.itemContactUpdateNew.mail1
       }
@@ -513,7 +521,7 @@ formGetContactUpdateEmployee(fr: string) {
       })
     } else if (this.itemContactUpdateNew.mail1 !== '') {
       let mail = {
-        codigo_Empleado: this.itemInfoUpdate.codigo,
+        numEmpleado: this.itemInfoUpdate.codigo,
         correoNuevo: this.itemContactUpdateNew.mail1
       }
       this.mydataservices.postData('correoEmpleado', mail).then((success) => {
@@ -525,7 +533,7 @@ formGetContactUpdateEmployee(fr: string) {
 
     if (this.itemContactUpdateNew.mail2 !== '' && this.itemContactUpdate.mail2 !== '') {
       let mail = {
-        codigo_Empleado: this.itemInfoUpdate.codigo,
+        numEmpleado: this.itemInfoUpdate.codigo,
         correoAnterior: this.itemContactUpdate.mail2,
         correoNuevo: this.itemContactUpdateNew.mail2
       }
@@ -537,7 +545,7 @@ formGetContactUpdateEmployee(fr: string) {
       })
     } else if (this.itemContactUpdateNew.mail2 !== '') {
       let mail = {
-        codigo_Empleado: this.itemInfoUpdate.codigo,
+        numEmpleado: this.itemInfoUpdate.codigo,
         correoNuevo: this.itemContactUpdateNew.mail2
       }
       this.mydataservices.postData('correoempleado', mail).then((success) => {

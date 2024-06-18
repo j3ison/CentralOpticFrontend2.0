@@ -1,1 +1,274 @@
-<p>lab works!</p>
+<app-view-data [ItemData]="data$" [columns]="tableColumnsCliente" [ItemViewGrid]="item"
+    [FormCreateView]="formcreate" [FormView]="formUpdate"  [FormInfoView]="itemInfo"></app-view-data>
+
+<ng-template #formUpdate>
+        <mat-stepper labelPosition="bottom" linear #stepper>
+            <mat-step [editable]="true">
+                <form [formGroup]="formInfoUpdateLab">
+                    <ng-template matStepLabel>Información Basica</ng-template>
+    
+                    <div class="container-form-step">
+                        <div class="content-form-item">
+                            <div class="form">
+                                <label class="title">Estado*</label>
+                                <input class="form-data" type="text" formControlName="state" [matAutocomplete]="auto"
+                                    [(ngModel)]="itemInfoUpdate.state">
+                                <i class="form-icon fa-solid fa-chevron-down"></i>
+    
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option"
+                                        style="font-family: 'Crimson Text', serif; color: black;">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <div class="alert alert-danger mt-1"
+                                    [hidden]="formGetUpdateLab('state').valid || (formGetUpdateLab('state').pristine)">
+                                    El campo no puede estar Vacio.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-form-item">
+                            <div class="form">
+                                <label class="title">Nombres*</label>
+                                <input class="form-data" type="text" formControlName="name"
+                                    [(ngModel)]="itemInfoUpdate.name">
+                                <i class="form-icon fa-solid fa-pencil"></i>
+                                <div class="alert alert-danger mt-1"
+                                    [hidden]="formGetCreateLab('name').valid || (formGetCreateLab('name').pristine)">
+                                    El campo no puede estar Vacio.
+                                </div>
+                            </div>
+                        </div>
+       
+                        <div class="content-form-item">
+    
+                            <mat-form-field class="form">
+                                <mat-label class="title">Dirección</mat-label>
+                                <textarea class="form-data" formControlName="address" matInput
+                                    [(ngModel)]="itemInfoUpdate.address"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="step-content-btn-first">
+                        <button mat-button matStepperNext class="step-btn-next">
+                            Siguiente
+                            <i class="icon-step fa-solid fa-right-to-bracket"></i>
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+    
+            <mat-step [editable]="true">
+                <!-- <mat-step [stepControl]="formDataClient" [editable]="true"> -->
+                <form [formGroup]="formContactUpdateLab">
+                    <ng-template matStepLabel>Contacto del laboratorio</ng-template>
+    
+                    <div class="container-form-step">
+    
+                        <div class="content-form-update">
+                            <div class="content-form-item">
+                                <div class="form">
+                                    <h1 class="title">Telefono Actual (1)</h1>
+                                    <input class="form-data" type="text" readonly [(ngModel)]="itemContactUpdate.phone1"
+                                        formControlName="phone1v">
+                                    <i class="fa-solid fa-phone-volume"></i>
+                                </div>
+                            </div>
+                            <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                                <i class="fa-solid fa-phone-slash icon-phone-" style="color: red;"></i>
+                                <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                                <i class="fa-solid fa-phone" style="color: #39a805;"></i>
+                            </div>
+                            <div class="content-form-item">
+                                <div class="form">
+                                    <h1 class="title">Telefono Nuevo (1)</h1>
+                                    <input class="form-data" type="text" formControlName="phone1"
+                                        [(ngModel)]="itemInfoUpdate.phone1v">
+                                    <i class="fa-solid fa-phone-volume"></i>
+                                </div>
+                            </div>
+                        </div>    
+    
+                        <div class="content-form-update">
+                            <div class="content-form-item">
+                                <div class="form">
+                                    <h1 class="title">Correo Actual (1)</h1>
+                                    <input class="form-data" type="text" readonly formControlName="mail1v"
+                                        [(ngModel)]="itemContactUpdate.mail1">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                            </div>
+                            <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                                <i class="fa-regular fa-envelope" style="color: red;"></i>
+                                <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                                <i class="fa-regular fa-envelope" style="color: #39a805;"></i>
+                            </div>
+                            <div class="content-form-item">
+                                <div class="form">
+                                    <h1 class="title">Correo Nuevo (1)</h1>
+                                    <input class="form-data" type="text" formControlName="mail1"
+                                        [(ngModel)]="itemInfoUpdate.mail1v">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+    
+    
+                    <div class="step-content-btn-first">
+                        <button mat-button matStepperPrevious class="step-btn-back">
+                            <i class="icon-step fa-solid fa-right-to-bracket" style="transform: rotate(180deg);"></i>
+                            Anterior
+                        </button>
+
+                        <button mat-button class="step-btn-next" style="background: #39a805 !important;"
+                            (click)="saveDataUpdateConfirmed()"
+                            [disabled]="formContactUpdateLab.invalid && formInfoUpdateLab.invalid">
+                            Guardar
+                            <i class="icon-step fa-regular fa-floppy-disk"></i>
+                        </button>
+                    </div>
+    
+                </form>
+            </mat-step>
+        </mat-stepper>
+</ng-template>
+
+<ng-template #formcreate>
+    <div class="container-form-create">
+            <form class="content-form" [formGroup]="formCreateLab">
+                <h1>Formulario laboratorio</h1>
+                    <div class="content-form-item">
+                        <div class="form">
+                            <label class="title">Nombres*</label>
+                            <input class="form-data" type="text" formControlName="name"
+                                [(ngModel)]="itemCreate.name">
+                            <i class="form-icon fa-solid fa-pencil"></i>
+                            <div class="alert alert-danger mt-1"
+                                [hidden]="formGetCreateLab('name').valid || (formGetCreateLab('name').pristine)">
+                                El campo no puede estar Vacio.
+                            </div>
+                        </div>
+                    </div>
+   
+                    <div class="content-form-item">
+                        <mat-form-field class="form">
+                            <mat-label class="title">Dirección</mat-label>
+                            <textarea class="form-data" formControlName="address" matInput
+                                [(ngModel)]="itemCreate.address"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                <div class="content-form-item">
+                    <div class="form">
+                        <div class="form-title">
+                            <label class="title">Telefono</label>
+                            <i class="icon" [ngClass]="classIconPhone()" (mouseenter)="iconChangeEnterPhone()"
+                                (mouseout)="iconChangeOverPhone()" (click)="clickPhone()"></i>
+                        </div>
+                        <input class="form-data" type="number" formControlName="phone1" [(ngModel)]="itemCreate.phone1">
+                        <i class="form-icon fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <div class="form">
+                        <div class="form-title">
+                            <label class="title" style="text-align: center;">Correo</label>
+                            <i class="icon" [ngClass]="classIconMail()" (mouseenter)="iconChangeEnterMail()"
+                                (mouseout)="iconChangeOverMail()" (click)="clickMail()"></i>
+                        </div>
+                        <input class="form-data" type="email" formControlName="mail1" [(ngModel)]="itemCreate.mail1">
+                        <i class="form-icon fa-regular fa-envelope fa-solid"></i>
+                    </div>
+                </div>
+                <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
+                    <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
+                        [disabled]="formCreateLab.invalid" (click)="saveDataConfirmed()">
+                        Guardar
+                        <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
+                    </button>
+                </div>
+
+            </form>
+    </div>
+
+</ng-template>
+
+<ng-template #item let-data>
+    <mat-card class="container-item-provider"
+        [ngClass]="itemClick?.codigo_Laboratorio===data.codigo_Laboratorio?'card-invoice-active':''">
+        <img src="../../../assets/images/provider-profile.jpg" alt="" class="img-item-provider">
+        <h1 class="title-item-provider">{{data.nombre}}</h1>
+        <span class="subtitle-item-provider">{{data.estado}}</span>
+        <div class="content-item-provider">
+            <div class="content-item-icon-provider" (click)="clickItem(true,data.codigo_Laboratorio)">
+                <i class="icon-item-provider fa-solid fa-phone" style="color: #25D366;"></i>
+            </div>
+            <div class="content-item-icon-provider" (click)="clickItem(false,data.codigo_Laboratorio)">
+                <i class="icon-item-provider fa-regular fa-envelope" style="background-image: linear-gradient(to bottom, #000ed6, #25D366, #E84436, #FBC004);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;"></i>
+            </div>
+        </div>
+
+        <div *ngIf="resultItemPhone(data.codigo_Laboratorio)">
+                <span class="text-item-contet"> <i class="fa-solid fa-phone"
+                        style="margin-right: 5px; color: rgb(37, 211, 102);"></i> {{data.telefono}}</span>
+        </div>
+
+        <div *ngIf="resultItemMail(data.codigo_Laboratorio)">
+                <span class="text-item-contet"> <i class="fa-regular fa-envelope" style="margin-right: 5px; background: linear-gradient(135deg, rgb(66, 133, 244), rgb(234, 67, 53), rgb(251, 188, 4), rgb(52, 168, 83));
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    color: transparent;"></i> {{data.correo}}</span>
+        </div>
+    </mat-card>
+</ng-template>
+
+<ng-template #itemInfo>
+    <div *ngIf="itemClick" class="container-sub-info">
+        <div class="content-img-info">
+            <img class="img-info" src="../../../assets/images/profile-provider-infojpg.jpg" alt="">
+        </div>
+        <div class="container-info">
+            <div class="block-content-info">
+                <h2 class="block-title-info">Información Basica</h2>
+            </div>
+            <div class="content-texts-info">
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Nombre del laboratorio:</strong></span>
+                    <span class="info-text-profile">{{itemClick.nombre}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Estado :</strong></span>
+                    <span class="info-text-profile">{{itemClick.estado}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Direccion :</strong></span>
+                    <span class="info-text-profile">{{itemClick.direccion}}</span>
+                </div>
+            </div>
+    
+            
+    
+            <div class="block-content-info">
+                <h1 class="block-title-info">Contactos</h1>
+            </div>
+        
+            <div class="content-texts-info">
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Telefonos : </strong></span>
+                    <span class="info-text-profile">{{itemClick.telefono}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Correos :</strong></span>
+                    <span class="info-text-profile">{{itemClick.correo}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
