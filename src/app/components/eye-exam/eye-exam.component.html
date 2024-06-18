@@ -1,1 +1,14 @@
-<p>eye-exam works!</p>
+<app-view-data [ItemData]="data$" [columns]="tableColumnsExamen" [ItemViewGrid]="item"
+    [FormCreateView]="formcreate" [FormView]="formUpdate"  [FormInfoView]="itemInfo"></app-view-data>
+
+<ng-template #formUpdate>
+</ng-template>
+
+<ng-template #formcreate>
+</ng-template>
+
+<ng-template #item let-data>
+</ng-template>
+
+<ng-template #itemInfo>
+</ng-template>

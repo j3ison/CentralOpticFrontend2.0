@@ -18,6 +18,7 @@ import { AddRegisterModule } from './register-product/add-register/add-register.
 import { RegisterProductModule } from './register-product/register-product.module';
 import { PayModule } from './pay/pay.module';
 import { LabModule } from './lab/lab.module';
+import { EyeExamModule } from './eye-exam/eye-exam.module';
 import { EmailServiceComponent } from './email-service/email-service.component';
 import { EmailServiceModule } from './email-service/email-service.module';
 import { ChangePasswordModule } from './change-password/change-password.module';
@@ -41,6 +42,7 @@ import { ChangePasswordModule } from './change-password/change-password.module';
     PayModule,
     ProviderModule,
     LabModule,
+    EyeExamModule,
     ChangePasswordModule
   ],
   exports: [DashboardModule, 
@@ -56,6 +58,7 @@ import { ChangePasswordModule } from './change-password/change-password.module';
     RegisterProductModule,
     PayModule,ProviderModule,
     LabModule,
+    EyeExamModule,
     EmailServiceModule,
     ChangePasswordModule
   ],
