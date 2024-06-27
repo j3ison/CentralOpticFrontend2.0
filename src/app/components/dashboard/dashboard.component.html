@@ -1,20 +1,1480 @@
-<!-- <app-view-data [ItemViewGrid]="customTemplate" [ItemData]="data"></app-view-data> -->
+<div class="row justify-content-md-center">
+    <div class="col-3">
+        <h1><strong id="Reportes">Estadisticas</strong></h1>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    <div class="col">
+        <h2>Fecha de incio:</h2>
+    </div>
+    <div class="col">
 
 
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker1" [value]="dateinputformat.fechaInicial"
+                (dateInput)="onDateChange1($event)">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
 
 
-<!-- <ng-template #customTemplate let-data>
-    <mat-card class="example-card">
-        <div class="container">
-            <h1 class="name">{{data.nombre}}</h1>
-            <div class="content">
-                <h2>{{data.cedula}}</h2>
-                <div>
-                    <h3>{{data.edad}}</h3>
-                </div>
+    </div>
+    <div class="col">
+        <h2>Fecha de Fin:</h2>
+    </div>
+    <div class="col">
+
+
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker2" [value]="dateinputformat.fechaFinal"
+                (dateInput)="onDateChange2($event)">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+
+    </div>
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos/Servicios más vendidos</strong></h3>
+
             </div>
-            <h3 class="address">{{data.direccion}}</h3>
         </div>
-    </mat-card>
-</ng-template> -->
+    </div>
 
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos/Servicios más vendidos</strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripción:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Tipo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Unidades Vendidas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of BestSellers; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.tipo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.total }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos/Servicios menos vendidos</strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripción:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Tipo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Unidades Vendidas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of LessSold; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.tipo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.total }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos/Servicios menos vendidos</strong></h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Productos por tipo -->
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos/Servicios más vendidos de {{Tipo_producto}} </strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos/Servicios más vendidos de {{Tipo_producto}} </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripción:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Unidades Vendidas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of BestSellersCode; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.total }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos/Servicios menos vendidos de {{Tipo_producto}} </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripción:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Unidades Vendidas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of LessSoldCode; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.total }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos/Servicios menos vendidos de {{Tipo_producto}}</strong></h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<!-- Clientes recurrentes -->
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Clientes recurrentes</strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Clientes recurrentes </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Cedula:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cliente:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Veces Facturadas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let cliente of CurrentClient; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ cliente.cedula }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ cliente.cliente }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ cliente.veces_Facturadas }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+
+<!-- Proveedores recurrentes -->
+
+<div class="row">
+
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Proveedores mas recurrentes </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Empresa:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de productos adquiridos:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let proveedor of MostCurrentSupplier; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ proveedor.codigo_Proveedor }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ proveedor.nombre_Empresa }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ proveedor.total_Productos }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Proveedores mas recurrentes</strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<!-- Pruductos adquiridos -->
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos mas adquiridos</strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos mas adquiridos </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripción:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Tipo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Unidades Adquiridas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of MostPurchasedProducts; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.tipo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.total_Productos }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos menos adquiridos </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripción:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Tipo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Unidades Adquiridas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of LessPurchasedProducts; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.tipo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.total_Productos }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos menos adquiridos</strong></h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<!--Laboratorios -->
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Laboratorios mas Recurrentes</strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Laboratorios mas Recurrentes </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Nombre:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de Ordenes:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of MostCurrentLab; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Laboratorio }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.nombre }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.cantidad_Pedidos }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Laboratorios menos Recurrentes </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Nombre:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de Ordenes:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of LessCurrentLab; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Laboratorio }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.nombre }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.cantidad_Pedidos }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Laboratorios menos Recurrentes</strong></h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<!--Productos ordenados -->
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pedidos mas Ordenados</strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pedidos mas Ordenados</strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripcion:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Tipo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Veces Pedidas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of MostOrderedProduct; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.tipo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.veces_Pedidas }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Pedidos menos Ordenados </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripcion:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Tipo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Veces Pedidas:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let producto of LessOrderedProduct; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.codigo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.tipo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.veces_Pedidas }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pedidos menos Ordenados</strong></h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pacientes mas Recurrentes</strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Pacientes mas Recurrentes </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Paciente:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Edad:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Examenes realizados:</p>
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="row" *ngFor="let paciente of CurrentPatient; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ paciente.cliente }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ paciente.edad === 0 ? 'Sin registros' : paciente.edad}}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ paciente.examenes_Realizados }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Edades mas recurentes de pacientes </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Edad:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de pacientes:</p>
+                        </strong>
+                    </div>
+
+
+                </div>
+
+                <div class="row" *ngFor="let producto of CurrentPatienAge; let i = index">
+                        <div class="col-4 texto-pequeno" *ngIf="producto.edad !== 0">
+                            <p>{{ i + 1 }} - {{ producto.edad }}</p>
+                        </div>
+                        <div class="col texto-pequeno" *ngIf="producto.edad !== 0">
+                            <p>{{ producto.cantidad_Pacientes }}</p>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Edades mas recurentes de pacientes</strong></h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pagos Preferidos</strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Pagos Preferidos</strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Tipo de Pago:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Frecuencia del pago:</p>
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="row" *ngFor="let paciente of PreferredPaymentType; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ paciente.tipo_Pago }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ paciente.frecuencia_de_uso }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Empleados con mas ventas </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Numero del empleado:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Empleado:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de facturas emitidas:</p>
+                        </strong>
+                    </div>
+
+
+                </div>
+
+                <div class="row" *ngFor="let producto of BillsEmployee; let i = index">
+                        <div class="col-4 texto-pequeno">
+                            <p>{{ i + 1 }} - {{ producto.numero_Empleado }}</p>
+                        </div>
+                        <div class="col texto-pequeno">
+                            <p>{{ producto.empleado }}</p>
+                        </div>
+                        <div class="col texto-pequeno">
+                            <p>{{ producto.facturas_Emitidas }}</p>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Edades mas recurentes de pacientes</strong></h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Empleados con mas examenes realizados</strong></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Empleados con mas examenes realizados</strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Numero del empleado:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Empleado:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de examenes realizados:</p>
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="row" *ngFor="let paciente of ExamEyeEmployee; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ paciente.numero_Empleado }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ paciente.empleado }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ paciente.examenes_Realizados }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Empleados con mas pedidos realizados</strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Numero del empleado:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Empleado:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Pedidos de lentes realizados:</p>
+                        </strong>
+                    </div>
+
+
+                </div>
+
+                <div class="row" *ngFor="let producto of OrderEmployee; let i = index">
+                        <div class="col-4 texto-pequeno">
+                            <p>{{ i + 1 }} - {{ producto.numero_Empleado }}</p>
+                        </div>
+                        <div class="col texto-pequeno">
+                            <p>{{ producto.empleado }}</p>
+                        </div>
+                        <div class="col texto-pequeno">
+                            <p>{{ producto.pedidos_Realizados }}</p>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Empleados con mas pedidos realizados</strong></h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Beneficios por productos vendidos (C$) </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-1 texto-pequeno">
+                        <strong>
+                            <p>Codigo del producto:</p>
+                        </strong>
+                    </div>
+                    <div class="col-2 texto-pequeno">
+                        <strong>
+                            <p>Descripcion:</p>
+                        </strong>
+                    </div>
+                    <div class="col-1 texto-pequeno">
+                        <strong>
+                            <p>Tipo de Producto:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad Actual:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidades Vendidas:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Costo de Venta del producto:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Total Vendido:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad Obtenida:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Costo de Obtencion:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de Pedidos:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Costo del Pedido:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Costo Total:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Beneficios:</p>
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="row" *ngFor="let B of Benefits; let i = index">
+                    <div class="col-1 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ B.codigo_Producto }}</p>
+                    </div>
+                    <div class="col-2 texto-pequeno">
+                        <p>{{ B.descripcion }}</p>
+                    </div>
+                    <div class="col-1 texto-pequeno">
+                        <p>{{ B.tipo_Producto }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.cantidad_Actual }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.cantidades_Vendidas }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.costo_Venta }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.total_Vendido }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.cantidad_Obtenida }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.costo_Obtencion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.cantidad_Pedidos }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.costo_Pedido }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.costo_Total }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.beneficios }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Beneficios totales (C$)</strong></h3>
+
+                <div class="row">
+
+                    
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidades Vendidas:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Costo de Venta:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Total Vendido:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad Obtenida:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Costo de Obtencion:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de Pedidos:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Costo del Pedido:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Costo Total:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Beneficios:</p>
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="row" *ngFor="let B of AllBenefits; let i = index">
+                    <div class="col texto-pequeno">
+                        <p>{{ B.cantidades_Vendidas }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.costo_Venta }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.total_Vendido }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.cantidad_Obtenida }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.costo_Obtencion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.cantidad_Pedidos }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.costo_Pedido }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.costo_Total }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ B.beneficios }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+</div>
+<div class="row">
+    &nbsp;
+</div>

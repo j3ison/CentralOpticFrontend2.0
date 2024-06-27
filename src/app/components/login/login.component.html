@@ -20,7 +20,7 @@
 
         <mat-card-content>
           <div class="content-form">
-            <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <form name="loginForm" [formGroup]="loginForm">
 
               <div class="email-input">
                 <mat-form-field class="full-width input" appearance="outline">
@@ -60,12 +60,16 @@
                 class="password-forgot" (click)="email_emit()">¿Has olvidado tu contraseña?</span>
               </div>
 
-              <div class="content-btn">
-                <button class="btn" color="primary" type="submit" [disabled]="loginForm.invalid" style="font-family: 'lato', sans-serif; font-weight: 700;
-                font-style: normal;">Iniciar sesión</button>
-              </div>
+             
 
             </form>
+
+            <div class="content-btn" >
+              <button class="btn" color="primary" type="submit" [disabled]="loginForm.invalid" style="font-family: 'lato', sans-serif; font-weight: 700;
+              font-style: normal;" (click)="onSubmit()">Iniciar sesión</button>
+            </div>
+
+
           </div>
         </mat-card-content>
       </mat-card>
