@@ -59,6 +59,37 @@ export class MyDataServices {
     });
   }
 
+  postDataStatic(endpoint: string, body: any): Observable<any[]> {
+    //const bearerToken: string = this.cookieService.get('token');
+    const userFromLocal = this.cookieService.get(USER_LOCAL_STORAGE_KEY);
+    const {token}:LoginUser = JSON.parse(userFromLocal) as LoginUser;
+    localStorage.setItem('access_token', token);
+
+    //This is the authentication about
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      })
+    };
+
+    return this.http.post<any[]>( link + endpoint, body, httpOptions) 
+
+    // return new Promise<boolean>((resolve, reject) => {
+    //   this.http.post( link + endpoint, body, httpOptions)
+    //     .subscribe(
+    //       response => {
+    //         console.log('Insertado con éxito');
+    //         resolve(true);
+    //       },
+    //       error => {
+    //         console.log('Error al insertar los datos:', error);
+    //         resolve(false);
+    //       }
+    //     );
+    // });
+  }
+
+
   /* En el Json que se le pasa a body, o al objeto que se le pasa como parametro body No tiene que ir el identificador ya que en este caso solo se le pasa como parametro*/
 
   updateData(endpoint: string, body: any, Id: number | string) : Promise<boolean> {
