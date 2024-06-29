@@ -65,6 +65,10 @@ export class ViewDataComponent {
     this.formInfoView = formView;
   }
 
+  @Input() set cancelDialogView(cancel: boolean) {
+    this.cancelDialogResult()
+  }
+
 
 
   @Input() set tabletBtnUpdate(btnUpdate: boolean) {
@@ -139,7 +143,7 @@ export class ViewDataComponent {
         console.log(lowerCaseFilterValue)
         this.filteredItemData = this.itemData$.filter(item => {
           const objectValues = Object.values(item);
-          return objectValues.some((value:any) => value.toString().toLowerCase().includes(lowerCaseFilterValue));
+          return objectValues.some((value: any) => value.toString().toLowerCase().includes(lowerCaseFilterValue));
         });
       }
     })
@@ -185,7 +189,8 @@ export class ViewDataComponent {
   }
 
   cancelForm() {
-    this.dataGlobalservice.setItemView(null);
+    if (this.matDialogRef)
+      this.dataGlobalservice.setItemView(null);
   }
 
   openDialogWithTemplate(template: TemplateRef<any> | null, templateV: TemplateRef<any> | null = null) {
@@ -201,7 +206,8 @@ export class ViewDataComponent {
   }
 
   cancelDialogResult() {
-    this.matDialogRef.close()
+    if (this.matDialogRef)
+      this.matDialogRef.close()
   }
 
   viewFormNull() {

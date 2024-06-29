@@ -1,5 +1,5 @@
 <app-view-data [ItemData]="data$" [columns]="tableColumnsCliente" [ItemViewGrid]="item" [FormCreateView]="formcreate"
-    [FormView]="formUpdate" [FormInfoView]="itemInfo"></app-view-data>
+    [FormView]="formUpdate" [FormInfoView]="itemInfo" [cancelDialogView]="cancel"></app-view-data>
 
 <ng-template #item let-data>
     <mat-card class="card-invoice" [ngClass]="itemClick?.codigo_Cliente===data.codigo_Cliente?'card-invoice-active':''"

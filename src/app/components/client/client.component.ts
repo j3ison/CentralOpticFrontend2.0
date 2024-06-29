@@ -17,6 +17,7 @@ export class ClientComponent {
 
   respuesta: any;
   itemUser: any;
+  cancel:boolean = true
   onItemClickActive(data: any) {
     if (this.itemClick !== data) {
       this.itemClick = data
@@ -491,6 +492,7 @@ export class ClientComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.saveDataCreate()
+        this.cancel != this.cancel;
         // this.formUpdateData.reset()
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
