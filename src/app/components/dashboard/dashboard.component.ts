@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import * as Est  from './interfaces/Statistics';
 import { AllBenefits } from './interfaces/Statistics';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginUser } from 'src/app/auth/model/user.interface';
 
 
 
@@ -18,12 +20,16 @@ interface Graphics{
   count: number[];
 }
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+
+  userFromLocal = this.cookieService.get('userData');
+  user:LoginUser = JSON.parse(this.userFromLocal) as LoginUser
 
   dateinputformat: Est.PostDate = {
     fechaInicial: "",
@@ -140,12 +146,13 @@ export class DashboardComponent {
     labels:[],
     count:[]
   }
+  
 
-
-  constructor(private mydataservices: MyDataServices) {
+  constructor(private mydataservices: MyDataServices,  private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
+    
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 

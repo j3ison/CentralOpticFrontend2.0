@@ -19,8 +19,8 @@ const routes: Routes = [
     path :'user',
     component:UserComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole([ 'Super Administrador', 'Administrador'])],
-    canLoad: [hasRole([ 'Super Administrador', 'Administrador'])]
+    canActivate: [hasRole([ 'Super Administrador'])],
+    canLoad: [hasRole([ 'Super Administrador'])]
   },{
     path :'profile',
     component:ProfileComponent,
