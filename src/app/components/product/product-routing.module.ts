@@ -11,13 +11,13 @@ const routes: Routes = [
     path: 'product',
     component:InventoryComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole(['Administrador', 'Super Administrador'])],
+    canActivate: [hasRole(['Administrador', 'Super Administrador','Venta'])],
     canLoad: [hasRole(['Administrador', 'Super Administrador'])]
   },{
     path :'supplier',
     component:SupplierComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole([ 'Administrador','Super Administrador'])],
+    canActivate: [hasRole([ 'Administrador','Super Administrador','Venta'])],
     canLoad: [hasRole([ 'Administrador','Super Administrador'])]
   }
 ];
