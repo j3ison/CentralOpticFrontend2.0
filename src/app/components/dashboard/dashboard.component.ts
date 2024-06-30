@@ -494,14 +494,16 @@ export class DashboardComponent {
   GetFormateDate(date: Date):string {
 
     let fechaActual = date;
+    fechaActual.setHours(0, 0, 0, 0);
+    fechaActual.setDate(fechaActual.getDate() + 1);
 
     // Obtener los componentes de la fecha
     let año = fechaActual.getFullYear();
     let mes = fechaActual.getMonth() + 1; // getMonth() devuelve valores de 0 a 11, por eso sumamos 1
-    let dia = fechaActual.getDate() + 1 ;
-    let horas = 0;
-    let minutos = 0;
-    let segundos = 0;
+    let dia = fechaActual.getDate();
+    let horas = fechaActual.getHours();
+    let minutos = fechaActual.getMinutes();
+    let segundos = fechaActual.getSeconds();
 
     // Formatear la fecha según el formato "YYYY-MM-DDTHH:mm:ss"
     let fechaFormateada = `${año}-${padNumber(mes)}-${padNumber(dia)}T${padNumber(horas)}:${padNumber(minutos)}:${padNumber(segundos)}`;
