@@ -1,6 +1,11 @@
+<!-- <app-bar-char></app-bar-char> -->
+<!-- <app-line-char></app-line-char>
+<app-donut-char></app-donut-char>
+<app-pie-char></app-pie-char>
+<app-area-char></app-area-char> -->
 <div class="row justify-content-md-center">
-    <div class="col-3">
-        <h1><strong id="Reportes">Estadisticas</strong></h1>
+    <div class="col">
+        <h1><strong id="Reportes">Reportes y Estadisticas</strong></h1>
     </div>
 </div>
 
@@ -47,12 +52,15 @@
     &nbsp;
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Optometrista'">
     <div class="col">
         <div class="card">
             <div class="card-body">
 
                 <h3><strong>Productos/Servicios más vendidos</strong></h3>
+
+                <app-bar-char [setbarChartLabels]="BestSellersG.labels" [setdata]="BestSellersG.count"
+                    [setLabel]="'Unidades vendidas'" [setbackgroundColor]="'rgba(59, 105, 190, 0.5)'"></app-bar-char>
 
             </div>
         </div>
@@ -109,17 +117,21 @@
     </div>
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Optometrista'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Optometrista'">
 
     <div class="col">
         <div class="card">
@@ -177,6 +189,9 @@
 
                 <h3><strong>Productos/Servicios menos vendidos</strong></h3>
 
+                <app-bar-char [setbarChartLabels]="LessSoldsG.labels" [setdata]="LessSoldsG.count"
+                    [setLabel]="'Unidades vendidas'" [setbackgroundColor]="'rgba(210, 180, 222, 0.5)'"></app-bar-char>
+
             </div>
         </div>
     </div>
@@ -184,7 +199,7 @@
 
 <!-- Productos por tipo -->
 
-<div class="row">
+<!-- <div class="row">
     &nbsp;
 </div>
 <div class="row">
@@ -311,15 +326,19 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Optometrista'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
 <!-- Clientes recurrentes -->
@@ -331,6 +350,9 @@
             <div class="card-body">
 
                 <h3><strong>Clientes recurrentes</strong></h3>
+
+                <app-donut-char [setdoughnutChartLabels]="CurrentClientG.labels" [setdata]="CurrentClientG.count"
+                    [setLabel]="'Veces Facturadas'"></app-donut-char>
 
             </div>
         </div>
@@ -392,7 +414,7 @@
 
 <!-- Proveedores recurrentes -->
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Optometrista'">
 
 
     <div class="col">
@@ -443,6 +465,10 @@
 
                 <h3><strong>Proveedores mas recurrentes</strong></h3>
 
+                <app-bar-char [setbarChartLabels]="MostCurrentSupplierG.labels" [setdata]="MostCurrentSupplierG.count"
+                    [setLabel]="'Cantidad de productos adquiridos'"
+                    [setbackgroundColor]="'rgba(59, 105, 190, 0.5)'"></app-bar-char>
+
             </div>
         </div>
     </div>
@@ -451,28 +477,100 @@
 
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+
+<div *ngIf="user.role !== 'Optometrista'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<!-- Pruductos adquiridos -->
 
-<div class="row">
+<!-- Proveedores menos recurrentes -->
+
+<div class="row" *ngIf="user.role !== 'Optometrista'">
 
     <div class="col">
         <div class="card">
             <div class="card-body">
 
-                <h3><strong>Productos mas adquiridos</strong></h3>
+                <h3><strong>Proveedores menos recurrentes</strong></h3>
+
+                <app-bar-char [setbarChartLabels]="LessCurrentSupplierG.labels" [setdata]="LessCurrentSupplierG.count"
+                    [setLabel]="'Cantidad de productos adquiridos'"
+                    [setbackgroundColor]="'rgba(210, 180, 222, 0.5)'"></app-bar-char>
 
             </div>
         </div>
     </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Proveedores menos recurrentes </strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Codigo:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Empresa:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de productos adquiridos:</p>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngFor="let proveedor of LessCurrentSupplier; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ proveedor.codigo_Proveedor }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ proveedor.nombre_Empresa }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ proveedor.total_Productos }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div *ngIf="user.role !== 'Optometrista'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
+</div>
+
+<!-- Pruductos adquiridos -->
+
+<div class="row" *ngIf="user.role !== 'Optometrista'">
 
     <div class="col">
         <div class="card">
@@ -524,18 +622,50 @@
         </div>
     </div>
 
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos mas adquiridos</strong></h3>
+
+                <app-bar-char [setbarChartLabels]="MostPurchasedProductsG.labels"
+                    [setdata]="MostPurchasedProductsG.count" [setLabel]="'Cantidad de productos adquiridos'"
+                    [setbackgroundColor]="'rgba(59, 105, 190, 0.5)'"></app-bar-char>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Optometrista'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Optometrista'">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Productos menos adquiridos</strong></h3>
+
+                <app-bar-char [setbarChartLabels]="LessPurchasedProductsG.labels"
+                    [setdata]="LessPurchasedProductsG.count" [setLabel]="'Cantidad de productos adquiridos'"
+                    [setbackgroundColor]="'rgba(210, 180, 222, 0.5)'"></app-bar-char>
+
+            </div>
+        </div>
+    </div>
 
     <div class="col">
         <div class="card">
@@ -587,38 +717,24 @@
         </div>
     </div>
 
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
 
-                <h3><strong>Productos menos adquiridos</strong></h3>
+</div>
 
-            </div>
-        </div>
+<div *ngIf="user.role !== 'Optometrista'">
+
+    <div class="row">
+        &nbsp;
     </div>
-</div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
 </div>
 
 <!--Laboratorios -->
-<div class="row">
-
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-
-                <h3><strong>Laboratorios mas Recurrentes</strong></h3>
-
-            </div>
-        </div>
-    </div>
+<div class="row" *ngIf="user.role !== 'Venta'">
 
     <div class="col">
         <div class="card">
@@ -662,18 +778,46 @@
         </div>
     </div>
 
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Laboratorios mas Recurrentes</strong></h3>
+
+                <app-area-char [setpolarAreaChartLabels]="MostCurrentLabG.labels" [setdata]="MostCurrentLabG.count"
+                    [setLabel]="'Cantidad de ordenes realizdas'"></app-area-char>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Venta'">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Laboratorios menos Recurrentes</strong></h3>
+                <app-area-char [setpolarAreaChartLabels]="LessCurrentLabG.labels" [setdata]="LessCurrentLabG.count"
+                    [setLabel]="'Cantidad de ordenes realizdas'"></app-area-char>
+            </div>
+        </div>
+    </div>
 
     <div class="col">
         <div class="card">
@@ -716,38 +860,24 @@
         </div>
     </div>
 
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
 
-                <h3><strong>Laboratorios menos Recurrentes</strong></h3>
+</div>
 
-            </div>
-        </div>
+<div *ngIf="user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
     </div>
-</div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
 </div>
 
 <!--Productos ordenados -->
-<div class="row">
-
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-
-                <h3><strong>Pedidos mas Ordenados</strong></h3>
-
-            </div>
-        </div>
-    </div>
+<div class="row" *ngIf="user.role !== 'Venta'">
 
     <div class="col">
         <div class="card">
@@ -799,18 +929,50 @@
         </div>
     </div>
 
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pedidos mas Ordenados</strong></h3>
+
+                <app-bar-char [setbarChartLabels]="MostOrderedProductG.labels" [setdata]="MostOrderedProductG.count"
+                    [setLabel]="'Cantidad de pedidos ordenados'"
+                    [setbackgroundColor]="'rgba(59, 105, 190, 0.5)'"></app-bar-char>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Venta'">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pedidos menos Ordenados</strong></h3>
+
+                <app-bar-char [setbarChartLabels]="LessOrderedProductG.labels" [setdata]="LessOrderedProductG.count"
+                    [setLabel]="'Cantidad de pedidos ordenados'"
+                    [setbackgroundColor]="'rgba(210, 180, 222, 0.5)'"></app-bar-char>
+
+            </div>
+        </div>
+    </div>
 
     <div class="col">
         <div class="card">
@@ -861,37 +1023,23 @@
         </div>
     </div>
 
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
 
-                <h3><strong>Pedidos menos Ordenados</strong></h3>
+</div>
 
-            </div>
-        </div>
+<div *ngIf="user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
     </div>
-</div>
-
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
-</div>
-
-<div class="row">
-
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-
-                <h3><strong>Pacientes mas Recurrentes</strong></h3>
-
-            </div>
-        </div>
+    <div class="row">
     </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
+</div>
+
+<div class="row" *ngIf="user.role !== 'Venta'">
 
     <div class="col">
         <div class="card">
@@ -933,23 +1081,49 @@
         </div>
     </div>
 
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pacientes mas Recurrentes</strong></h3>
+                <app-pie-char [setpieChartLabels]="CurrentPatientG.labels" [setdata]="CurrentPatientG.count"
+                    [setLabel]="'Examenes realizados'"></app-pie-char>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Venta'">
 
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h3><strong>Edades mas recurentes de pacientes </strong></h3>
+
+                <h3><strong>Edades mas recurrentes de pacientes</strong></h3>
+                <app-pie-char [setpieChartLabels]="CurrentPatienAgeG.labels" [setdata]="CurrentPatienAgeG.count"
+                    [setLabel]="'Examenes realizados'"></app-pie-char>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Edades mas recurrentes de pacientes </strong></h3>
 
                 <div class="row">
 
@@ -968,49 +1142,35 @@
                 </div>
 
                 <div class="row" *ngFor="let producto of CurrentPatienAge; let i = index">
-                        <div class="col-4 texto-pequeno" *ngIf="producto.edad !== 0">
-                            <p>{{ i + 1 }} - {{ producto.edad }}</p>
-                        </div>
-                        <div class="col texto-pequeno" *ngIf="producto.edad !== 0">
-                            <p>{{ producto.cantidad_Pacientes }}</p>
-                        </div>
+                    <div class="col-4 texto-pequeno" *ngIf="producto.edad !== 0">
+                        <p>{{ i + 1 }} - {{ producto.edad }}</p>
+                    </div>
+                    <div class="col texto-pequeno" *ngIf="producto.edad !== 0">
+                        <p>{{ producto.cantidad_Pacientes }}</p>
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
 
-                <h3><strong>Edades mas recurentes de pacientes</strong></h3>
+</div>
 
-            </div>
-        </div>
+<div *ngIf="user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
     </div>
-</div>
-
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
-</div>
-
-<div class="row">
-
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-
-                <h3><strong>Pagos Preferidos</strong></h3>
-
-            </div>
-        </div>
+    <div class="row">
     </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
+</div>
+
+<div class="row" *ngIf="user.role !== 'Optometrista'">
 
     <div class="col">
         <div class="card">
@@ -1043,19 +1203,49 @@
             </div>
         </div>
     </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Pagos Preferidos</strong></h3>
+                <app-area-char [setpolarAreaChartLabels]="PreferredPaymentTypeG.labels"
+                    [setdata]="PreferredPaymentTypeG.count" [setLabel]="'Frecuencia del pago'">
+                </app-area-char>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Optometrista'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Empleados con mas ventas</strong></h3>
+                <app-donut-char [setdoughnutChartLabels]="BillsEmployeeG.labels" [setdata]="BillsEmployeeG.count"
+                    [setLabel]="'Veces Facturadas'"></app-donut-char>
+
+            </div>
+        </div>
+    </div>
 
     <div class="col">
         <div class="card">
@@ -1084,52 +1274,38 @@
                 </div>
 
                 <div class="row" *ngFor="let producto of BillsEmployee; let i = index">
-                        <div class="col-4 texto-pequeno">
-                            <p>{{ i + 1 }} - {{ producto.numero_Empleado }}</p>
-                        </div>
-                        <div class="col texto-pequeno">
-                            <p>{{ producto.empleado }}</p>
-                        </div>
-                        <div class="col texto-pequeno">
-                            <p>{{ producto.facturas_Emitidas }}</p>
-                        </div>
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.numero_Empleado }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.empleado }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.facturas_Emitidas }}</p>
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
 
-                <h3><strong>Edades mas recurentes de pacientes</strong></h3>
+</div>
 
-            </div>
-        </div>
+<div *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
     </div>
-</div>
-
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
-</div>
-
-<div class="row">
-
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-
-                <h3><strong>Empleados con mas examenes realizados</strong></h3>
-
-            </div>
-        </div>
+    <div class="row">
     </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
+</div>
+
+<div class="row" *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
 
     <div class="col">
         <div class="card">
@@ -1170,20 +1346,45 @@
             </div>
         </div>
     </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <h3><strong>Empleados con mas examenes realizados</strong></h3>
+                <app-donut-char [setdoughnutChartLabels]="ExamEyeEmployeeG.labels" [setdata]="ExamEyeEmployeeG.count"
+                    [setLabel]="'Examenes realizados'"></app-donut-char>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
 
+                <h3><strong>Empleados con mas pedidos realizados</strong></h3>
+                <app-pie-char [setpieChartLabels]="OrderEmployeeG.labels" [setdata]="OrderEmployeeG.count"
+                    [setLabel]="'Pedidos realizados'"></app-pie-char>
+
+            </div>
+        </div>
+    </div>
     <div class="col">
         <div class="card">
             <div class="card-body">
@@ -1211,15 +1412,74 @@
                 </div>
 
                 <div class="row" *ngFor="let producto of OrderEmployee; let i = index">
-                        <div class="col-4 texto-pequeno">
-                            <p>{{ i + 1 }} - {{ producto.numero_Empleado }}</p>
-                        </div>
-                        <div class="col texto-pequeno">
-                            <p>{{ producto.empleado }}</p>
-                        </div>
-                        <div class="col texto-pequeno">
-                            <p>{{ producto.pedidos_Realizados }}</p>
-                        </div>
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.numero_Empleado }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.empleado }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.pedidos_Realizados }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
+</div>
+
+<div class="row" *ngIf="user.role === 'Super Administrador'">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3><strong>Roles mas frecuentes en el sistema</strong></h3>
+
+                <div class="row">
+
+                    <div class="col-4 texto-pequeno">
+                        <strong>
+                            <p>Rol:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Descripcion:</p>
+                        </strong>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <strong>
+                            <p>Cantidad de usuarios:</p>
+                        </strong>
+                    </div>
+
+
+                </div>
+
+                <div class="row" *ngFor="let producto of CurrentRoll; let i = index">
+                    <div class="col-4 texto-pequeno">
+                        <p>{{ i + 1 }} - {{ producto.rol }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.descripcion }}</p>
+                    </div>
+                    <div class="col texto-pequeno">
+                        <p>{{ producto.cantidad_Usuarios }}</p>
+                    </div>
                 </div>
 
             </div>
@@ -1230,23 +1490,30 @@
         <div class="card">
             <div class="card-body">
 
-                <h3><strong>Empleados con mas pedidos realizados</strong></h3>
+                <h3><strong>Roles mas frecuentes en el sistema</strong></h3>
+                <app-area-char [setpolarAreaChartLabels]="CurrentRollG.labels" [setdata]="CurrentRollG.count"
+                    [setLabel]="'Cantidad de Usuarios'"></app-area-char>
 
             </div>
         </div>
     </div>
+
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role === 'Super Administrador'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
 
     <div class="col">
         <div class="card">
@@ -1369,16 +1636,21 @@
     </div>
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+
+<div *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
 
     <div class="col">
         <div class="card">
@@ -1387,7 +1659,7 @@
 
                 <div class="row">
 
-                    
+
                     <div class="col texto-pequeno">
                         <strong>
                             <p>Cantidades Vendidas:</p>
@@ -1470,11 +1742,15 @@
     </div>
 </div>
 
-<div class="row">
-    &nbsp;
-</div>
-<div class="row">
-</div>
-<div class="row">
-    &nbsp;
+<div *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
+
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+
 </div>
