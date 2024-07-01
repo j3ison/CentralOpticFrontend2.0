@@ -529,15 +529,23 @@ export class DashboardComponent {
     }
 
     //const doc = new jsPDF.default();
-
+   // doc.setFont('Times New Roman');
     const columns = this.generateHeaders(Inf);
-    const rows = Inf.map(product => Object.values(product));;
+    const rows = Inf.map(product => Object.values(product));
     const currentDate = new Date().toString();
-    doc.setFontSize(10);
+    doc.setFontSize(12);
     doc.text(`Fecha de generacion del reporte: ${currentDate}`, 14, 10);
-    doc.text(`Informacion obtenida a partir del rango de fechas de:`, 14, 20);
+    doc.text(`Informacion obtenida a partir del rango de fechas`, 14, 20);
     doc.text(`Fecha de inicio: ${this.dateinputformat.fechaInicial}`, 14, 30);
     doc.text(`Fecha de fin: ${this.dateinputformat.fechaFinal} `, 14, 40);
+
+
+    // const imgWidth = 50; // Ancho de la imagen en mm
+    // const imgHeight = 30; // Altura de la imagen en mm
+    // const pageWidth = doc.internal.pageSize.getWidth();
+    // const margin = 10;
+    // const xPos = pageWidth - imgWidth - margin;
+    //doc.addImage('src\assets\images\logo.svg', 'SVG', xPos, 10, imgWidth, imgHeight);
 
     if (format) {
 
@@ -546,10 +554,11 @@ export class DashboardComponent {
         body: rows,
         startY: 50,
         styles: {
-          fontSize: 7 // Tamaño de letra para el contenido de la tabla
+          fontSize: 8, // Tamaño de letra para el contenido de la tabla
         },
         headStyles: {
-          fontSize: 7 // Tamaño de letra para los encabezados de la tabla
+          fontSize: 8,
+          fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
         }
       });
 
@@ -558,12 +567,656 @@ export class DashboardComponent {
       (doc as any).autoTable({
         head: [columns],
         body: rows,
-        startY: 50
+        startY: 50,
+        styles: {
+          fontSize: 10,
+          cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+          valign: 'middle' // Tamaño de letra para el contenido de la tabla
+        },
+        headStyles: {
+          fontSize: 10,
+          fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+        }
       });
     }
 
     doc.save(filename);
 
+  }
+
+  exportToPDFAll(){
+    const doc = new jsPDF.default({
+      orientation: 'landscape', // Orientación horizontal (paisaje)
+      unit: 'mm', // Unidad de medida: milímetros
+      format: 'a4' // Formato de página: A4
+    });
+
+    const currentDate = new Date().toString();
+    doc.setFontSize(12);
+    doc.text(`Fecha de generacion del reporte: ${currentDate}`, 14, 10);
+    doc.text(`Informacion obtenida a partir del rango de fechas de:`, 14, 20);
+    doc.text(`Fecha de inicio: ${this.dateinputformat.fechaInicial}`, 14, 30);
+    doc.text(`Fecha de fin: ${this.dateinputformat.fechaFinal} `, 14, 40);
+
+    let startY = 50;
+    let columns = this.generateHeaders(this.BestSellers);
+    let rows = this.BestSellers.map(product => Object.values(product));
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    let { finalY } = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+    columns = this.generateHeaders(this.LessSold);
+    rows = this.LessSold.map(product => Object.values(product));
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+    console.log(startY)
+    startY = finalY + 10;
+
+    console.log(startY)
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+    columns = this.generateHeaders(this.CurrentClient);
+    rows = this.CurrentClient.map(product => Object.values(product));
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+    columns = this.generateHeaders(this.MostCurrentSupplier);
+    rows = this.MostCurrentSupplier.map(product => Object.values(product));
+ // Tamaño de letra para el encabezado de la tabla
+   
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+    columns = this.generateHeaders(this.LessCurrentSupplier);
+    rows = this.LessCurrentSupplier.map(product => Object.values(product));
+// Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    
+    columns = this.generateHeaders(this.MostPurchasedProducts);
+    rows = this.MostPurchasedProducts.map(product => Object.values(product));
+// Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.LessPurchasedProducts);
+    rows = this.LessPurchasedProducts.map(product => Object.values(product));
+// Tamaño de letra para el encabezado de la tabla
+   
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+    columns = this.generateHeaders(this.MostCurrentLab);
+    rows = this.MostCurrentLab.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.LessCurrentLab);
+    rows = this.LessCurrentLab.map(product => Object.values(product));
+
+   // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.MostOrderedProduct);
+    rows = this.MostOrderedProduct.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.LessOrderedProduct);
+    rows = this.LessOrderedProduct.map(product => Object.values(product));
+
+     // Tamaño de letra para el encabezado de la tabla
+   
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+  
+
+    columns = this.generateHeaders(this.CurrentPatient);
+    rows = this.CurrentPatient.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.CurrentPatienAge);
+    rows = this.CurrentPatienAge.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+ 
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.PreferredPaymentType);
+    rows = this.PreferredPaymentType.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+  
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.BillsEmployee);
+    rows = this.BillsEmployee.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+  
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.ExamEyeEmployee);
+    rows = this.ExamEyeEmployee.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+  
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.OrderEmployee);
+    rows = this.OrderEmployee.map(product => Object.values(product));
+
+     // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.CurrentRoll);
+    rows = this.CurrentRoll.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+   
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.Benefits);
+    rows = this.Benefits.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+ 
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 8, // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 8,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.AllBenefits);
+    rows = this.AllBenefits.map(product => Object.values(product));
+
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+    doc.save(`Reporte.pdf`);
   }
 
   private generateHeaders(data: any[]): string[] {
