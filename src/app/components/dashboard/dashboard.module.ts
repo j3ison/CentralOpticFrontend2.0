@@ -9,7 +9,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BarCharComponent } from './graph/bar-char/bar-char.component';
+// import { NgChartsModule } from 'ng2-charts';
 import { NgChartsModule } from 'ng2-charts';
+
 import { LineCharComponent } from './graph/line-char/line-char.component';
 import { DonutCharComponent } from './graph/donut-char/donut-char.component';
 import { PieCharComponent } from './graph/pie-char/pie-char.component';
