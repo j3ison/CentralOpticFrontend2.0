@@ -136,6 +136,12 @@ export const navbarData: INavbarData[] = [
         label: 'Orden Pedido',
         role: ['Administrador', 'Super Administrador']
     },
+    {
+        routeLink: 'help',
+        icon: 'fa-solid fa-flask',
+        label: 'Ayuda',
+        role: ['Administrador', 'Super Administrador', 'Optometrista','Venta']
+    }
     /*,
     {    <i class=""></i>
         routeLink: 'empleado',

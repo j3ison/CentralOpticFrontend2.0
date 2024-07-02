@@ -11,6 +11,7 @@ import { OrderComponent } from './order/order.component';
 import { ProviderModule } from './provider/provider.module';
 import { LabComponent } from './lab/lab.component';
 import { ProviderComponent } from './provider/provider.component';
+import { AssistComponent } from './assist/assist.component';
 //import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
@@ -23,6 +24,11 @@ const routes: Routes = [
   },{
     path :'client',
     component:ClientComponent,
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista','Venta'])]
+  },{
+    path :'help',
+    component:AssistComponent,
     canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista','Venta'])],
     canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista','Venta'])]
   },{
