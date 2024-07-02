@@ -1,3 +1,5 @@
+//interface
+
 export interface PostDate { 
 
     fechaInicial:string;
@@ -136,3 +138,35 @@ export interface AllBenefits {
     beneficios: number
 
 }
+// functions
+
+
+// Funcion para obtener la fecha en string
+
+export function GetFormateDate(date: Date):string {
+
+    let fechaActual = date;
+    fechaActual.setHours(0, 0, 0, 0);
+    fechaActual.setDate(fechaActual.getDate() + 1);
+
+    // Obtener los componentes de la fecha
+    let año = fechaActual.getFullYear();
+    let mes = fechaActual.getMonth() + 1; // getMonth() devuelve valores de 0 a 11, por eso sumamos 1
+    let dia = fechaActual.getDate();
+    let horas = fechaActual.getHours();
+    let minutos = fechaActual.getMinutes();
+    let segundos = fechaActual.getSeconds();
+
+    // Formatear la fecha según el formato "YYYY-MM-DDTHH:mm:ss"
+    let fechaFormateada = `${año}-${padNumber(mes)}-${padNumber(dia)}T${padNumber(horas)}:${padNumber(minutos)}:${padNumber(segundos)}`;
+
+    // Función para asegurarse de que los números tengan dos dígitos (agrega ceros a la izquierda si es necesario)
+    function padNumber(num: number): string {
+      return num.toString().padStart(2, '0');
+    }
+
+    //console.log(fechaFormateada); // Imprimir la fecha formateada en la consola
+
+    return fechaFormateada
+  }
+

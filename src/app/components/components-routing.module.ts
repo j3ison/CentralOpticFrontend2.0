@@ -19,8 +19,8 @@ const routes: Routes = [
     path: 'dashboard',
     component:DashboardComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole(['Administrador', 'Super Administrador'])],
-    canLoad: [hasRole(['Administrador', 'Super Administrador'])]
+    canActivate: [hasRole(['Administrador', 'Super Administrador','Optometrista','Venta'])],
+    canLoad: [hasRole(['Administrador', 'Super Administrador','Optometrista','Venta'])]
   },{
     path :'client',
     component:ClientComponent,
@@ -42,8 +42,8 @@ const routes: Routes = [
     path :'provider',
     component: ProviderComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole(['Administrador', 'Super Administrador'])],
-    canLoad: [hasRole(['Administrador', 'Super Administrador'])]
+    canActivate: [hasRole(['Administrador', 'Super Administrador','Venta'])],
+    canLoad: [hasRole(['Administrador', 'Super Administrador','Venta'])]
   },{
     path :'invoice',
     component:InvoiceComponent,

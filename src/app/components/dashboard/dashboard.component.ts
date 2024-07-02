@@ -1,17 +1,18 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MyDataServices } from 'src/app/auth/mydata.service';
-import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
-import * as Est  from './interfaces/Statistics';
-import { AllBenefits } from './interfaces/Statistics';
+import * as Est from './interfaces/Statistics';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginUser } from 'src/app/auth/model/user.interface';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+import * as jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-
-
-interface SideNavToggle {
-  screenWidth: number;
-  collapsed: boolean;
+interface Graphics {
+  labels: string[];
+  count: number[];
 }
+
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,9 @@ interface SideNavToggle {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+
+  userFromLocal = this.cookieService.get('userData');
+  user: LoginUser = JSON.parse(this.userFromLocal) as LoginUser
 
   dateinputformat: Est.PostDate = {
     fechaInicial: "",
@@ -30,48 +34,126 @@ export class DashboardComponent {
 
   BestSellers: Est.SellProducts[] = []
   LessSold: Est.SellProducts[] = []
+  BestSellersG: Graphics = {
+    labels: [],
+    count: []
+  }
+  LessSoldsG: Graphics = {
+    labels: [],
+    count: []
+  }
+
 
   BestSellersCode: Est.SellProducts[] = []
   LessSoldCode: Est.SellProducts[] = []
 
   CurrentClient: Est.CurrentClient[] = []
+  CurrentClientG: Graphics = {
+    labels: [],
+    count: []
+  }
+
+
   CurrentPatient: Est.CurrentPatient[] = []
+  CurrentPatientG: Graphics = {
+    labels: [],
+    count: []
+  }
   CurrentPatienAge: Est.CurrentPatienAge[] = []
+  CurrentPatienAgeG: Graphics = {
+    labels: [],
+    count: []
+  }
 
   MostCurrentSupplier: Est.CurrentSupplier[] = []
+  MostCurrentSupplierG: Graphics = {
+    labels: [],
+    count: []
+  }
   LessCurrentSupplier: Est.CurrentSupplier[] = []
+  LessCurrentSupplierG: Graphics = {
+    labels: [],
+    count: []
+  }
 
   MostPurchasedProducts: Est.PurchasedProducts[] = []
+  MostPurchasedProductsG: Graphics = {
+    labels: [],
+    count: []
+  }
   LessPurchasedProducts: Est.PurchasedProducts[] = []
+  LessPurchasedProductsG: Graphics = {
+    labels: [],
+    count: []
+  }
 
   MostCurrentLab: Est.CurrentLab[] = []
+  MostCurrentLabG: Graphics = {
+    labels: [],
+    count: []
+  }
   LessCurrentLab: Est.CurrentLab[] = []
+  LessCurrentLabG: Graphics = {
+    labels: [],
+    count: []
+  }
 
-  MostOrderedProduct: Est.OrderedProduct[] =[]
-  LessOrderedProduct: Est.OrderedProduct[] =[]
+  MostOrderedProduct: Est.OrderedProduct[] = []
+  MostOrderedProductG: Graphics = {
+    labels: [],
+    count: []
+  }
+  LessOrderedProduct: Est.OrderedProduct[] = []
+  LessOrderedProductG: Graphics = {
+    labels: [],
+    count: []
+  }
 
-  PreferredPaymentType: Est.PreferredPaymentType[] =[]
+  PreferredPaymentType: Est.PreferredPaymentType[] = []
+  PreferredPaymentTypeG: Graphics = {
+    labels: [],
+    count: []
+  }
   BillsEmployee: Est.BillsEmployee[] = []
+  BillsEmployeeG: Graphics = {
+    labels: [],
+    count: []
+  }
   ExamEyeEmployee: Est.ExamEyeEmployee[] = []
+  ExamEyeEmployeeG: Graphics = {
+    labels: [],
+    count: []
+  }
+
   OrderEmployee: Est.OrderEmployee[] = []
+  OrderEmployeeG: Graphics = {
+    labels: [],
+    count: []
+  }
 
-  Benefits: Est.Benefits[] =[]
-  AllBenefits: Est.AllBenefits[] =[]
+  Benefits: Est.Benefits[] = []
+  AllBenefits: Est.AllBenefits[] = []
 
-  CurrentRoll:Est.CurrentRoll[] =[]
+  CurrentRoll: Est.CurrentRoll[] = []
+  CurrentRollG: Graphics = {
+    labels: [],
+    count: []
+  }
 
-  constructor(private mydataservices: MyDataServices) {
+
+  constructor(private mydataservices: MyDataServices, private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
+
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 
     let fechaActual = new Date();
     fechaActual.setMonth(fechaActual.getMonth() - 12)
 
-    this.dateinputformat.fechaInicial = this.GetFormateDate(fechaActual)
-    this.dateinputformat.fechaFinal = this.GetFormateDate(new Date)
+    this.dateinputformat.fechaInicial = Est.GetFormateDate(fechaActual)
+    this.dateinputformat.fechaFinal = Est.GetFormateDate(new Date)
 
     console.log(this.dateinputformat.fechaInicial)
     console.log(this.dateinputformat.fechaFinal)
@@ -85,6 +167,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/productovendido/true", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.BestSellers = respuesta
+      this.BestSellersG.labels = this.BestSellers.map(producto => producto.descripcion)
+      this.BestSellersG.count = this.BestSellers.map(producto => producto.total)
 
     }, (error) => {
 
@@ -94,6 +178,9 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/productovendido/false", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.LessSold = respuesta
+      this.LessSoldsG.labels = this.LessSold.map(producto => producto.descripcion)
+      this.LessSoldsG.count = this.LessSold.map(producto => producto.total)
+
 
     }, (error) => {
 
@@ -129,6 +216,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/clienterecurrente", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.CurrentClient = respuesta
+      this.CurrentClientG.labels = this.CurrentClient.map(producto => producto.cliente)
+      this.CurrentClientG.count = this.CurrentClient.map(producto => producto.veces_Facturadas)
 
     }, (error) => {
 
@@ -142,6 +231,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/proveedorrecurrente/true", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.MostCurrentSupplier = respuesta
+      this.MostCurrentSupplierG.labels = this.MostCurrentSupplier.map(producto => producto.nombre_Empresa)
+      this.MostCurrentSupplierG.count = this.MostCurrentSupplier.map(producto => producto.total_Productos)
 
     }, (error) => {
 
@@ -151,6 +242,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/proveedorrecurrente/false", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.LessCurrentSupplier = respuesta
+      this.LessCurrentSupplierG.labels = this.LessCurrentSupplier.map(producto => producto.nombre_Empresa)
+      this.LessCurrentSupplierG.count = this.LessCurrentSupplier.map(producto => producto.total_Productos)
 
     }, (error) => {
 
@@ -164,6 +257,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/productoadquirido/true", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.MostPurchasedProducts = respuesta
+      this.MostPurchasedProductsG.labels = this.MostPurchasedProducts.map(producto => producto.descripcion)
+      this.MostPurchasedProductsG.count = this.MostPurchasedProducts.map(producto => producto.total_Productos)
 
     }, (error) => {
 
@@ -173,6 +268,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/productoadquirido/false", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.LessPurchasedProducts = respuesta
+      this.LessPurchasedProductsG.labels = this.LessPurchasedProducts.map(producto => producto.descripcion)
+      this.LessPurchasedProductsG.count = this.LessPurchasedProducts.map(producto => producto.total_Productos)
 
     }, (error) => {
 
@@ -186,6 +283,9 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/laboratoriorecurrente/true", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.MostCurrentLab = respuesta
+      this.MostCurrentLabG.labels = this.MostCurrentLab.map(producto => producto.nombre)
+      this.MostCurrentLabG.count = this.MostCurrentLab.map(producto => producto.cantidad_Pedidos)
+
 
     }, (error) => {
 
@@ -195,6 +295,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/laboratoriorecurrente/false", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.LessCurrentLab = respuesta
+      this.LessCurrentLabG.labels = this.LessCurrentLab.map(producto => producto.nombre)
+      this.LessCurrentLabG.count = this.LessCurrentLab.map(producto => producto.cantidad_Pedidos)
 
     }, (error) => {
 
@@ -208,6 +310,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/productopedido/true", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.MostOrderedProduct = respuesta
+      this.MostOrderedProductG.labels = this.MostOrderedProduct.map(producto => producto.descripcion)
+      this.MostOrderedProductG.count = this.MostOrderedProduct.map(producto => producto.veces_Pedidas)
 
     }, (error) => {
 
@@ -217,6 +321,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/productopedido/false", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.LessOrderedProduct = respuesta
+      this.LessOrderedProductG.labels = this.LessOrderedProduct.map(producto => producto.descripcion)
+      this.LessOrderedProductG.count = this.LessOrderedProduct.map(producto => producto.veces_Pedidas)
 
     }, (error) => {
 
@@ -230,6 +336,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/pacienterecurrente", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.CurrentPatient = respuesta
+      this.CurrentPatientG.labels = this.CurrentPatient.map(producto => producto.cliente)
+      this.CurrentPatientG.count = this.CurrentPatient.map(producto => producto.examenes_Realizados)
 
     }, (error) => {
 
@@ -243,6 +351,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/edadrecurrente", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.CurrentPatienAge = respuesta
+      this.CurrentPatienAgeG.labels = this.CurrentPatienAge.map(producto => producto.edad.toString())
+      this.CurrentPatienAgeG.count = this.CurrentPatienAge.map(producto => producto.cantidad_Pacientes)
 
     }, (error) => {
 
@@ -251,13 +361,13 @@ export class DashboardComponent {
 
   }
 
-  //Falta por poner en el HTML
-
   LoadPreferredPaymentType() {
 
     this.mydataservices.postDataStatic("estadistica/tipopagopreferido", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.PreferredPaymentType = respuesta
+      this.PreferredPaymentTypeG.labels = this.PreferredPaymentType.map(producto => producto.tipo_Pago)
+      this.PreferredPaymentTypeG.count = this.PreferredPaymentType.map(producto => producto.frecuencia_de_uso)
 
     }, (error) => {
 
@@ -271,6 +381,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/empleadofactura", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.BillsEmployee = respuesta
+      this.BillsEmployeeG.labels = this.BillsEmployee.map(producto => producto.empleado)
+      this.BillsEmployeeG.count = this.BillsEmployee.map(producto => producto.facturas_Emitidas)
 
     }, (error) => {
 
@@ -284,6 +396,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/empleadoexamen", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.ExamEyeEmployee = respuesta
+      this.ExamEyeEmployeeG.labels = this.ExamEyeEmployee.map(producto => producto.empleado)
+      this.ExamEyeEmployeeG.count = this.ExamEyeEmployee.map(producto => producto.examenes_Realizados)
 
     }, (error) => {
 
@@ -297,6 +411,8 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/empleadoorden", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.OrderEmployee = respuesta
+      this.OrderEmployeeG.labels = this.OrderEmployee.map(producto => producto.empleado)
+      this.OrderEmployeeG.count = this.OrderEmployee.map(producto => producto.pedidos_Realizados)
 
     }, (error) => {
 
@@ -336,6 +452,8 @@ export class DashboardComponent {
     this.mydataservices.getData("estadistica/rolrecurrente").subscribe((respuesta: any) => {
 
       this.CurrentRoll = respuesta
+      this.CurrentRollG.labels = this.CurrentRoll.map(producto => producto.rol)
+      this.CurrentRollG.count = this.CurrentRoll.map(producto => producto.cantidad_Usuarios)
 
     }, (error) => {
 
@@ -344,7 +462,7 @@ export class DashboardComponent {
 
   }
 
-// Funciones para cargar los datos automaticamente
+  // Funciones para cargar los datos automaticamente
 
   onDateChange1(event: any) {
     // Aquí puedes manejar el cambio de fecha
@@ -359,41 +477,14 @@ export class DashboardComponent {
     //console.log('Fecha seleccionada:', event.value);
     this.dateinputformat.fechaFinal = event.value
     this.LoadAll()
-    
+
     //console.log(this.dateinputformat)
     // Llama a otras funciones o realiza otras operaciones según sea necesario
   }
 
-// Funcion para obtener la fecha en string
+  //Funion para cargar todo
 
-  GetFormateDate(date: Date):string {
-
-    let fechaActual = date;
-
-    // Obtener los componentes de la fecha
-    let año = fechaActual.getFullYear();
-    let mes = fechaActual.getMonth() + 1; // getMonth() devuelve valores de 0 a 11, por eso sumamos 1
-    let dia = fechaActual.getDate() + 1 ;
-    let horas = 0;
-    let minutos = 0;
-    let segundos = 0;
-
-    // Formatear la fecha según el formato "YYYY-MM-DDTHH:mm:ss"
-    let fechaFormateada = `${año}-${padNumber(mes)}-${padNumber(dia)}T${padNumber(horas)}:${padNumber(minutos)}:${padNumber(segundos)}`;
-
-    // Función para asegurarse de que los números tengan dos dígitos (agrega ceros a la izquierda si es necesario)
-    function padNumber(num: number): string {
-      return num.toString().padStart(2, '0');
-    }
-
-    //console.log(fechaFormateada); // Imprimir la fecha formateada en la consola
-
-    return fechaFormateada
-  }
-
-//Funion para cargar todo
-
-  LoadAll(){
+  LoadAll() {
     this.LoadProductsSelling()
     this.LoadProductsSellingByCode()
     this.LoadCurrentClient()
@@ -413,4 +504,727 @@ export class DashboardComponent {
 
   }
 
+  exportToExcel(Inf: any[], filename: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(Inf);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, filename);
+
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
+
+  exportToPDF(Inf: any[], filename: string, format: boolean = false): void {
+    let doc = new jsPDF.default()
+
+    if (format) {
+      doc = new jsPDF.default({
+        orientation: 'landscape', // Orientación horizontal (paisaje)
+        unit: 'mm', // Unidad de medida: milímetros
+        format: 'a4' // Formato de página: A4
+      });
+    }
+
+    //const doc = new jsPDF.default();
+   // doc.setFont('Times New Roman');
+    const columns = this.generateHeaders(Inf);
+    const rows = Inf.map(product => Object.values(product));
+    const currentDate = new Date().toString();
+    doc.setFontSize(12);
+    doc.text(`Fecha de generacion del reporte: ${currentDate}`, 14, 10);
+    doc.text(`Informacion obtenida a partir del rango de fechas`, 14, 20);
+    doc.text(`Fecha de inicio: ${this.dateinputformat.fechaInicial}`, 14, 30);
+    doc.text(`Fecha de fin: ${this.dateinputformat.fechaFinal} `, 14, 40);
+
+
+    // const imgWidth = 50; // Ancho de la imagen en mm
+    // const imgHeight = 30; // Altura de la imagen en mm
+    // const pageWidth = doc.internal.pageSize.getWidth();
+    // const margin = 10;
+    // const xPos = pageWidth - imgWidth - margin;
+    //doc.addImage('src\assets\images\logo.svg', 'SVG', xPos, 10, imgWidth, imgHeight);
+
+    if (format) {
+
+      (doc as any).autoTable({
+        head: [columns],
+        body: rows,
+        startY: 50,
+        styles: {
+          fontSize: 8, // Tamaño de letra para el contenido de la tabla
+        },
+        headStyles: {
+          fontSize: 8,
+          fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+        }
+      });
+
+    }
+    else {
+      (doc as any).autoTable({
+        head: [columns],
+        body: rows,
+        startY: 50,
+        styles: {
+          fontSize: 10,
+          cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+          valign: 'middle' // Tamaño de letra para el contenido de la tabla
+        },
+        headStyles: {
+          fontSize: 10,
+          fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+        }
+      });
+    }
+
+    doc.save(filename);
+
+  }
+
+  exportToPDFAll(){
+    const doc = new jsPDF.default({
+      orientation: 'landscape', // Orientación horizontal (paisaje)
+      unit: 'mm', // Unidad de medida: milímetros
+      format: 'a4' // Formato de página: A4
+    });
+
+    const currentDate = new Date().toString();
+    doc.setFontSize(12);
+    doc.text(`Fecha de generacion del reporte: ${currentDate}`, 14, 10);
+    doc.text(`Informacion obtenida a partir del rango de fechas de:`, 14, 20);
+    doc.text(`Fecha de inicio: ${this.dateinputformat.fechaInicial}`, 14, 30);
+    doc.text(`Fecha de fin: ${this.dateinputformat.fechaFinal} `, 14, 40);
+
+    let startY = 50;
+    let columns = this.generateHeaders(this.BestSellers);
+    let rows = this.BestSellers.map(product => Object.values(product));
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    let { finalY } = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+    columns = this.generateHeaders(this.LessSold);
+    rows = this.LessSold.map(product => Object.values(product));
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+    console.log(startY)
+    startY = finalY + 10;
+
+    console.log(startY)
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+    columns = this.generateHeaders(this.CurrentClient);
+    rows = this.CurrentClient.map(product => Object.values(product));
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+    columns = this.generateHeaders(this.MostCurrentSupplier);
+    rows = this.MostCurrentSupplier.map(product => Object.values(product));
+ // Tamaño de letra para el encabezado de la tabla
+   
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+    columns = this.generateHeaders(this.LessCurrentSupplier);
+    rows = this.LessCurrentSupplier.map(product => Object.values(product));
+// Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    
+    columns = this.generateHeaders(this.MostPurchasedProducts);
+    rows = this.MostPurchasedProducts.map(product => Object.values(product));
+// Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.LessPurchasedProducts);
+    rows = this.LessPurchasedProducts.map(product => Object.values(product));
+// Tamaño de letra para el encabezado de la tabla
+   
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+    columns = this.generateHeaders(this.MostCurrentLab);
+    rows = this.MostCurrentLab.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.LessCurrentLab);
+    rows = this.LessCurrentLab.map(product => Object.values(product));
+
+   // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.MostOrderedProduct);
+    rows = this.MostOrderedProduct.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.LessOrderedProduct);
+    rows = this.LessOrderedProduct.map(product => Object.values(product));
+
+     // Tamaño de letra para el encabezado de la tabla
+   
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+  
+
+    columns = this.generateHeaders(this.CurrentPatient);
+    rows = this.CurrentPatient.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.CurrentPatienAge);
+    rows = this.CurrentPatienAge.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+ 
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.PreferredPaymentType);
+    rows = this.PreferredPaymentType.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+  
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.BillsEmployee);
+    rows = this.BillsEmployee.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+  
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.ExamEyeEmployee);
+    rows = this.ExamEyeEmployee.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+  
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.OrderEmployee);
+    rows = this.OrderEmployee.map(product => Object.values(product));
+
+     // Tamaño de letra para el encabezado de la tabla
+    
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.CurrentRoll);
+    rows = this.CurrentRoll.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+   
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.Benefits);
+    rows = this.Benefits.map(product => Object.values(product));
+
+    // Tamaño de letra para el encabezado de la tabla
+ 
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 8, // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 8,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+
+
+    columns = this.generateHeaders(this.AllBenefits);
+    rows = this.AllBenefits.map(product => Object.values(product));
+
+
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: startY,
+      styles: {
+        fontSize: 10,
+        cellWidth: 'wrap', // Ajusta el ancho de la celda para ajustarse al contenido
+        valign: 'middle' // Tamaño de letra para el contenido de la tabla
+      },
+      headStyles: {
+        fontSize: 10,
+        fontStyle: 'bold' // Tamaño de letra para los encabezados de la tabla
+      }
+    });
+
+    finalY  = (doc as any).autoTable.previous;
+
+    startY = finalY + 10;
+
+    if (startY > doc.internal.pageSize.height - 20) {
+      doc.addPage();
+      startY = 20; // Reiniciar startY en la nueva página
+    }
+
+    doc.save(`Reporte.pdf`);
+  }
+
+  private generateHeaders(data: any[]): string[] {
+    if (data.length === 0) return [];
+    return Object.keys(data[0]);
+  }
+
 }
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';  
