@@ -45,31 +45,39 @@ export class EyeExamComponent {
   data$: Observable<any>[] = []
 
   tableColumnsExamen: TableColumn[] = [
-    { label: 'Número de Examen', def: 'numExamen', dataKey: 'numExamen' },
+    { label: 'ID', def: 'numExamen', dataKey: 'numExamen' },
     { label: 'Estado', def: 'estado', dataKey: 'estado'},
     { label: 'Empleado', def: 'empleado', dataKey: 'empleado' },
     { label: 'Paciente', def: 'paciente', dataKey: 'paciente' },
+    { label: 'Sph OD OI', def: 'sphIz', dataKey: 'sph' },
+    { label: 'Cyl OD OI', def: 'cylIz', dataKey: 'cyl' },
+    { label: 'Add OD OI', def: 'addIz', dataKey: 'add' },
+    { label: 'Eje OD OI', def: 'ejeIz', dataKey: 'eje' },
+    { label: 'DP OD OI', def: 'dpIz', dataKey: 'dp' },
+    { label: 'Alt OD OI', def: 'altIz', dataKey: 'alt' },
     { label: 'Fecha de Realización', def: 'fecha_Realizacion', dataKey: 'fecha_Realizacion' },
     { label: 'Observación', def: 'observacion', dataKey: 'observacion' },
-    { label: 'Esfera Izquierda', def: 'sphIz', dataKey: 'sphIz' },
-    { label: 'Cilindro Izquierda', def: 'cylIz', dataKey: 'cylIz' },
-    { label: 'Adición Izquierda', def: 'addIz', dataKey: 'addIz' },
-    { label: 'Eje Izquierda', def: 'ejeIz', dataKey: 'ejeIz' },
-    { label: 'DP Izquierda', def: 'dpIz', dataKey: 'dpIz' },
-    { label: 'Altura Izquierda', def: 'altIz', dataKey: 'altIz' },
-    { label: 'Esfera Derecha', def: 'sphDe', dataKey: 'sphDe' },
-    { label: 'Cilindro Derecha', def: 'cylDe', dataKey: 'cylDe' },
-    { label: 'Adición Derecha', def: 'addDe', dataKey: 'addDe' },
-    { label: 'Eje Derecha', def: 'ejeDe', dataKey: 'ejeDe' },
-    { label: 'DP Derecha', def: 'dpDe', dataKey: 'dpDe' },
-    { label: 'Altura Derecha', def: 'altDe', dataKey: 'altDe' }
   ];
+
+  itemCreate: any = {
+    paciente: '',
+    fecha_Realizacion: '',
+    observacion: '',
+    sphIz: '',
+  };
+  itemUpdate: any ={
+    paciente: '',
+    fecha_Realizacion: '',
+    observacion: '',
+    sph: '',
+  }
 
   ngOnInit() {
     this.mydataservices.getData("examen").subscribe((respuesta: any) => {
       console.log(respuesta)
       this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
       this.data$ = this.data$.reverse()
+
     }, (error) => {
       console.log(error)
     })
@@ -79,6 +87,7 @@ export class EyeExamComponent {
     })
   }
 
+
   procesarDatosNulos(data: any): any {
     const datosProcesados = { ...data };
     for (const key in datosProcesados) {
@@ -86,7 +95,23 @@ export class EyeExamComponent {
         datosProcesados[key] = "Dato no existente";
       }
     }
+
+    this.combinarClaves(datosProcesados, 'sphDe', 'sphIz', 'sph');
+    this.combinarClaves(datosProcesados, 'cylDe', 'cylIz', 'cyl');
+    this.combinarClaves(datosProcesados, 'addDe', 'addIz', 'add');
+    this.combinarClaves(datosProcesados, 'ejeDe', 'ejeIz', 'eje');
+    this.combinarClaves(datosProcesados, 'dpDe', 'dpIz', 'dp');
+    this.combinarClaves(datosProcesados, 'altDe', 'altIz', 'alt');
+
+
     return datosProcesados;
+  }
+  combinarClaves(datosProcesados: any, key1: string, key2: string, combinedKey: string): void {
+    if (datosProcesados.hasOwnProperty(key1) && datosProcesados.hasOwnProperty(key2)) {
+      const valor1 = datosProcesados[key1] === "Dato no existente" ? "NA" : datosProcesados[key1];
+      const valor2 = datosProcesados[key2] === "Dato no existente" ? "NA" : datosProcesados[key2];
+      datosProcesados[combinedKey] = `${valor1} ${valor2}`;
+  }
   }
 
 
