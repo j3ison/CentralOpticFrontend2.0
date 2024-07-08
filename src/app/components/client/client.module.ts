@@ -15,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatProgressBarModule,
     MatDividerModule,
     MatStepperModule,
+    MatSelectModule,
     MatTooltipModule
   ],
   exports:[ClientComponent]

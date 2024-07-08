@@ -11,18 +11,30 @@ export interface Client {
     telefonos: string;
 }
 
-
 export interface Employee {
-    Numero_Empleado: number;
-    Cedula: string;
-    Nombres: string;
-    Apellidos: string;
-    Direccion: string;
-    Fecha_Nacimiento: string;
-    Estado: boolean;
-    Telefono: string;
-    Correo: string;
+  numEmpleado: number;
+  nombres: string;
+  apellidos: string;
+  cedula: string;
+  direccion: string;
+  fechaNac: string;
+  edad: number;
+  telefonos: string;
+  correos: string;
+  estado: boolean;
 }
+
+// export interface  {
+//     Numero_Empleado: number;
+//     Cedula: string;
+//     Nombres: string;
+//     Apellidos: string;
+//     Direccion: string;
+//     Fecha_Nacimiento: string;
+//     Estado: boolean;
+//     Telefono: string;
+//     Correo: string;
+// }
 
 export interface User {
     Numero_Usuario: number;

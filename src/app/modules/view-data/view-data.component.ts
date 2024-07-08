@@ -193,13 +193,12 @@ export class ViewDataComponent {
       this.dataGlobalservice.setItemView(null);
   }
 
-  openDialogWithTemplate(template: TemplateRef<any> | null, templateV: TemplateRef<any> | null = null) {
+  openDialogWithTemplate(template: TemplateRef<any> | null, templateV: TemplateRef<any> | null = null, onResponse?: (value: any) => void) {
     if (template && templateV) {
       console.log(this.formCreateView)
       this.matDialogRef = this.dialogService.openDialogWithTemplate({ template });
 
-      this.matDialogRef.afterClosed().subscribe((res) => {
-      });
+      this.matDialogRef.afterClosed().subscribe(onResponse);
     } else {
       this.viewFormNull();
     }
