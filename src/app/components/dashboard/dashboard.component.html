@@ -1324,7 +1324,10 @@
                     <div class="col-4 texto-pequeno" *ngIf="producto.edad !== 0">
                         <p>{{ i + 1 }} - {{ producto.edad }}</p>
                     </div>
-                    <div class="col texto-pequeno" *ngIf="producto.edad !== 0">
+                    <div class="col-4 texto-pequeno" *ngIf="producto.edad === 0">
+                        <p>{{ i + 1 }} -  Sin edad registrada</p>
+                    </div>
+                    <div class="col texto-pequeno">
                         <p>{{ producto.cantidad_Pacientes }}</p>
                     </div>
                 </div>
