@@ -10,7 +10,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -18,7 +17,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
 
 @NgModule({
   declarations: [
@@ -35,13 +33,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule, // Ensure ReactiveFormsModule is included
     MatStepperModule,
     MatDividerModule,
     MatProgressBarModule,
     MatAutocompleteModule,
     MatTableModule,
     MatPaginatorModule,
-    MatTooltipModule
+    MatTooltipModule,
+  ],
+  exports: [
+    SupplierComponent // Export component if needed outside this module
   ]
 })
 export class SupplierModule { }
+

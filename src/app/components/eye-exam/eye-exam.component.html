@@ -70,7 +70,7 @@
                     class="form-data"
                     type="text"
                     formControlName="estado"
-                    [matAutocomplete]="auto"
+                    [matAutocomplete]="auto" 
                     [(ngModel)]="itemCreate.estado"
                   />
                   <i class="form-icon fa-solid fa-chevron-down"></i>
@@ -78,7 +78,7 @@
                   <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                     <mat-option
                       *ngFor="let option of listStatus | async"
-                      [value]="option.value"
+                      [value]="option.title"
                       style="font-family: 'Crimson Text', serif; color: black"
                     >
                       {{ option.title }}

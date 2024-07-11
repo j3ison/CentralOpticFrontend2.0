@@ -47,7 +47,6 @@ export class EmployeeComponent {
   itemClick: any = null;
   ngOnInit() {
     this.mydataservices.getData("empleado").subscribe((respuesta: any) => {
-      console.log(respuesta)
       this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
       this.data$ = this.data$.reverse()
     }, (error) => {
@@ -85,6 +84,20 @@ export class EmployeeComponent {
       }
 
     })
+  }
+
+  procesarDatosNulos(data: any): any {
+    const datosProcesados = { ...data };
+    for (const key in datosProcesados) {
+      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+        datosProcesados[key] = "Dato no existente";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
+        datosProcesados[key] = "Activo";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
+        datosProcesados[key] = "Inactivo";
+      }
+    }
+    return datosProcesados;
   }
 
 //Para actualizar informacion
@@ -192,15 +205,15 @@ formGetContactUpdateEmployee(fr: string) {
       this.dataGlobalservice.setItemView(null);
     }
   }
-  procesarDatosNulos(data: any): any {
-    const datosProcesados = { ...data };
-    for (const key in datosProcesados) {
-      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
-        datosProcesados[key] = "Dato no existente";
-      }
-    }
-    return datosProcesados;
-  }
+  // procesarDatosNulos(data: any): any {
+  //   const datosProcesados = { ...data };
+  //   for (const key in datosProcesados) {
+  //     if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+  //       datosProcesados[key] = "Dato no existente";
+  //     }
+  //   }
+  //   return datosProcesados;
+  // }
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
       Swal.fire({

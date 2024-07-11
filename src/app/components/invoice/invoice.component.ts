@@ -73,7 +73,7 @@ export class InvoiceComponent {
   typeShopFilter!: Observable<string[]>;
   itemTypeShop: string = 'Piso'
 
-  itemInvoiceDetail:any[] = []
+  itemInvoiceDetail: any[] = []
 
   user: any;
 
@@ -267,8 +267,8 @@ export class InvoiceComponent {
 
     this.dataGlobalservice.$itemView.subscribe(item => {
       this.itemClick = item
-      if(item){
-        this.mydataservices.getData("detallefactura/"+item.numFactura).subscribe((respuesta: any) => {
+      if (item) {
+        this.mydataservices.getData("detallefactura/" + item.numFactura).subscribe((respuesta: any) => {
           console.log(respuesta)
           this.itemInvoiceDetail = respuesta
         }, (error) => {
@@ -279,22 +279,36 @@ export class InvoiceComponent {
     })
 
 
-  } 
+  }
+
+  procesarDatosNulos(data: any): any {
+    const datosProcesados = { ...data };
+    for (const key in datosProcesados) {
+      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+        datosProcesados[key] = "Dato no existente";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
+        datosProcesados[key] = "Piso";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
+        datosProcesados[key] = "Convenio";
+      }
+    }
+    return datosProcesados;
+  }
 
   itemStatusInvoice = ''
 
 
 
-  procesarDatosNulos(data: any): any {
-    const datosProcesados = { ...data };
-    // Iterar sobre las propiedades del objeto y reemplazar los valores null
-    for (const key in datosProcesados) {
-      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
-        datosProcesados[key] = "Dato no existente";
-      }
-    }
-    return datosProcesados;
-  }
+  // procesarDatosNulos(data: any): any {
+  //   const datosProcesados = { ...data };
+  //   // Iterar sobre las propiedades del objeto y reemplazar los valores null
+  //   for (const key in datosProcesados) {
+  //     if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+  //       datosProcesados[key] = "Dato no existente";
+  //     }
+  //   }
+  //   return datosProcesados;
+  // }
 
   openDialog() {
 
@@ -410,9 +424,10 @@ export class InvoiceComponent {
   saveData(data$: any) {
     if (data$?.cantidad && data$.cantidad.toString().trim() !== '') {
       const data = this.listProducto.find(obj => obj.codProducto == data$.codProducto)
+      console.log(data)
       if (data)
         if (data.cantidad > data$.cantidad) {
-          if (data$.cantidad !== 0) {
+          if (data$.cantidad <= 0) {
             data$.estado = true
           } else {
             Swal.fire({
@@ -423,11 +438,26 @@ export class InvoiceComponent {
           }
         }
         else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "La cantidad supera el stock actual."
-          });
+          if(data.tipoProducto != 'Reparaciones'
+            && data.tipoProducto != 'Reajustes' && data.tipoProducto != 'Monofocales'  && data.tipoProducto != 'Bifocales' 
+            && data.tipoProducto != 'Progresivos'  && data.tipoProducto != 'Servicios'){
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "La cantidad supera el stock actual."
+              });
+          }else{
+            if (data$.cantidad !== 0) {
+              data$.estado = true
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "La cantidad no puede ser 0."
+              });
+            }
+          }
+          
         }
     } else {
       Swal.fire({
@@ -603,6 +633,8 @@ export class InvoiceComponent {
     }
   }
 
+
+
   dataItems: any = null
   onItemClick(data: any) {
     this.dataItems = data
@@ -738,11 +770,11 @@ export class InvoiceComponent {
 
   itemClick: any = null
   onItemClickActive(data: any) {
-    
-    if (this.itemClick !== data){
+
+    if (this.itemClick !== data) {
       this.itemClick = data
       this.dataGlobalservice.setItemView(data);
-    }else{
+    } else {
       this.itemClick = null
       this.dataGlobalservice.setItemView(null);
     }

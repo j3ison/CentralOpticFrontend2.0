@@ -94,7 +94,7 @@ export const navbarData: INavbarData[] = [
             {
                 routeLink: 'product/supplier',
                 icon: 'fa-solid fa-plus',
-                label: 'Proveedores',
+                label: 'Registro Producto',
                 role: ['Administrador', 'Super Administrador', 'Venta']
 
             }
