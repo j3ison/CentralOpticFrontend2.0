@@ -1,9 +1,118 @@
 <app-view-data [ItemViewGrid]="item" [ItemData]="data$" 
     [columns]="tableColumnsProveedor" 
     [clickItems]="dataItems" 
-    [FormCreateView]="formcreate"></app-view-data>
+    [FormCreateView]="formcreate" 
+    [FormView]="formUpdate"></app-view-data>
 
     
+    <!-- <ng-template #formcreate>
+        <div class="container-form-create">
+            <form class="content-form" [formGroup]="formCreateClient">
+                <h1>Formulario Usuario</h1>
+                
+
+                <div class="content-form-item">
+                    <div class="form">
+                        <label class="title">Nombres*</label>
+                        <input class="form-data" type="text" formControlName="nombres">
+                        <i class="form-icon fa-solid fa-pencil"></i>
+                        <div class="alert alert-danger mt-1"
+                            [hidden]="formGetCreateClient('nombres').valid || (formGetCreateClient('nombres').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+                    <div class="form">
+                        <label class="title">Apellidos*</label>
+                        <input class="form-data" type="text" formControlName="apellidos">
+                        <i class="form-icon fa-solid fa-pencil"></i>
+                        <div class="alert alert-danger mt-1"
+                            [hidden]="formGetCreateClient('apellidos').valid || (formGetCreateClient('apellidos').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-form-item">
+                    <div class="form">
+                        <label class="title">Nombre de Usuario*</label>
+                        <input class="form-data" type="text" formControlName="nombreUsuario">
+                        <i class="form-icon fa-solid fa-pencil"></i>
+                        <div class="alert alert-danger mt-1"
+                            [hidden]="formGetCreateClient('nombreUsuario').valid || (formGetCreateClient('nombreUsuario').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+                    <div class="form">
+                        <label class="title">Numero de Empleado*</label>
+                        <input class="form-data" type="text" formControlName="numero_Empleado">
+                        <i class="form-icon fa-solid fa-pencil"></i>
+                        <div class="alert alert-danger mt-1"
+                            [hidden]="formGetCreateClient('numero_Empleado').valid || (formGetCreateClient('numero_Empleado').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-form-item">
+                    <div class="form">
+                        <label class="title">Rol*</label>
+                        <input class="form-data" type="text" formControlName="rol"  [matAutocomplete]="auto">
+                        <i class="form-icon fa-solid fa-pencil"></i>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option.rol"
+                                style="font-family: 'Crimson Text', serif; color: black;">
+                                {{option.rol}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div class="alert alert-danger mt-1"
+                            [hidden]="formGetCreateClient('rol').valid || (formGetCreateClient('rol').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+                    <div class="form">
+                        <label class="title">Clave*</label>
+                        <input class="form-data" type="text" formControlName="clave">
+                        <i class="form-icon fa-solid fa-pencil"></i>
+                        <div class="alert alert-danger mt-1"
+                            [hidden]="formGetCreateClient('clave').valid || (formGetCreateClient('clave').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-form-item">
+                    <div class="form">
+                        <label class="title">Email 1*</label>
+                        <input class="form-data" type="text" formControlName="mail1">
+                        <i class="form-icon fa-solid fa-pencil"></i>
+                        <div class="alert alert-danger mt-1"
+                            [hidden]="formGetCreateClient('mail1').valid || (formGetCreateClient('mail1').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+                    <div class="form">
+                        <label class="title">EMail 2</label>
+                        <input class="form-data" type="text" formControlName="mail1">
+                        <i class="form-icon fa-solid fa-pencil"></i>
+                        <div class="alert alert-danger mt-1"
+                            [hidden]="formGetCreateClient('mail2').valid || (formGetCreateClient('mail2').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
+                    <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
+                        [disabled]="formCreateClient.invalid" (click)="saveDataConfirmed()">
+                        Guardar
+                        <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
+                    </button>
+                </div>
+    
+            </form>
+        </div>
+    </ng-template> -->
+
 
 
 
@@ -83,29 +192,9 @@
 <ng-template #formcreate>
     <div class="container-form-create">
         <form class="content-form" [formGroup]="formCreateClient">
-            <h1>Formulario Cliente</h1>
-            
-            <div class="content-form-item">
-                <div class="form">
-                    <label class="title">Nombre</label>
-                    <input class="form-data" type="text" formControlName="nombres" [(ngModel)]="itemCreate.nombres">
-                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
-                    <!-- <i class="fa-solid fa-pencil"></i> -->
-                </div>
-                <div class="form">
-                    <label class="title">Apellido*</label>
-                    <input class="form-data" type="text" formControlName="apellidos" [(ngModel)]="itemCreate.apellidos">
-                    <i class="form-icon fa-solid fa-pencil"></i>
-                    <div class="alert alert-danger mt-1"
-                        [hidden]="formGetCreateClient('apellidos').valid || (formGetCreateClient('apellidos').pristine)">
-                        El campo no puede estar Vacio.
-                    </div>
-
-                </div>
-            </div>
+            <h1>Formulario Usuario</h1>
 
             <div class="content-form-item">
-
                 <div class="form">
                     <label class="title">Empleado</label>
                     <input class="form-data" type="text" formControlName="numero_Empleado" [(ngModel)]="itemEmployee.numEmpleado">
@@ -144,38 +233,17 @@
                 </div>
                 <div class="form">
                     <label class="title">Clave</label>
-                    <input class="form-data" type="password" formControlName="clave" [(ngModel)]="itemCreate.nombreUsuario">
+                    <input class="form-data" type="password" formControlName="clave" [(ngModel)]="itemCreate.clave">
                     <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
                     <!-- <i class="fa-solid fa-pencil"></i> -->
                 </div>
-            </div>
-
-            <div class="content-form-item">
-
                 <div class="form">
                     <label class="title">Estado</label>
                     <input class="form-data" type="text" formControlName="estado" [(ngModel)]="itemCreate.estado" readonly>
                     <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
                     <!-- <i class="fa-solid fa-pencil"></i> -->
                 </div>
-                
-                <div class="form">
-                    <div class="form-title">
-                        <label class="title" style="text-align: center;">Correo</label>
-                        <i class="icon" [ngClass]="classIconMail()" (mouseenter)="iconChangeEnterMail()"
-                            (mouseout)="iconChangeOverMail()" (click)="clickMail()"></i>
-                    </div>
-                    <input class="form-data" type="email" formControlName="mail1" [(ngModel)]="itemCreate.correos1">
-                    <i class="form-icon fa-regular fa-envelope fa-solid"></i>
-
-                    <input *ngIf="twoMail" class="form-data" type="email" formControlName="mail2"
-                        [(ngModel)]="itemCreate.correos2">
-                    <i *ngIf="twoMail" class="form-icon fa-regular fa-envelope fa-solid"></i>
-                </div>
             </div>
-
-
-
 
             <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
                 <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
@@ -193,4 +261,67 @@
     <app-sub-tablet [data]="dataEmployee" [columns]=" tableColumnsEmployee"
     (selectItemsCell)="resultDataTableProduct($event)" (cancelTable)="cancelDialogResult()">
     </app-sub-tablet>
+</ng-template>
+
+<ng-template #formUpdate>
+    <div class="container-form-create">
+        <form class="content-form" [formGroup]="formUpdateClient">
+            <h1>Formulario Usuario</h1>
+
+            <div class="content-form-item">
+                
+                <div class="form">
+                    <label class="title">Nombre de usuario</label>
+                    <input class="form-data" type="text" formControlName="nombreUsuario" [(ngModel)]="itemClick.nombreUsuario">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+
+                <div class="form">
+                    <label class="title">Rol*</label>
+                    <input class="form-data" type="text" formControlName="rol" [matAutocomplete]="auto"
+                        [(ngModel)]="itemClick.rol">
+                    <i class="form-icon fa-solid fa-chevron-down"></i>
+
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option.rol"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option.rol}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateClient('rol').valid || (formGetCreateClient('rol').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Clave</label>
+                    <input class="form-data" type="password" formControlName="clave" [(ngModel)]="itemClick.clave">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+
+                <div class="form">
+                    <label class="title">Estado</label>
+                    <input class="form-data" type="text" formControlName="estado" [(ngModel)]="itemClick.estado" >
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+            </div>
+
+            <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
+                <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
+                    [disabled]="formUpdateClient.invalid" (click)="saveDataConfirmedUpdate()">
+                    Guardar
+                    <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
 </ng-template>

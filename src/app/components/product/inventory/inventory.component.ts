@@ -37,7 +37,7 @@ export class InventoryComponent {
 
   formCreate: FormGroup = this.formBuilder.group(
     {
-      'codProducto': ['', Validators.required],
+      'codProducto': ['', Validators.nullValidator],
       'descripcion': ['', Validators.required],
       'tipoProducto': ['', Validators.required],
       'precioVenta': ['', Validators.required],
