@@ -134,7 +134,7 @@ export const navbarData: INavbarData[] = [
         routeLink: 'order',
         icon: 'fa-solid fa-truck-field',
         label: 'Orden Pedido',
-        role: ['Administrador', 'Super Administrador']
+        role: ['Administrador', 'Super Administrador', 'Optometrista']
     },
     {
         routeLink: 'help',

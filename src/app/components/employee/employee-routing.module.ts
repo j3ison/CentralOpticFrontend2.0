@@ -25,14 +25,14 @@ const routes: Routes = [
     path :'profile',
     component:ProfileComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole([ 'Super Administrador', 'Administrador'])],
-    canLoad: [hasRole([ 'Super Administrador', 'Administrador'])]
+    canActivate: [hasRole([ 'Super Administrador', 'Administrador', 'Venta', 'Optometrista'])],
+    canLoad: [hasRole([ 'Super Administrador', 'Administrador', 'Venta', 'Optometrista'])]
   },{
     path :'roll',
     component:RollComponent,
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole([ 'Super Administrador', 'Administrador'])],
-    canLoad: [hasRole([ 'Super Administrador', 'Administrador'])]
+    canActivate: [hasRole([ 'Super Administrador'])],
+    canLoad: [hasRole([ 'Super Administrador'])]
   }
 ];
 

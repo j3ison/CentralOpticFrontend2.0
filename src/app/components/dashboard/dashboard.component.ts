@@ -1017,7 +1017,7 @@ export class DashboardComponent {
         startY = 20; // Reiniciar startY en la nueva página
       }
 
-      doc.text('Edades mas recurrentes en pacientes', 14, startY)
+      doc.text('Edades mas recurrentes en examenes', 14, startY)
       startY = startY + 10;
 
       columns = this.generateHeaders(this.CurrentPatienAge);

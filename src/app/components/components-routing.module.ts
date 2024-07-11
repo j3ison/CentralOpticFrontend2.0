@@ -35,8 +35,8 @@ const routes: Routes = [
     path :'employee',
     loadChildren:() => import('./employee/employee.module').then(m => m.EmployeeModule),
     canMatch: [isLoggedInGuard],
-    canActivate: [hasRole(['Administrador', 'Super Administrador'])],
-    canLoad: [hasRole(['Administrador', 'Super Administrador'])]
+    canActivate: [hasRole(['Administrador', 'Super Administrador','Venta', 'Optometrista'])],
+    canLoad: [hasRole(['Administrador', 'Super Administrador','Venta', 'Optometrista'])]
   },
   {
     path :'provider',
@@ -79,8 +79,8 @@ const routes: Routes = [
   },{
     path :'order',
     component:OrderComponent,
-    canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
-    canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista'])]
   }
 ];
 
