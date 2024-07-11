@@ -21,7 +21,8 @@ export class SupplierComponent {
     { label: 'Descripción', def: 'descripcion', dataKey: 'descripcion' },
     { label: 'Nombre de la Empresa', def: 'nombreEmpresa', dataKey: 'nombreEmpresa' },
     { label: 'Costo', def: 'costo', dataKey: 'costo' },
-    { label: 'Estado', def: 'estado', dataKey: 'estado' }
+    { label: 'Estado', def: 'estado', dataKey: 'estado' },
+    { label: 'Cantidad', def: 'cantidad', dataKey: 'cantidad' }
   ]
   fecha = new Date();
 

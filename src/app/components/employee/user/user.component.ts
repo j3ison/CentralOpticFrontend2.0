@@ -44,6 +44,37 @@ export class UserComponent {
     { label: 'Fecha de nacimiento', def: 'fechaNac', dataKey: 'fechaNac' },
   ];
 
+  formCreateClient: FormGroup = this.formBuilder.group(
+    {
+      'clave': ['', Validators.required],
+      'nombres': ['', Validators.nullValidator],
+      'apellidos': ['', Validators.nullValidator],
+      'estado': ['Activo', Validators.required],
+      'nombreUsuario': ['', Validators.required],
+      'numero_Empleado': [0, Validators.required],
+      'rol': ['', Validators.required],
+      'mail1': ['', Validators.nullValidator],
+      'mail2': ['', Validators.nullValidator],
+    }
+  )
+
+  formUpdateClient: FormGroup = this.formBuilder.group(
+    {
+      'clave': ['', Validators.required],
+      'nombres': ['', Validators.nullValidator],
+      'apellidos': ['', Validators.nullValidator],
+      'estado': ['Activo', Validators.required],
+      'nombreUsuario': ['', Validators.required],
+      'numero_Empleado': [0, Validators.required],
+      'rol': ['', Validators.required],
+      'mail1': ['', Validators.nullValidator],
+      'mail2': ['', Validators.nullValidator],
+    }
+  )
+
+  listRoll: Observable<any[]> | undefined
+  filteredOptions: Observable<any[]> | undefined;
+
   @Output() eventClickItems = new EventEmitter<void>();
   itemClick: any = null;
 
@@ -65,19 +96,7 @@ export class UserComponent {
   listAssociatedCompany: any[] = []
   listAssociatedCompanyFilter: Observable<any[]> = of(['Activo', 'Inactivo']);
 
-  formCreateClient: FormGroup = this.formBuilder.group(
-    {
-      'clave': ['', Validators.required],
-      'nombres': ['', Validators.required],
-      'apellidos': ['', Validators.required],
-      'estado': ['Activo', Validators.required],
-      'nombreUsuario': ['', Validators.required],
-      'numero_Empleado': [0, Validators.required],
-      'rol': ['', Validators.required],
-      'mail1': ['', Validators.nullValidator],
-      'mail2': ['', Validators.nullValidator],
-    }
-  )
+
 
   formGetCreateClient(fr: string) {
     return this.formCreateClient.get(fr) as FormControl;
@@ -95,17 +114,17 @@ export class UserComponent {
     correos1?: any;
     correos2?: any;
   } = {
-    idUsuario: 1,
-    nombres: '',
-    apellidos: '',
-    estado: 'Activo',
-    clave: null,
-    nombreUsuario: '',
-    rol: '',
-    numero_Empleado: 0
-  }
+      idUsuario: 1,
+      nombres: '',
+      apellidos: '',
+      estado: 'Activo',
+      clave: null,
+      nombreUsuario: '',
+      rol: '',
+      numero_Empleado: 0
+    }
 
-  itemEmployee:any = {
+  itemEmployee: any = {
     numEmpleado: 0
   };
 
@@ -116,10 +135,29 @@ export class UserComponent {
 
   ngOnInit(): void {
 
+    this.dataGlobalservice.$itemView.subscribe(item => {
+
+      this.itemClick = item
+
+      console.log(this.itemClick)
+      if (item) {
+
+        this.formUpdateClient.patchValue ({
+          clave: '',
+          nombreUsuario: item.nombreEmpresa,
+          rol: item.rol,
+          estado: item.estado,
+        })
+
+      
+      }
+
+    })
+
     this.mydataservices.getData("empleado/true").subscribe((respuesta: any) => {
       this.dataEmployee = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
       this.dataEmployee = this.dataEmployee.reverse()
-      console.log(this.dataEmployee )
+      console.log(this.dataEmployee)
     }, (error) => {
       console.log(error)
     })
@@ -150,6 +188,8 @@ export class UserComponent {
       startWith(''),
       map(value => this._filterAssociatedCompany(value || '')),
     );
+
+
 
 
   }
@@ -245,96 +285,39 @@ export class UserComponent {
     });
   }
 
-
-
   saveDataCreate() {
     let data = {
-      // empresa_Asociada: this.itemCreate.empresa_Asociada,
-      // nombres: this.itemCreate.nombres,
-      // apellidos: this.itemCreate.apellidos,
-      // cedula: this.itemCreate.cedula,
-      // direccion: this.itemCreate.direccion,
-      // fechaNac: this.itemCreate.fechaNac
+      clave: this.itemCreate.clave,
+      estado: true,
+      nombreUsuario: this.itemCreate.nombreUsuario,
+      numeroEmpleado: this.itemEmployee.numEmpleado,
+      rol: this.itemCreate.rol
     }
 
-    this.mydataservices.postData('cliente', data).then((success) => {
+    console.log(data)
+
+    this.mydataservices.postData('usuario', data).then((success) => {
       if (success) {
-        this.mydataservices.getData("cliente").subscribe((respuesta: any[]) => {
-          // console.log(respuesta)
-          let todoslosdatos = respuesta
-          this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
-          this.data$ = this.data$.reverse()
 
-          // console.log(respuesta)
+        this.formCreateClient.reset
 
-          let result = todoslosdatos.find((obj: any) =>
-            obj.nombres == this.itemCreate.nombres
-            && obj.apellidos == this.itemCreate.apellidos
-            // (this.itemCreate.cedula && obj.cedula == this.itemCreate.cedula)
-          )
+        this.itemCreate = {
+          idUsuario: 1,
+          nombres: '',
+          apellidos: '',
+          estado: 'Activo',
+          clave: '',
+          nombreUsuario: '',
+          rol: '',
+          numero_Empleado: 0
+        }
 
-          console.log(result)
-
-          if (this.itemCreate.correos1 && result) {
-            let contact = {
-              codigo_Cliente: result.codigo_Cliente,
-              correoNuevo: this.itemCreate.correos1
-            }
-
-            this.mydataservices.postData('correocliente', contact).then((success) => {
-              if (success) {
-
-                this.mydataservices.getData("cliente").subscribe((respuesta: any[]) => {
-                  // console.log(respuesta)
-                  this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
-                  this.data$ = this.data$.reverse()
-                })
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Ups...',
-                  text: 'Se ha producido un error al intentar guardar el primer correo del cliente.',
-                  footer: '<a href="">¿Por qué tengo este problema??</a>'
-                })
-              }
-            })
-          }
-
-          if (this.itemCreate.correos2 && result) {
-            let contact = {
-              codigo_Cliente: result.codigo_Cliente,
-              correoNuevo: this.itemCreate.correos2
-            }
-
-            this.mydataservices.postData('correocliente', contact).then((success) => {
-              if (success) {
-
-                this.mydataservices.getData("cliente").subscribe((respuesta: any[]) => {
-                  // console.log(respuesta)
-                  this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
-                  this.data$ = this.data$.reverse()
-                })
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Ups...',
-                  text: 'Se ha producido un error al intentar guardar el segundo correo del cliente.',
-                  footer: '<a href="">¿Por qué tengo este problema??</a>'
-                })
-              }
-            })
-
-          }
-
-          Swal.fire({
-            icon: 'success',
-            title: 'Exito',
-            text: '¡La información ha sido guardada exitosamente!',
-          })
-
-        }, (error) => {
-          console.log(error)
+        Swal.fire({
+          icon: 'success',
+          title: 'Exito',
+          text: '¡La información ha sido guardada exitosamente!',
         })
+
       } else {
 
       }
@@ -343,34 +326,69 @@ export class UserComponent {
     console.log(data)
   }
 
-  // d() {
-  //   const data = {
+  saveDataConfirmedUpdate() {
+    Swal.fire({
+      title: 'Confirmar',
+      text: '¿Está seguro que desea Actualizar la información?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Actualizar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.saveDataUpdate()
+        // this.formUpdateData.reset()
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          'Los datos siguen a salvo:)',
+          'error'
+        )
+      }
+    });
+  }
 
-  //     cantidad:0,
-  //     codProducto:"1110-99",
-  //     descripcion:"nuevo producto",
-  //     estado:true,
-  //     precioCompra:0,
-  //     precioVenta:370,
-  //     stockMaximo:0,
-  //     stockMinimo:0,
-  //     tipoProducto:"Reparaciones",
-  //   }
-  //   this.mydataservices.postData('producto', data).then((success) => {
-  //     if (success) {
+  saveDataUpdate() {
+    let data = {
+      clave: this.itemClick.clave == 'Dato no existente'?null:this.itemClick.clave,
+      estado: this.itemClick.estado == 'Activo',
+      numeroEmpleado:this.itemClick.numero_Empleado,
+      nombreUsuario: this.itemClick.nombreUsuario,
+      rol: this.itemClick.rol
+    }
 
-  //     } else {
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Ups...',
-  //         text: 'Algo salió mal!',
-  //         footer: '<a href="">¿Por qué tengo este problema??</a>'
-  //       })
-  //       return
-  //     }
-  //   })
-  // }
+    console.log(data)
 
+    this.mydataservices.updateData('usuario', data,this.itemClick.idUsuario).then((success) => {
+      if (success) {
+
+        this.formUpdateClient.reset
+
+        this.itemCreate = {
+          idUsuario: 1,
+          nombres: '',
+          apellidos: '',
+          estado: 'Activo',
+          clave: '',
+          nombreUsuario: '',
+          rol: '',
+          numero_Empleado: 0
+        }
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Exito',
+          text: '¡La información ha sido guardada exitosamente!',
+        })
+
+      } else {
+
+      }
+    })
+
+    console.log(data)
+  }
 
 
   image(rol: string): string {
