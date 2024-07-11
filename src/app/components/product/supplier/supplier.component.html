@@ -1,11 +1,32 @@
-<p>supplier works!</p><app-view-data [ItemViewGrid]="customTemplate" [FormView]="formupdate" [ItemData]="data$"
+<app-view-data [ItemViewGrid]="customTemplate" [FormView]="formupdate" [ItemData]="data$"
     [columns]="tableColumnsInventory" [clickItems]="dataItems" [FormCreateView]="form"></app-view-data>
 
 
+
 <ng-template #customTemplate let-data>
+    <mat-card class="card-product" [ngClass]="itemClick=== data?'card-invoice-active':''"
+    (click)="onItemClickActive(data)">
+        
+        <div class="container-card-product">
+            <img class="img-card-product" [src]="imgItems(data.tipoProducto)">
+
+            <div class="content-body-card-product">
+                <h1 class="text-name-card-product">{{data.descripcion}}</h1>
+                <span class="text-price-card-product">${{data.costo}}</span>
+            </div>
+
+            <div class="content-footer-card-product">
+                <h2 class="text-type-card-product">{{data.tipoProducto}}</h2>
+            </div>
+        </div>
+    </mat-card>
+</ng-template>
+
+
+
+<!-- <ng-template #customTemplate let-data>
     <mat-card class="card-product">
         <div class="container-card-product">
-            <!-- <img class="img-card-product" [src]="imgItems(data.tipoProducto)"> -->
 
             <div class="content-body-card-product">
                 <h1 class="text-name-card-product">{{data.descripcion}}</h1>
@@ -17,127 +38,182 @@
             </div>
         </div>
     </mat-card>
-</ng-template>
+</ng-template> -->
 
 <ng-template #form>
     <div class="container-form-create">
-        <form class="content-form" >
+        <form class="content-form" [formGroup]="formCreate">
             <h1>Formulario Proveedor</h1>
 
             <div class="content-form-item">
                 <div class="form">
-                    <label class="title">Nombre de la compañia*</label>
-                    <input class="form-data" type="text" formControlName="name_company"
-                        >
+
+                    <label class="title">Descripción del producto</label>
+                    <input class="form-data" type="text" formControlName="descripcion" [matAutocomplete]="auto">
+
                     <i class="form-icon fa-solid fa-pencil"></i>
-                    <!-- <div class="alert alert-danger mt-1"
-                        [hidden]="formGetCreateClient('name_company').valid || (formGetCreateClient('name_company').pristine)">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions  | async" [value]="option.descripcion"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option.descripcion}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('descripcion').valid || (formGetCreate('descripcion').pristine)">
                         El campo no puede estar Vacio.
-                    </div> -->
+                    </div>
                 </div>
                 <div class="form">
-                    <label class="title">Contacto</label>
-                    <input class="form-data" type="text" formControlName="contact" >
+                    <label class="title">Nombre de la Empresa</label>
+                    <input class="form-data" type="text" formControlName="nombreEmpresa"
+                        [matAutocomplete]="autoProveedor">
                     <i class="form-icon fa-solid fa-pencil"></i>
+                    <mat-autocomplete #autoProveedor="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredProveedor  | async" [value]="option.nombre_Empresa"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option.nombre_Empresa}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('nombreEmpresa').valid || (formGetCreate('nombreEmpresa').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
                 </div>
             </div>
-
-
-
             <div class="content-form-item">
-
-                <mat-form-field class="form">
-                    <mat-label class="title">Dirección</mat-label>
-                    <textarea class="form-data" formControlName="address" matInput
-                        ></textarea>
-                </mat-form-field>
+                <div class="form">
+                    <label class="title">Fecha de Adquisición</label>
+                    <input class="form-data" type="text" formControlName="fechaAdquisicion">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('fechaAdquisicion').valid || (formGetCreate('fechaAdquisicion').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+                <div class="form">
+                    <label class="title">Costo</label>
+                    <input class="form-data" type="text" formControlName="costo">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('costo').valid || (formGetCreate('costo').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+                <div class="form">
+                    <label class="title">Cantidad</label>
+                    <input class="form-data" type="text" formControlName="cantidad">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('cantidad').valid || (formGetCreate('cantidad').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
             </div>
+            <div class="form-button">
+                <button class="btn btn-danger">Cancelar</button>
 
-            
-
-
-
-
-            <!-- <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
-                <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
-                    [disabled]="formCreateClient.invalid" (click)="saveDataConfirmed()">
-                    Guardar
-                    <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
-                </button>
-            </div> -->
-
+                <button class="btn btn-primary" (click)="saveDataConfirmed()" style="margin-left: 5rem;"
+                    [disabled]="formCreate.invalid">Guardar</button>
+            </div>
         </form>
     </div>
 </ng-template>
 
 
 <ng-template #formupdate>
-    <div class="container-form">
-        <form class="content-form">
-            <h1 *ngIf="item">Actualizar Producto</h1>
-            <h1 *ngIf="!item">Agregar Producto</h1>
+    <div class="container-form-create">
+        <form class="content-form" [formGroup]="formUpdate">
+            <h1>Formulario Proveedor</h1>
 
             <div class="content-form-item">
                 <div class="form">
-                    <label class="title">Codigo</label>
-                    <input class="form-data" type="text" formControlName="codProducto" readonly>
-                </div>
 
-                <div class="form">
-                    <label class="title">Descripcion</label>
-                    <input class="form-data" type="text" formControlName="descripcion">
-                </div>
+                    <label class="title">Descripción del producto</label>
+                    <input class="form-data" type="text" formControlName="descripcion" [matAutocomplete]="auto">
 
-                <div class="form">
-                    <label class="title">Estado</label>
-                    <input class="form-data" type="text" formControlName="estado">
-                </div>
-            </div>
-
-            <div class="content-form-item">
-                <div class="form">
-                    <label class="title">Tipo de producto</label>
-                    <input class="form-data" type="text" formControlName="tipoProducto" [matAutocomplete]="auto">
-                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of listTypeProduct | async" [value]="option.tipoProducto"
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions  | async" [value]="option.descripcion"
                             style="font-family: 'Crimson Text', serif; color: black;">
-                            {{option.tipoProducto}}
+                            {{option.descripcion}}
                         </mat-option>
                     </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('descripcion').valid || (formGetCreate('descripcion').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
                 </div>
-
                 <div class="form">
-                    <label class="title">Precio Venta</label>
-                    <input class="form-data" type="text" formControlName="precioVenta">
-                </div>
-
-                <div class="form">
-                    <label class="title">Precio Compra</label>
-                    <input class="form-data" type="text" formControlName="precioCompra">
+                    <label class="title">Nombre de la Empresa</label>
+                    <input class="form-data" type="text" formControlName="nombreEmpresa"
+                        [matAutocomplete]="autoProveedor">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <mat-autocomplete #autoProveedor="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredProveedor  | async" [value]="option.nombre_Empresa"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option.nombre_Empresa}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('nombreEmpresa').valid || (formGetCreate('nombreEmpresa').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
                 </div>
             </div>
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Fecha de Adquisición</label>
+                    <input class="form-data" type="text" formControlName="fechaAdquisicion">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('fechaAdquisicion').valid || (formGetCreate('fechaAdquisicion').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+                <div class="form">
+                    <label class="title">Costo</label>
+                    <input class="form-data" type="text" formControlName="costo">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('costo').valid || (formGetCreate('costo').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
 
+            </div>
             <div class="content-form-item">
                 <div class="form">
                     <label class="title">Cantidad</label>
                     <input class="form-data" type="text" formControlName="cantidad">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('cantidad').valid || (formGetCreate('cantidad').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
                 </div>
 
                 <div class="form">
-                    <label class="title">Stock Minimo</label>
-                    <input class="form-data" type="text" formControlName="stockMinimo">
-                </div>
-
-                <div class="form">
-                    <label class="title">Stock Maximo</label>
-                    <input class="form-data" type="text" formControlName="stockMaximo">
+                    <label class="title">Estado</label>
+                    <input class="form-data" type="text" formControlName="estado" [matAutocomplete]="autoEstado">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <mat-autocomplete #autoEstado="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredStatus  | async" [value]="option"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreate('cantidad').valid || (formGetCreate('cantidad').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
                 </div>
             </div>
 
             <div class="form-button">
                 <button class="btn btn-danger">Cancelar</button>
 
-                <!-- <button class="btn btn-primary" (click)="saveDataConfirmedUpdate()" [disabled]="formUpdate.invalid">Guardar</button> -->
+                <button class="btn btn-primary" style="margin-left: 5rem;" (click)="saveDataConfirmedUpdate()"
+                    [disabled]="formUpdate.invalid">Guardar</button>
             </div>
         </form>
     </div>

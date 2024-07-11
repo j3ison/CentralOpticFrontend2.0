@@ -126,6 +126,20 @@ export class EyeExamComponent {
     this.getEyeExamList();
   }
 
+  // procesarDatosNulos(data: any): any {
+  //   const datosProcesados = { ...data };
+  //   for (const key in datosProcesados) {
+  //     if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+  //       datosProcesados[key] = "Dato no existente";
+  //     } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
+  //       datosProcesados[key] = "Activo";
+  //     } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
+  //       datosProcesados[key] = "Inactivo";
+  //     }
+  //   }
+  //   return datosProcesados;
+  // }
+
   getEyeExamList() {
     this.mydataservices.getData('examen').subscribe(
       (respuesta: any) => {
@@ -229,11 +243,12 @@ export class EyeExamComponent {
   procesarDatosNulos(data: any): any {
     const datosProcesados = { ...data };
     for (const key in datosProcesados) {
-      if (
-        datosProcesados.hasOwnProperty(key) &&
-        datosProcesados[key] === null
-      ) {
-        datosProcesados[key] = 'Dato no existente';
+      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+        datosProcesados[key] = "Dato no existente";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
+        datosProcesados[key] = "Activo";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
+        datosProcesados[key] = "Inactivo";
       }
     }
 

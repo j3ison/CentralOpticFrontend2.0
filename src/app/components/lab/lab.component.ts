@@ -161,6 +161,20 @@ export class LabComponent {
     })
 
   }
+
+  procesarDatosNulos(data: any): any {
+    const datosProcesados = { ...data };
+    for (const key in datosProcesados) {
+      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+        datosProcesados[key] = "Dato no existente";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
+        datosProcesados[key] = "Activo";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
+        datosProcesados[key] = "Inactivo";
+      }
+    }
+    return datosProcesados;
+  }
 //-----------------------------------------------------------------//
 saveDataCreate() {
   let data = {
@@ -280,15 +294,15 @@ saveDataConfirmed() {
   iconSubPhone: boolean = false;
 
 
-  procesarDatosNulos(data: any): any {
-    const datosProcesados = { ...data };
-    for (const key in datosProcesados) {
-      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
-        datosProcesados[key] = "Dato no existente";
-      }
-    }
-    return datosProcesados;
-  }
+  // procesarDatosNulos(data: any): any {
+  //   const datosProcesados = { ...data };
+  //   for (const key in datosProcesados) {
+  //     if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+  //       datosProcesados[key] = "Dato no existente";
+  //     }
+  //   }
+  //   return datosProcesados;
+  // }
 
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {

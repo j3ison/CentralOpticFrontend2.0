@@ -99,18 +99,32 @@ export class InventoryComponent {
     })
 
     this.mydataservices.getData("producto").subscribe((respuesta: any) => {
-      this.data$ = respuesta
-      console.log(respuesta)
+      this.data$ = respuesta.map((obj: any) => this.procesarDatosNulos(obj));
+      
     }, (error) => {
       console.log(error)
     })
 
     this.mydataservices.getData("tipoproducto ").subscribe((respuesta: any) => {
       this.listTypeProduct = of(respuesta)
-      console.log(respuesta)
+      
     }, (error) => {
       console.log(error)
     })
+  }
+
+  procesarDatosNulos(data: any): any {
+    const datosProcesados = { ...data };
+    for (const key in datosProcesados) {
+      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
+        datosProcesados[key] = "Dato no existente";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
+        datosProcesados[key] = "Activo";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
+        datosProcesados[key] = "Inactivo";
+      }
+    }
+    return datosProcesados;
   }
 
   onSubmit() {
