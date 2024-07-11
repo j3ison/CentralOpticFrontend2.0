@@ -351,7 +351,12 @@ export class DashboardComponent {
     this.mydataservices.postDataStatic("estadistica/edadrecurrente", this.dateinputformat).subscribe((respuesta: any) => {
 
       this.CurrentPatienAge = respuesta
-      this.CurrentPatienAgeG.labels = this.CurrentPatienAge.map(producto => producto.edad.toString())
+      this.CurrentPatienAgeG.labels = this.CurrentPatienAge.map(producto => {
+        if (producto.edad === 0)
+          return 'Sin edad registrada'
+        else
+          return producto.edad.toString()
+      })
       this.CurrentPatienAgeG.count = this.CurrentPatienAge.map(producto => producto.cantidad_Pacientes)
 
     }, (error) => {

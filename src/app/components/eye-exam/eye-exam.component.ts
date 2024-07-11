@@ -15,6 +15,8 @@ import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
 import { DataGlobalService } from 'src/app/modules/view-data/services/data-global.service';
 import { Client, Employee } from '../model';
 import { MatSelectModule } from '@angular/material/select';
+import { LoginUser } from 'src/app/auth/model/user.interface';
+import { CookieService } from 'ngx-cookie-service';
 
 interface EyeExamModel {
   numExamen: number;
@@ -43,6 +45,8 @@ interface EyeExamModel {
   styleUrls: ['./eye-exam.component.css'],
 })
 export class EyeExamComponent {
+  userFromLocal = this.cookieService.get('userData');
+  user: LoginUser = JSON.parse(this.userFromLocal) as LoginUser
   respuesta: any;
   itemUser: any;
   onItemClickActive(data: any) {
@@ -75,10 +79,9 @@ export class EyeExamComponent {
   constructor(
     private mydataservices: MyDataServices,
     private formBuilder: FormBuilder,
-    private elementRef: ElementRef,
-    private dialogService: DialogService,
-    private authService: AuthService,
-    private dataGlobalservice: DataGlobalService
+    private dataGlobalservice: DataGlobalService,
+    private cookieService: CookieService
+
   ) {}
 
   itemClick: any = null;
@@ -120,6 +123,11 @@ export class EyeExamComponent {
 
     this.mydataservices.getData('empleado').subscribe((data) => {
       this.employeeList = data;
+    },(error) => {
+      console.log(error);
+      this.mydataservices.getData('empleado/'+this.user.numEmpleado).subscribe((data) => {
+        this.employeeList = data;
+      })
     });
 
     this.dataGlobalservice.$itemView.subscribe((item) => {});
