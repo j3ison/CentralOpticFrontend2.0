@@ -169,7 +169,7 @@ export class EyeExamComponent {
   }
 
   async saveEyeExam() {
-    console.log(this.formCreateEyeExam.value);
+    // console.log(this.formCreateEyeExam.value);
     if (!this.formCreateEyeExam.valid) return;
 
     const result = await Swal.fire({
