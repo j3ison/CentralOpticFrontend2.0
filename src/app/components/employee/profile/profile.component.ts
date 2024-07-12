@@ -89,7 +89,7 @@ export class ProfileComponent {
       if(this.clave.length > 6){
         let data = 
         this.mydataservices.updateData('usuario',{
-          nombreUsuario: this.itemUser[0].nombres,
+          nombreUsuario: this.itemUser[0].nombreUsuario,
           numeroEmpleado: this.itemEmploye[0].numEmpleado,
           clave: this.clave,
           rol: this.itemUser[0].rol,
