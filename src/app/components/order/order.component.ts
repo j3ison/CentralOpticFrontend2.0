@@ -55,6 +55,7 @@ export class OrderComponent {
     { value: 0, title: 'Pendiente' },
     { value: 1, title: 'Obtenido' },
     { value: 2, title: 'Entregado' },
+    { value: 3, title: 'Anulado' },
   ]);
 
   formUpdate: CustomForm = this.formBuilder.group({
