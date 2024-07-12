@@ -25,7 +25,7 @@ import { ChangePasswordModule } from './change-password/change-password.module';
 import { EmployeeModule } from './employee/employee.module';
 import { AssistModule } from './assist/assist.module';
 import { OrderModule } from './order/order.module';
-
+import { CompanyModule } from './company/company.module';
 @NgModule({
   declarations: [],
   imports: [
@@ -46,7 +46,8 @@ import { OrderModule } from './order/order.module';
     LabModule,
     ChangePasswordModule,
     AssistModule,
-    OrderModule
+    OrderModule,
+    CompanyModule
   ],
   exports: [DashboardModule, 
     LoginModule, 
@@ -65,7 +66,8 @@ import { OrderModule } from './order/order.module';
     ChangePasswordModule,
     EmployeeModule,
     AssistModule,
-    OrderModule
+    OrderModule,
+    CompanyModule
   ],
   providers: [DialogService],
 })

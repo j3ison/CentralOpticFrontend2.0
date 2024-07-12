@@ -1,0 +1,34 @@
+<app-view-data [ItemData]="data$"
+ [columns]="tableColumnsCliente"
+    [FormCreateView]="form" 
+    [FormView]="form"></app-view-data>
+
+
+<ng-template #form>
+    <div class="container-form-create">
+        <form class="content-form" [formGroup]="formData">
+            <h1>Formulario de Empresa</h1>
+
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Numero Ruc</label>
+                    <input class="form-data" type="text" formControlName="numero_Ruc">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                </div>
+
+                <div class="form">
+                    <label class="title">Nombre de la Empresa</label>
+                    <input class="form-data" type="text" formControlName="nombre">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                </div>
+            </div>
+            <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
+                <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
+                    [disabled]="formData.invalid" (click)="saveDataConfirmed()">
+                    Guardar
+                    <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</ng-template>

@@ -12,6 +12,7 @@ import { ProviderModule } from './provider/provider.module';
 import { LabComponent } from './lab/lab.component';
 import { ProviderComponent } from './provider/provider.component';
 import { AssistComponent } from './assist/assist.component';
+import { CompanyComponent } from './company/company.component';
 //import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
@@ -81,6 +82,11 @@ const routes: Routes = [
     component:OrderComponent,
     canActivate: [hasRole([ 'Super Administrador','Administrador','Venta'])],
     canLoad: [hasRole([ 'Super Administrador','Administrador','Venta'])]
+  },{
+    path :'company',
+    component:CompanyComponent,
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista'])]
   }
 ];
 
