@@ -14,12 +14,12 @@ export const navbarData: INavbarData[] = [
         label: 'Cliente',
         role: ['Administrador', 'Super Administrador', 'Venta', 'Optometrista']
     },
-    {
-        routeLink: 'employee',
-        icon: 'fa-solid fa-users-line',
-        label: 'Empleado',
-        role: ['Administrador']
-    },
+    // {
+    //     routeLink: 'employee',
+    //     icon: 'fa-solid fa-users-line',
+    //     label: 'Empleado',
+    //     role: ['Administrador']
+    // },
     {
         routeLink: 'employee',
         icon: 'fa-solid fa-users-line',
@@ -29,7 +29,7 @@ export const navbarData: INavbarData[] = [
                 routeLink: 'employee/employee',
                 icon: 'fa-solid fa-user-tie',
                 label: 'Empleados',
-                role: ['Super Administrador']
+                role: ['Super Administrador','Administrador']
             },
             {
                 routeLink: 'employee/user',
@@ -50,7 +50,7 @@ export const navbarData: INavbarData[] = [
                 role: ['Super Administrador','Administrador','Venta','Optometrista']
             }
         ],
-        role: ['Super Administrador']
+        role: ['Super Administrador','Administrador']
     },
     {
         routeLink: 'provider',

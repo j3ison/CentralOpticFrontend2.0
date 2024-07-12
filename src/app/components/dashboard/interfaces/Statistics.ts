@@ -147,7 +147,7 @@ export function GetFormateDate(date: Date):string {
 
     let fechaActual = date;
     fechaActual.setHours(0, 0, 0, 0);
-    fechaActual.setDate(fechaActual.getDate() + 1);
+    fechaActual.setDate(fechaActual.getDate());
 
     // Obtener los componentes de la fecha
     let año = fechaActual.getFullYear();

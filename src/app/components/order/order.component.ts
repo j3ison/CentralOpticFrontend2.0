@@ -16,6 +16,8 @@ import {
   Product,
 } from '../model';
 import Swal from 'sweetalert2';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginUser } from 'src/app/auth/model/user.interface';
 
 interface OrdenModel {
   numero_Orden?: number;
@@ -33,13 +35,16 @@ interface OrdenModel {
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent {
+  userFromLocal = this.cookieService.get('userData');
+  user: LoginUser = JSON.parse(this.userFromLocal) as LoginUser;
   constructor(
     private mydataservices: MyDataServices,
     private formBuilder: FormBuilder,
     private dataGlobalservice: DataGlobalService,
     private elementRef: ElementRef,
     private dialogService: DialogService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cookieService: CookieService
   ) {}
 
   formCreate: CustomForm<OrdenModel> = this.formBuilder.group({
@@ -142,6 +147,11 @@ export class OrderComponent {
       },
       (error) => {
         console.log(error);
+        this.mydataservices
+          .getData('empleado/' + this.user.numEmpleado)
+          .subscribe((data) => {
+            this.employeeList = data;
+          });
       }
     );
 
