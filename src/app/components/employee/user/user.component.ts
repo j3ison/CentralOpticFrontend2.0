@@ -137,7 +137,7 @@ export class UserComponent {
 
     this.dataGlobalservice.$itemView.subscribe(item => {
 
-      this.itemClick = item
+      this.itemClick = {...item}
 
       console.log(this.itemClick)
       if (item) {
