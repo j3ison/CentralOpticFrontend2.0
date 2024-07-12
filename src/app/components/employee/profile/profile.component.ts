@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { MyDataServices } from 'src/app/auth/mydata.service';
 import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
 import { DataGlobalService } from 'src/app/modules/view-data/services/data-global.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -37,6 +38,12 @@ export class ProfileComponent {
     numEmpleado:0,
     telefonos:''
   }
+
+  clave = ''
+
+  valChange = false;
+
+  
 
   constructor(private mydataservices: MyDataServices,
     private formBuilder: FormBuilder,
@@ -74,6 +81,55 @@ export class ProfileComponent {
       console.log(error)
     })
 
+  }
+
+  guardar(){
+    if(this.clave != ''){
+      
+      if(this.clave.length > 6){
+        let data = 
+        this.mydataservices.updateData('usuario',{
+          nombreUsuario: this.itemUser[0].nombres,
+          numeroEmpleado: this.itemEmploye[0].numEmpleado,
+          clave: this.clave,
+          rol: this.itemUser[0].rol,
+          estado: true
+        },this.itemUser[0].idUsuario).then((success) => {
+          if (success){
+            this.valChange = !this.valChange
+            this.clave = ''
+            Swal.fire({
+              icon: 'success',
+              title: 'Exito',
+              text: 'La clave fue modificada con exito',
+            })
+          }
+        })
+      }else{
+        Swal.fire({
+          title: 'Confirmar',
+          text: 'La contraseña es devil ¿Desea modificarla?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Modificar',
+          cancelButtonText: 'Salir',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            this.valChange = !this.valChange
+            this.clave = ''
+          }
+        });
+      }
+
+      
+    }else{
+      this.valChange = !this.valChange
+      this.clave = ''
+    }
+    
   }
 
 
