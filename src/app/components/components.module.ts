@@ -24,6 +24,7 @@ import { EmailServiceModule } from './email-service/email-service.module';
 import { ChangePasswordModule } from './change-password/change-password.module';
 import { EmployeeModule } from './employee/employee.module';
 import { AssistModule } from './assist/assist.module';
+import { OrderModule } from './order/order.module';
 
 @NgModule({
   declarations: [],
@@ -44,7 +45,8 @@ import { AssistModule } from './assist/assist.module';
     ProviderModule,
     LabModule,
     ChangePasswordModule,
-    AssistModule
+    AssistModule,
+    OrderModule
   ],
   exports: [DashboardModule, 
     LoginModule, 
@@ -62,7 +64,8 @@ import { AssistModule } from './assist/assist.module';
     EmailServiceModule,
     ChangePasswordModule,
     EmployeeModule,
-    AssistModule
+    AssistModule,
+    OrderModule
   ],
   providers: [DialogService],
 })

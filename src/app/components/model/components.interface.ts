@@ -73,6 +73,28 @@ export interface EyeExam {
     Observacion: string;
 }
 
+export interface EyeExamModel {
+    numExamen: number;
+    estado: boolean;
+    numEmpleado: number;
+    codigo_Cliente: string;
+    fecha_Realizacion: string;
+    observacion: string;
+    sphIz?: number;
+    cylIz?: number;
+    addIz?: number;
+    ejeIz?: number;
+    dpIz?: number;
+    altIz?: number;
+    sphDe?: number;
+    cylDe?: number;
+    addDe?: number;
+    ejeDe?: number;
+    dpDe?: number;
+    altDe?: number;
+    paciente?: string;
+  }
+
 export interface orderGlasses {
     Numero_Orden: number;
     Costo: number;
@@ -104,6 +126,16 @@ export interface Laboratory {
     Direccion: string;
     Telefono: string;
     Correo: string;
+}
+
+
+export interface ILaboratory {
+    codigo_Laboratorio: number;
+    nombre: string;
+    estado: boolean;
+    direccion: string;
+    telefono: string;
+    correo: string;
 }
 
 export interface Product {

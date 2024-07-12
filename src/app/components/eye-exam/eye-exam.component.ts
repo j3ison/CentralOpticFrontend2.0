@@ -13,30 +13,13 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { MyDataServices } from 'src/app/auth/mydata.service';
 import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
 import { DataGlobalService } from 'src/app/modules/view-data/services/data-global.service';
-import { Client, Employee } from '../model';
+import { Client, CustomForm, Employee, EyeExamModel } from '../model';
 import { MatSelectModule } from '@angular/material/select';
 import { LoginUser } from 'src/app/auth/model/user.interface';
 import { CookieService } from 'ngx-cookie-service';
 
-interface EyeExamModel {
-  numExamen: number;
-  estado: boolean;
-  numEmpleado: number;
-  codigo_Cliente: string;
-  fecha_Realizacion: string;
-  observacion: string;
-  sphIz?: number;
-  cylIz?: number;
-  addIz?: number;
-  ejeIz?: number;
-  dpIz?: number;
-  altIz?: number;
-  sphDe?: number;
-  cylDe?: number;
-  addDe?: number;
-  ejeDe?: number;
-  dpDe?: number;
-  altDe?: number;
+interface UpdateEyeExamModel {
+  estado: string;
 }
 
 @Component({
@@ -46,7 +29,7 @@ interface EyeExamModel {
 })
 export class EyeExamComponent {
   userFromLocal = this.cookieService.get('userData');
-  user: LoginUser = JSON.parse(this.userFromLocal) as LoginUser
+  user: LoginUser = JSON.parse(this.userFromLocal) as LoginUser;
   respuesta: any;
   itemUser: any;
   onItemClickActive(data: any) {
@@ -81,14 +64,14 @@ export class EyeExamComponent {
     private formBuilder: FormBuilder,
     private dataGlobalservice: DataGlobalService,
     private cookieService: CookieService
-
   ) {}
-
   itemClick: any = null;
+  
+  formUpdateEyeExam: CustomForm<UpdateEyeExamModel> = this.formBuilder.group({
+    estado: ['', Validators.required],
+  });
 
-  formCreateEyeExam: FormGroup & {
-    controls: { [key in keyof EyeExamModel]: AbstractControl };
-  } = this.formBuilder.group({
+  formCreateEyeExam: CustomForm<EyeExamModel> = this.formBuilder.group({
     addDe: [undefined, Validators.nullValidator],
     addIz: [undefined, Validators.nullValidator],
     altDe: [undefined, Validators.nullValidator],
@@ -110,9 +93,8 @@ export class EyeExamComponent {
     codigo_Cliente: ['', Validators.required],
   });
 
-  formGet(fr: string) {
-    return this.formCreateEyeExam.get(fr) as FormControl;
-  }
+  formGet = (fr: string) => this.formCreateEyeExam.get(fr) as FormControl;
+  formUpdateGet = (fr: string) => this.formUpdateEyeExam.get(fr) as FormControl;
 
   // Definimos la estructura de la tabla
 
@@ -121,32 +103,47 @@ export class EyeExamComponent {
       .getData('cliente')
       .subscribe((data) => (this.customerList = data));
 
-    this.mydataservices.getData('empleado').subscribe((data) => {
-      this.employeeList = data;
-    },(error) => {
-      console.log(error);
-      this.mydataservices.getData('empleado/'+this.user.numEmpleado).subscribe((data) => {
+    this.mydataservices.getData('empleado').subscribe(
+      (data) => {
         this.employeeList = data;
-      })
-    });
+      },
+      (error) => {
+        console.log(error);
+        this.mydataservices
+          .getData('empleado/' + this.user.numEmpleado)
+          .subscribe((data) => {
+            this.employeeList = data;
+          });
+      }
+    );
 
-    this.dataGlobalservice.$itemView.subscribe((item) => {});
+    this.dataGlobalservice.$itemView.subscribe((item) => {
+      this.itemClick = item;
+
+      if (item) {
+        this.itemUpdate = {
+          empleado: item.numEmpleado,
+          paciente: item.cedula !== 'Dato no existente' ? item.cedula : '',
+          state: item.estado ? 'Activo' : 'Inactivo',
+          observacion:
+            item.observacion !== 'Dato no existente' ? item.observacion : '',
+          fecha_Realizacion:
+            item.fecha_Realizacion !== 'Dato no existente'
+              ? item.fecha_Realizacion
+              : '',
+        };
+      }
+    });
     this.getEyeExamList();
   }
 
-  // procesarDatosNulos(data: any): any {
-  //   const datosProcesados = { ...data };
-  //   for (const key in datosProcesados) {
-  //     if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
-  //       datosProcesados[key] = "Dato no existente";
-  //     } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
-  //       datosProcesados[key] = "Activo";
-  //     } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
-  //       datosProcesados[key] = "Inactivo";
-  //     }
-  //   }
-  //   return datosProcesados;
-  // }
+  saveDataConfirmeUpdate({ numExamen }: EyeExamModel) {
+    this.mydataservices
+      .updateData('examen', this.formUpdateEyeExam.value, numExamen)
+      .then((response) => {
+        this.getEyeExamList();
+      });
+  }
 
   getEyeExamList() {
     this.mydataservices.getData('examen').subscribe(
@@ -174,10 +171,10 @@ export class EyeExamComponent {
 
     const result = await Swal.fire({
       title: 'Confirmar',
-      text: '¿Está seguro que desea actualizar la información?',
+      text: '¿Está seguro que desea guardar la información?',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Actualizar',
+      confirmButtonText: 'Guardar',
       cancelButtonText: 'Cancelar',
       reverseButtons: true,
     });
@@ -204,7 +201,7 @@ export class EyeExamComponent {
         });
 
       // this.saveDataUpdate();
-      
+
       this.formCreateEyeExam.reset();
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       Swal.fire('Cancelado', 'Los datos no han sido modificados', 'error');
@@ -241,22 +238,32 @@ export class EyeExamComponent {
     observacion: '',
     codigo_Cliente: '',
   };
-  itemUpdate: any = {
+  itemUpdate = {
+    empleado: '',
     paciente: '',
     fecha_Realizacion: '',
     observacion: '',
-    sph: '',
+    state: '',
   };
 
   procesarDatosNulos(data: any): any {
     const datosProcesados = { ...data };
     for (const key in datosProcesados) {
-      if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
-        datosProcesados[key] = "Dato no existente";
-      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
-        datosProcesados[key] = "Activo";
-      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
-        datosProcesados[key] = "Inactivo";
+      if (
+        datosProcesados.hasOwnProperty(key) &&
+        datosProcesados[key] === null
+      ) {
+        datosProcesados[key] = 'Dato no existente';
+      } else if (
+        datosProcesados.hasOwnProperty(key) &&
+        datosProcesados[key] === true
+      ) {
+        datosProcesados[key] = 'Activo';
+      } else if (
+        datosProcesados.hasOwnProperty(key) &&
+        datosProcesados[key] === false
+      ) {
+        datosProcesados[key] = 'Inactivo';
       }
     }
 
