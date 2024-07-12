@@ -13,31 +13,10 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { MyDataServices } from 'src/app/auth/mydata.service';
 import { DialogService } from 'src/app/modules/dialog/service/dialog.service';
 import { DataGlobalService } from 'src/app/modules/view-data/services/data-global.service';
-import { Client, CustomForm, Employee } from '../model';
+import { Client, CustomForm, Employee, EyeExamModel } from '../model';
 import { MatSelectModule } from '@angular/material/select';
 import { LoginUser } from 'src/app/auth/model/user.interface';
 import { CookieService } from 'ngx-cookie-service';
-
-interface EyeExamModel {
-  numExamen: number;
-  estado: boolean;
-  numEmpleado: number;
-  codigo_Cliente: string;
-  fecha_Realizacion: string;
-  observacion: string;
-  sphIz?: number;
-  cylIz?: number;
-  addIz?: number;
-  ejeIz?: number;
-  dpIz?: number;
-  altIz?: number;
-  sphDe?: number;
-  cylDe?: number;
-  addDe?: number;
-  ejeDe?: number;
-  dpDe?: number;
-  altDe?: number;
-}
 
 interface UpdateEyeExamModel {
   estado: string;
@@ -86,9 +65,8 @@ export class EyeExamComponent {
     private dataGlobalservice: DataGlobalService,
     private cookieService: CookieService
   ) {}
-  listStateFilter: Observable<string[]> = of(['Activo', 'Inactivo']);
   itemClick: any = null;
-
+  
   formUpdateEyeExam: CustomForm<UpdateEyeExamModel> = this.formBuilder.group({
     estado: ['', Validators.required],
   });

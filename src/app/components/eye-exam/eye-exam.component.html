@@ -3,7 +3,7 @@
   [columns]="tableColumnsExamen"
   [FormCreateView]="formcreate"
   [FormView]="itemUpdate"
-  [FormInfoView]="itemInfo"
+  [ItemViewGrid]="item"
 ></app-view-data>
 
 <ng-template #formcreate>
@@ -266,7 +266,6 @@
   </mat-card>
 </ng-template>
 
-<ng-template #itemInfo> </ng-template>
 
 <ng-template #valUpdate>
   <div class="container-card">
@@ -287,4 +286,53 @@
           </mat-card-content>
       </mat-card>
   </div>
+</ng-template>
+
+<ng-template #item let-data>
+  <mat-card class="card-invoice" [ngClass]="itemClick?.numExamen===data.numExamen?'card-invoice-active':''"
+      (click)="onItemClickActive(data)">
+      <div class="container-card-invoice">
+          <div class="content-header-card-invoice">
+              <!-- imagen y id de la factura -->
+              <h1 class="content-header-title">Examen #{{data.numExamen}}</h1>
+              <i class="fa-solid fa-file text-white"></i>
+
+          </div>
+          <div class="content-body-card-invoice">
+              <h2 class="text-card-title">
+                  <strong>
+                      Empleado:
+                  </strong>
+              </h2>
+              <span class="text-card-contet">{{data.empleado}}</span>
+
+              <h2 class="text-card-title">
+                  <strong>
+                      Paciente:
+                  </strong>
+              </h2>
+              <span class="text-card-contet">{{data.paciente}}</span>
+
+              <h2 class="text-card-title">
+                  <strong>
+                      Fecha:
+                  </strong>
+              </h2>
+              <span class="text-card-contet">{{data.fecha_Realizacion}}</span>
+
+              <h2 class="text-card-title">
+                  <strong>
+                      Estado:
+                  </strong>
+              </h2>
+              <span class="text-card-contet">{{data.estado}}</span>
+
+              <div
+                  style="display: flex; justify-content: flex-end; align-items: end; width: calc(100%); margin-right: 5px;">
+                  <span class="text-card-contet"
+                      style="color: #ABA9AA; padding-right: 5px;">{{data.fecha_Emision}}</span>
+              </div>
+          </div>
+      </div>
+  </mat-card>
 </ng-template>
