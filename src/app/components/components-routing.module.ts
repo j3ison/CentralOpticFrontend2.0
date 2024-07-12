@@ -85,8 +85,8 @@ const routes: Routes = [
   },{
     path :'company',
     component:CompanyComponent,
-    canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista'])],
-    canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista'])]
+    canActivate: [hasRole([ 'Super Administrador','Administrador','Optometrista','Venta'])],
+    canLoad: [hasRole([ 'Super Administrador','Administrador','Optometrista','Venta'])]
   }
 ];
 

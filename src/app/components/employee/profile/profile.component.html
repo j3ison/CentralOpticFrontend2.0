@@ -84,7 +84,7 @@
                     <!-- <span class="text">{{itemUser[0]?.clave}}</span> -->
                     <div class="input-group mb-3" *ngIf="valChange">
                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock" ></i></span>
-                        <input type="text" class="form-control" placeholder="Nueva Clave" aria-label="Username"
+                        <input type="text" class="form-control" placeholder="Nueva Clave" aria-label="Username" autocomplete="off"
                             aria-describedby="basic-addon1" [(ngModel)]="clave" name="clave">
                     </div>
                 </div>

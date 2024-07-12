@@ -154,7 +154,7 @@ export class DashboardComponent {
 
     this.dateinputformat.fechaInicial = Est.GetFormateDate(fechaActual)
     this.dateinputformat.fechaFinal = Est.GetFormateDate(new Date)
-
+    
     console.log(this.dateinputformat.fechaInicial)
     console.log(this.dateinputformat.fechaFinal)
 
