@@ -31,8 +31,12 @@
             <!-- <input matInput (keyup)="getSearchFilter($event)" type="search" class="search" name="" id="" placeholder="Search..."> -->
             <!-- <input matInput  type="search" class="search" name="" id="" placeholder="Search..."> -->
 
-            <button class="btn btn-outline-warning" style="margin-top: 5px;">Editar</button>
-        </div>
+            <button class="btn btn-outline-warning" style="margin-top: 5px;" *ngIf="!valChange"
+                (click)="valChange = !valChange">Editar</button>
+
+            <button class="btn btn-outline-primary" style="margin-top: 5px;" *ngIf="valChange"
+                (click)="guardar()">Guardar</button>
+        </div> 
 
         <div class="container-content-rigth">
             <div class="container-content">
@@ -77,7 +81,12 @@
                 </div>
                 <div class="content-text">
                     <span class="text"><strong>Clave de usuario</strong></span>
-                    <span class="text">{{itemUser[0]?.clave}}</span>
+                    <!-- <span class="text">{{itemUser[0]?.clave}}</span> -->
+                    <div class="input-group mb-3" *ngIf="valChange">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock" ></i></span>
+                        <input type="text" class="form-control" placeholder="Nueva Clave" aria-label="Username"
+                            aria-describedby="basic-addon1" [(ngModel)]="clave" name="clave">
+                    </div>
                 </div>
                 <div class="content-text">
                     <span class="text"><strong>Rol de usuario</strong></span>
