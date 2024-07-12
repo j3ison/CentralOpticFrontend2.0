@@ -74,7 +74,7 @@ export class InventoryComponent {
 
   listTypeProduct: Observable<any[]> | undefined
 
-
+  listTypeState: Observable<any[]> = of(['Activo','Inactivo'])
 
   ngOnInit(): void {
 
@@ -173,7 +173,7 @@ export class InventoryComponent {
       precioVenta: this.formUpdate.get('precioVenta')?.value,
       precioCompra: this.formUpdate.get('precioCompra')?.value,
       cantidad: this.formUpdate.get('cantidad')?.value,
-      estado: this.formUpdate.get('estado')?.value,
+      estado: this.formUpdate.get('estado')?.value=='Activo'?true:false,
       stockMinimo: this.formUpdate.get('stockMinimo')?.value,
       stockMaximo: this.formUpdate.get('stockMaximo')?.value
     }

@@ -179,8 +179,6 @@ export class ClientComponent {
     private dialogService: DialogService,
     private authService: AuthService,
     private dataGlobalservice: DataGlobalService,
-
-
   ) { }
 
 

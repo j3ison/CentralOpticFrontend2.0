@@ -135,6 +135,12 @@ export const navbarData: INavbarData[] = [
         icon: 'fa-solid fa-truck-field',
         label: 'Orden Pedido',
         role: ['Administrador', 'Super Administrador', 'Optometrista']
+    }
+    ,{
+        routeLink:'company',
+        icon: 'fa-solid fa-building',
+        label:'Empresa',
+        role: ['Administrador', 'Super Administrador', 'Optometrista','Venta']
     },
     {
         routeLink: 'help',
@@ -179,13 +185,10 @@ export const navbarData: INavbarData[] = [
     //             label: 'Contactos del Proveedor'
     //         }
     //     ]
-    // },{
-    //     routeLink:'factura',
-    //     icon: 'fa-solid fa-file-invoice-dollar',
-    //     label:'Factura'
-    // },
+    // }
+    
     // {
-    //     routeLink:'detalle-factura',
+    //     routeLink:'detalle-factura',<i class=""></i>
     //     icon: 'fa-solid fa-receipt',
     //     label:'Detalle Factura'
     // },

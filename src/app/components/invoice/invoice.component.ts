@@ -287,9 +287,9 @@ export class InvoiceComponent {
       if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === null) {
         datosProcesados[key] = "Dato no existente";
       } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === true) {
-        datosProcesados[key] = "Piso";
-      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
         datosProcesados[key] = "Convenio";
+      } else if (datosProcesados.hasOwnProperty(key) && datosProcesados[key] === false) {
+        datosProcesados[key] = "Piso";
       }
     }
     return datosProcesados;
