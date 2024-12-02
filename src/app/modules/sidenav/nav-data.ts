@@ -74,12 +74,12 @@ export const navbarData: INavbarData[] = [
         label: 'Examen de vista',
         role: ['Administrador', 'Super Administrador', 'Optometrista']
     },
-    {
-        routeLink: 'lab',
-        icon: 'fa-solid fa-flask',
-        label: 'Laboratorio',
-        role: ['Administrador', 'Super Administrador', 'Optometrista']
-    },
+    // {
+    //     routeLink: 'lab',
+    //     icon: 'fa-solid fa-flask',
+    //     label: 'Laboratorio',
+    //     role: ['Administrador', 'Super Administrador', 'Optometrista']
+    // },
     {
         routeLink: 'product',
         icon: 'fa-solid fa-glasses',
@@ -130,13 +130,14 @@ export const navbarData: INavbarData[] = [
     //     ],
     //     role: ['Super Administrador']
     // }
+    // {
+    //     routeLink: 'order',
+    //     icon: 'fa-solid fa-truck-field',
+    //     label: 'Orden Pedido',
+    //     role: ['Administrador', 'Super Administrador', 'Optometrista']
+    // }
+    // ,
     {
-        routeLink: 'order',
-        icon: 'fa-solid fa-truck-field',
-        label: 'Orden Pedido',
-        role: ['Administrador', 'Super Administrador', 'Optometrista']
-    }
-    ,{
         routeLink:'company',
         icon: 'fa-solid fa-building',
         label:'Empresa',
