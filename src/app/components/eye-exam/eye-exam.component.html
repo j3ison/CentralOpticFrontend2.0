@@ -1,0 +1,338 @@
+<app-view-data
+  [ItemData]="data$"
+  [columns]="tableColumnsExamen"
+  [FormCreateView]="formcreate"
+  [FormView]="itemUpdate"
+  [ItemViewGrid]="item"
+></app-view-data>
+
+<ng-template #formcreate>
+    <mat-stepper labelPosition="bottom" linear #stepper>
+        <mat-step [editable]="true">
+          <ng-template matStepLabel>Información del Paciente</ng-template>
+          <div class="container-form-create">
+            <form class="content-form" [formGroup]="formCreateEyeExam">
+              <div class="content-form-item">
+                <mat-form-field>
+                  <mat-label>Empleado</mat-label>
+                  <mat-select
+                    [(ngModel)]="itemCreate.numEmpleado"
+                    formControlName="numEmpleado"
+                  >
+                    <mat-option
+                      *ngFor="let option of employeeList"
+                      [value]="option.numEmpleado"
+                    >
+                      {{ option.numEmpleado }} - {{ option.nombres }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field>
+                  <mat-label>Paciente</mat-label>
+                  <mat-select
+                    [(ngModel)]="itemCreate.codigo_Cliente"
+                    formControlName="codigo_Cliente"
+                  >
+                    <mat-option
+                      *ngFor="let option of customerList"
+                      [value]="option.codigo_Cliente"
+                    >
+                      {{ option.codigo_Cliente }} - {{ option.nombres }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+    
+                <div class="form">
+                  <mat-form-field class="form-field-date">
+                    <mat-label class="title">Fecha de realización</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="datepicker"
+                      formControlName="fecha_Realizacion"
+                      [(ngModel)]="itemCreate.fecha_Realizacion"
+                    />
+    
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="datepicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker> </mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="form">
+                  <label class="title">Estado*</label>
+                  <input
+                    class="form-data"
+                    type="text"
+                    formControlName="estado"
+                    [matAutocomplete]="auto" 
+                    [(ngModel)]="itemCreate.estado"
+                  />
+                  <i class="form-icon fa-solid fa-chevron-down"></i>
+    
+                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option
+                      *ngFor="let option of listStatus | async"
+                      [value]="option.value"
+                      style="font-family: 'Crimson Text', serif; color: black"
+                    >
+                      {{ option.title }}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <div
+                    class="alert alert-danger mt-1"
+                    [hidden]="formGet('estado').valid || formGet('estado').pristine"
+                  >
+                    El campo no puede estar Vacio.
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div
+              class="form-button"
+              style="width: calc(100%); display: flex; justify-content: flex-end"
+            >
+              <button
+                class="btn btn-primary"
+                style="margin-right: 1rem; font-family: 'lato', sans-serif"
+                (click)="onNext(stepper)"
+              >
+                Siguiente
+                <i class="fa-solid fa-arrow-right" style="margin-left: 0.4rem"></i>
+              </button>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step [editable]="true">
+          <ng-template matStepLabel>Preescripción</ng-template>
+          <form class="content-form" [formGroup]="formCreateEyeExam">
+            <div class="content-form-item">
+              <table [dataSource]="parameters" mat-table>
+                <ng-container matColumnDef="data">
+                  <th mat-header-cell *matHeaderCellDef>Medida</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.data }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="title1">
+                  <th mat-header-cell *matHeaderCellDef>Ojo Izquierdo</th>
+                  <td mat-cell *matCellDef="let element">
+                    <input
+                      min="-10"
+                      max="10"
+                      class="form-data"
+                      type="number"
+                      [formControlName]="element.data + 'Iz'"
+                    />
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="title2">
+                  <th mat-header-cell *matHeaderCellDef>Ojo Derecho</th>
+                  <td mat-cell *matCellDef="let element">
+                    <input
+                      min="-10"
+                      max="10"
+                      class="form-data"
+                      type="number"
+                      [formControlName]="element.data + 'De'"
+                    />
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
+            <div class="content-form-item" style="width: 100%">
+              <label class="title">Observacion</label>
+              <input
+                matInput
+                class="form-data"
+                type="text"
+                formControlName="observacion"
+                rows="4"
+                [(ngModel)]="itemCreate.observacion"
+              />
+            </div>
+          </form>
+    
+          <div
+            class="form-button"
+            style="
+              width: calc(100%);
+              display: flex;
+              justify-content: flex-end;
+              margin-top: 1rem;
+            "
+          >
+            <button
+              class="btn btn-primary"
+              style="margin-right: 1rem; font-family: 'lato', sans-serif"
+              (click)="stepper.reset()"
+            >
+              <i class="fa-solid fa-arrow-left" style="margin-left: 0.4rem"></i>
+              Atras
+            </button>
+            <button
+              class="btn btn-primary"
+              style="margin-right: 1rem; font-family: 'lato', sans-serif"
+              #btnEnviar
+              (click)="saveEyeExam()"
+            >
+              Guardar
+              <i class="fa-solid fa-save" style="margin-left: 0.4rem"></i>
+            </button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+
+</ng-template>
+
+<ng-template #itemUpdate let-data>
+  <mat-card class="card-invoice-update" *ngIf="data.estado === 'Activo' ; else valUpdate">
+      <div class="container-card-invoice-update">
+          <div class="content-header-card-invoice-update">
+              <h1 class="content-header-title"> Actualización del Estado del examen</h1>
+          </div>
+          <div class="content-body-card-invoice-update">
+              <div class="content-container-text">
+                  <div class="content-block-text">
+                      <h2 class="text-title-block">
+                          <strong>
+                              Empleado
+                          </strong>
+                      </h2>
+                      <span class="text-content-block">{{data.empleado}}</span>
+                  </div>
+                  <div class="content-block-text">
+                      <h2 class="text-title-block">
+                          <strong>
+                              Paciente
+                          </strong>
+                      </h2>
+                      <span class="text-content-block">{{data.paciente}}</span>
+                  </div>
+              </div>
+              <div class="content-container-text">
+                  <div class="content-block-text">
+                      <h2 class="text-title-block">
+                          <strong>
+                              Fecha
+                          </strong>
+                      </h2>
+                      <span class="text-content-block">{{data.fecha_Realizacion}}</span>
+                  </div>
+                  <div class="content-block-text">
+                      <h2 class="text-title-block">
+                          <strong>
+                              Descripción
+                          </strong>
+                      </h2>
+                      <span class="text-content-block">{{data.observacion}}</span>
+                  </div>
+              </div>
+              
+              <form class="form-update" [formGroup]="formUpdateEyeExam">
+                  <div class="form">
+
+                      <label class="title">
+                          <strong>
+                              Estado de Examen*
+                          </strong>
+                      </label>
+                      <input class="form-data" type="text" formControlName="estado"
+                          [matAutocomplete]="auto">
+                      <i class="fa-solid fa-chevron-down"></i>
+                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                          <mat-option *ngFor="let option of listStatus | async"
+                              [value]="option.value">
+                              {{option.title}}
+                          </mat-option>
+                      </mat-autocomplete>
+                      <div class="alert 1alert-danger mt-1"
+                          [hidden]="formUpdateGet('estado').valid || (formUpdateGet('estado').pristine)">
+                          El campo no puede estar Vacio.
+                      </div>
+                  </div>
+
+                  <div style="width: calc(100%); display: flex; justify-content: flex-end; margin: 1rem 0; ">
+                      <button class="btn btn-primary" #btnEnviar (click)="saveDataConfirmeUpdate(data)">
+                          Actualizar
+                      </button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </mat-card>
+</ng-template>
+
+
+<ng-template #valUpdate>
+  <div class="container-card">
+      <mat-card class="example-card">
+          <mat-card-header style="border-bottom: 1px solid #000000;">
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>Asistente Virtual</mat-card-title>
+              <mat-card-subtitle>Engineer Dog</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="contentt">
+              <img class="emoji" mat-card-image src="	https://cdn-icons-png.flaticon.com/512/7933/7933285.png"
+                  alt="Error">
+              <h1 style="font-family: 'Crimson Text', serif; text-align: center;">
+                  <strong>
+                      Lo siento, el examen no puede ser actualizada en este momento.
+                  </strong>
+              </h1>
+          </mat-card-content>
+      </mat-card>
+  </div>
+</ng-template>
+
+<ng-template #item let-data>
+  <mat-card class="card-invoice" [ngClass]="itemClick?.numExamen===data.numExamen?'card-invoice-active':''"
+      (click)="onItemClickActive(data)">
+      <div class="container-card-invoice">
+          <div class="content-header-card-invoice">
+              <!-- imagen y id de la factura -->
+              <h1 class="content-header-title">Examen #{{data.numExamen}}</h1>
+              <i class="fa-solid fa-file text-white"></i>
+
+          </div>
+          <div class="content-body-card-invoice">
+              <h2 class="text-card-title">
+                  <strong>
+                      Empleado:
+                  </strong>
+              </h2>
+              <span class="text-card-contet">{{data.empleado}}</span>
+
+              <h2 class="text-card-title">
+                  <strong>
+                      Paciente:
+                  </strong>
+              </h2>
+              <span class="text-card-contet">{{data.paciente}}</span>
+
+              <h2 class="text-card-title">
+                  <strong>
+                      Fecha:
+                  </strong>
+              </h2>
+              <span class="text-card-contet">{{data.fecha_Realizacion}}</span>
+
+              <h2 class="text-card-title">
+                  <strong>
+                      Estado:
+                  </strong>
+              </h2>
+              <span class="text-card-contet">{{data.estado}}</span>
+
+              <div
+                  style="display: flex; justify-content: flex-end; align-items: end; width: calc(100%); margin-right: 5px;">
+                  <span class="text-card-contet"
+                      style="color: #ABA9AA; padding-right: 5px;">{{data.fecha_Emision}}</span>
+              </div>
+          </div>
+      </div>
+  </mat-card>
+</ng-template>

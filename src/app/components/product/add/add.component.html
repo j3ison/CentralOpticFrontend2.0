@@ -1,0 +1,52 @@
+<div class="container-form">
+    <form class="content-form" [formGroup]="form">
+      <h1>Agregar Producto</h1>
+  
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Codigo</label>
+          <input formControlName="codProducto" class="form-data" type="text">
+        </div>
+  
+        <div class="form">
+          <label class="title">Descripcion</label>
+          <input formControlName="descripcion" class="form-data" type="text">
+        </div>
+      </div>
+  
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Tipo de producto</label>
+          <input formControlName="tipoProducto" class="form-data" type="text">
+        </div>
+  
+        <div class="form">
+          <label class="title">Precio Venta</label>
+          <input formControlName="precioVenta" class="form-data" type="text">
+        </div>
+  
+        <div class="form">
+          <label class="title">Precio Compra</label>
+          <input formControlName="precioCompra" class="form-data" type="text">
+        </div>
+      </div>
+  
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Stock Minimo</label>
+          <input formControlName="stockMinimo" class="form-data" type="text">
+        </div>
+  
+        <div class="form">
+          <label class="title">Stock Maximo</label>
+          <input formControlName="stockMaximo" class="form-data" type="text">
+        </div>
+      </div>
+  
+      <div class="form-button">
+        <button class="btn btn-danger" >Cancelar</button>
+  
+        <button class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+      </div>
+    </form>
+  </div>

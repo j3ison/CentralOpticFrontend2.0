@@ -1,0 +1,48 @@
+<div class="container-form">
+    <form class="content-form" [formGroup]="form">
+      <h1>Agregar Registro</h1>
+  
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Codigo</label> 
+          <input formControlName="codProducto" class="form-data" type="text" >
+        </div>
+  
+        <div class="form">
+          <label class="title">Descripcion</label>
+          <input formControlName="descripcion" class="form-data" type="text" >
+        </div>
+      </div>
+  
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Empresa</label>
+          <input formControlName="nombreEmpresa" class="form-data" type="text" >
+        </div>
+  
+        <div class="form">
+          <label class="title">Fecha</label>
+          <input formControlName="fechaAdquisicion" class="form-data" type="text">
+        </div>
+  
+        <div class="form">
+          <label class="title">Costo</label>
+          <input formControlName="costo" class="form-data" type="text" >
+        </div>
+      </div>
+  
+      <div class="content-form-item">
+        <div class="form">
+          <label class="title">Cantidad</label>
+          <input formControlName="cantidad" class="form-data" type="text">
+        </div>
+  
+      </div>
+  
+      <div class="form-button">
+        <button class="btn btn-danger" >Cancelar</button>
+  
+        <button class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+      </div>
+    </form>
+  </div>

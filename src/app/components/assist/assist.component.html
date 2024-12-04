@@ -1,0 +1,309 @@
+<div class="row">
+    &nbsp;
+</div>
+
+
+<div class="row">
+    <div class="col" >
+        <div class="card">
+            <div class="card-body">
+                <h1><strong>Inicio</strong></h1>
+                <p>
+                    La pantalla de inicio se muestra los detalles de las estadistica de la informacion almacenada en el
+                    sistema.
+                    En esta pantalla se puede configurar la fecha de incio y la fecha final de donde se quiere obtener
+                    las estadisticas de la informacion del sistema.
+                    Se pueden exportar dicha informacion de manera individual tanto en excel como en pdf, y exportar
+                    toda la informacion en pdf.
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h1><strong>Cliente</strong></h1>
+                        <p>
+                            La pantalla de Cliente se muestran los clientes que se han guardado en el sistema estos pueden tener o no cedula
+                            ya que dentro de esta categoria entran tanto los clientes que se facturan, como los pacientes que se realizan un examen visual
+                            En este apartado se muestra los nombres del cliente, su Edad su direccion, su fecha de nacimiento, junto con su informacion de contacto
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+
+<div class="row">
+    <div class="col" *ngIf="user.role !== 'Optometrista' && user.role !== 'Venta'">
+        <div class="card">
+            <div class="card-body">
+                <h1><strong>Empleados</strong></h1>
+                <p>
+                    La pantalla de Empleados administra la informacion de los empleados que trabajan en la empresa, mostrando los nombres de
+                    cada uno su informacion de contacto, su direccion actual, edad de ellos, su fecha de nacimiento, junto con su estado actual si es un empleado activo o no
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col" *ngIf="user.role === 'Super Administrador'">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h1><strong>Usuarios</strong></h1>
+                        <p>
+                            La pantalla de usuarios, muestra la informacion de los usuarios del sistema, siendo estos usuarios asociados a los empleados, muestra su nombre de usuario,
+                            rol, nombre del empleado a quien se le asocia el usuario. Se puede agregar o editar la informacion de usuario a un empleado en especifico.
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+
+<div class="row">
+    <div class="col" *ngIf="user.role === 'Super Administrador'">
+        <div class="card">
+            <div class="card-body">
+                <h1><strong>Rol</strong></h1>
+                <p>
+                    En esta pantalla solo se muestra los roles de usuarios que posee el sistema, mostrando la autorizacion que llega a tener cada rol dentro de las funciones del sistema
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h1><strong>Perfil</strong></h1>
+                        <p>
+                            Muestra informacion del perfil actual de quien esta utilizando el sistema, permitiendo cambiar su propia clave de usuario.
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col" *ngIf="user.role !== 'Optometrista'">
+        <div class="card">
+            <div class="card-body">
+                <h1><strong>Proveedor</strong></h1>
+                <p>
+                    En esta pantalla, muestra la informacion general de los proveedores asociados de la empresa, mostrando su nombre, la persona quien es el contacto de esta emmpresa proveedora, 
+                    El estado del proveedor ( Si se sigue mantieniendo la asociasion o no ), su direccion, y su informacion de contacto.
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col" *ngIf="user.role !== 'Optometrista'">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h1><strong>Factura</strong></h1>
+                        <p>
+                            La pantalla de Factura, muestra informacion referente a las facturas realizadas a un cliente en especifico, mostrando su emisor, su receptor, el estado de la factura
+                            la fecha de realizacion, el tipo de venta, el tipo de factura, y mucho mas. Pudiento ver informacion mas detallada al seleccionar una factura en especifico.
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col" *ngIf="user.role !== 'Optometrista'">
+        <div class="card">
+            <div class="card-body">
+                <h1><strong>Pago</strong></h1>
+                <p>
+                    En esta pantalla se muestran los pagos realizados referente a la factura seleccionada, se muestra el tipo de pago, la fecha en que se realizo el pago,
+                    la factura asociada, el tipo de factura, y el estado de esta, junto con el abono del pago, se muestra tambien si es un pago valido o anulado.
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col" *ngIf="user.role !== 'Venta'">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h1><strong>Examen de vista</strong></h1>
+                        <p>
+                            Muestra los examenes de la vista realizados a los pacientes, junto con el empleado que lo realizo, y el estado del registro (Si es un registro valido o invalido).
+                            Se toman las medidas de los lentes tanto del ojo izquierdo como del ojo derecho.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col" *ngIf="user.role !== 'Venta'">
+        <div class="card">
+            <div class="card-body">
+                <h1><strong>Laboratorio</strong></h1>
+                <p>
+                    En esta pantalla se muestra la informacion de los laboratorios asiciados para la construcion del lente para los anteojos, mostrando el nombre del laboratorio, como su direccion
+                    junto con su informacion de contacto y su estado (Si se sigue teniendo una asociacion o no)
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col" *ngIf="user.role !== 'Optometrista'"> 
+        <div class="card" >
+            <div class="card-body" >
+
+                <div class="row">
+                    <div class="col">
+                        <h1><strong>Producto</strong></h1>
+                        <p>
+                            En esta pantalla se administra el catalogo de los productos y servicios que se ofrecen al cliente, mostrando su codigo del producto, la descripcion de este y el tipo.
+                            Muestra si el producto sigue vigente o no, y su precio de compra y venta, junto con el stock actual, el stock minimo y el stock maximo, en caso de que en el registro muestre un valor de 
+                            stock Minimo y maximo de 0 quiere decir que ese es un servicio que se brinda.
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col" *ngIf="user.role !== 'Optometrista'">
+        <div class="card">
+            <div class="card-body">
+                <h1><strong>Registros de producto</strong></h1>
+                <p>
+                    La pantalla de Registro muestra los registros de obtencion del producto del proveedor, muestra el codigo del producto, la descripcion, junto con el nombre de la empresa proveedora,
+                    aparte se muestra la fecha de obtencion, el costo total por todo el producto, y la cantidad del producto que se obtuvo. 
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col" *ngIf="user.role !== 'Venta'">
+        <div class="card" >
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h1><strong>Orden de Pedido</strong></h1>
+                        <p>
+                            En esta pantalla se muestra la informacion que se registra al momento de realizar un pedido para la construccion de un lente, se muestra la fecha de emision del pedido, el empleado emisor, la fecha del examen, el numero del examen,
+                            el pacionte, observaciones adicionales del examen, el laboratorio que va dirigido, informacion del producto dentro del catalogo, el costo del pedido, y el estado de este (Pendiente, Obtenido, Entregado o Anulado)
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>

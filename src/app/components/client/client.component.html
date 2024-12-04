@@ -1,0 +1,479 @@
+<app-view-data [ItemData]="data$" [columns]="tableColumnsCliente" [ItemViewGrid]="item" [FormCreateView]="formcreate"
+    [FormView]="formUpdate" [FormInfoView]="itemInfo" [cancelDialogView]="cancel"></app-view-data>
+
+<ng-template #item let-data>
+    <mat-card class="card-invoice" [ngClass]="itemClick?.codigo_Cliente===data.codigo_Cliente?'card-invoice-active':''"
+        (click)="onItemClickActive(data)">
+        <div class="container-card-invoice">
+            <div class="content-header-card-invoice">
+                <!-- imagen y id de la factura -->
+                <img mat-card-sm-image src="https://cdn-icons-png.flaticon.com/512/9068/9068842.png"
+                    class="content-header-icon">
+                <h1 class="content-header-title">{{data.cedula}}</h1>
+            </div>
+            <div class="content-body-card-invoice">
+                <h2 class="text-card-title">
+                    <strong>
+                        Nombre del cliente:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.nombres + ' ' + data.apellidos }}</span>
+
+                <h2 class="text-card-title">
+                    <strong>
+                        Edad:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.edad}}</span>
+
+                <h2 class="text-card-title">
+                    <strong>
+                        Empresa Asociada:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.empresa_Asociada}}</span>
+
+                <h2 class="text-card-title">
+                    <strong>
+                        Contacto:
+                    </strong>
+                </h2>
+                <div *ngFor="let telefono of data.telefonos.split(',')" matTooltipPosition="right"
+                    matTooltip="Copiar Telefono" (click)="copyToClipboard(telefono)">
+                    <span class="text-card-contet"> <i class="fa-solid fa-phone"
+                            style="margin-right: 5px; color: rgb(37, 211, 102);"></i> {{telefono}}</span>
+                </div>
+                <div *ngFor="let correo of data.correos.split(',')" matTooltip="Copiar Correo Electronico"
+                    matTooltipPosition="right" (click)="copyToClipboard(correo)">
+                    <span class="text-card-contet"> 
+                        <i class="fa-regular fa-envelope" style="margin-right: 5px; background: linear-gradient(135deg, rgb(66, 133, 244), rgb(234, 67, 53), rgb(251, 188, 4), rgb(52, 168, 83));
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        color: transparent;"></i>{{correo}}</span>
+                </div>
+
+                <div
+                    style="display: flex; justify-content: flex-end; align-items: end; width: calc(100%); margin-right: 5px; margin-top: 1rem;">
+                    <span class="text-card-contet" style="color: #ABA9AA; padding-right: 5px;">{{data.fechaNac}}
+                        <i class="fa-solid fa-cake-candles" style="
+                        background: linear-gradient(to bottom, rgb(255, 219, 99),rgb(255, 219, 99),rgb(255, 219, 99), rgb(234, 67, 53),
+                        rgb(143, 224, 255),rgb(189, 237, 255),rgb(143, 224, 255),
+                        rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201),rgb(254, 231, 201), 
+                        rgb(243, 162, 80),rgb(243, 162, 80),rgb(243, 162, 80),rgb(243, 162, 80));
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        color: transparent;"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</ng-template>
+
+
+
+
+<ng-template #formcreate>
+    <div class="container-form-create">
+        <form class="content-form" [formGroup]="formCreateClient">
+            <h1>Formulario Cliente</h1>
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Cedula</label>
+                    <input class="form-data" type="text" formControlName="identityCard" [(ngModel)]="itemCreate.cedula">
+                    <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+
+                <div class="form">
+                    <label class="title">Empresa Asociada*</label>
+                    <input class="form-data" type="text" formControlName="AssociatedCompany" [matAutocomplete]="auto"
+                        [(ngModel)]="itemCreate.empresa_Asociada">
+                    <i class="form-icon fa-solid fa-chevron-down"></i>
+
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of listAssociatedCompanyFilter | async" [value]="option.nombre"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option.nombre}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateClient('AssociatedCompany').valid || (formGetCreateClient('AssociatedCompany').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+
+                <div class="form">
+                    <mat-form-field class="form-field-date">
+                        <mat-label class="title">Fecha de nacimiento</mat-label>
+                        <input matInput [matDatepicker]="datepicker" formControlName="birthday"
+                            [(ngModel)]="itemCreate.fechaNac">
+
+                        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker>
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Nombres*</label>
+                    <input class="form-data" type="text" formControlName="name" [(ngModel)]="itemCreate.nombres">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateClient('name').valid || (formGetCreateClient('name').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+                <div class="form">
+                    <label class="title">Apellidos*</label>
+                    <input class="form-data" type="text" formControlName="lastName" [(ngModel)]="itemCreate.apellidos">
+                    <i class="form-icon fa-solid fa-pencil"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetCreateClient('lastName').valid || (formGetCreateClient('lastName').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="content-form-item">
+
+                <mat-form-field class="form">
+                    <mat-label class="title">Dirección</mat-label>
+                    <textarea class="form-data" formControlName="address" matInput
+                        [(ngModel)]="itemCreate.direccion"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="content-form-item">
+                <div class="form">
+                    <div class="form-title">
+                        <label class="title">Telefono</label>
+                        <i class="icon" [ngClass]="classIconPhone()" (mouseenter)="iconChangeEnterPhone()"
+                            (mouseout)="iconChangeOverPhone()" (click)="clickPhone()"></i>
+                    </div>
+                    <input class="form-data" type="number" formControlName="phone1" [(ngModel)]="itemCreate.telefonos1">
+                    <i class="form-icon fa-solid fa-mobile-screen-button"></i>
+
+                    <input *ngIf="twoPhone" class="form-data" type="number" formControlName="phone2"
+                        [(ngModel)]="itemCreate.telefonos2">
+                    <i *ngIf="twoPhone" class="form-icon fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <div class="form">
+                    <div class="form-title">
+                        <label class="title" style="text-align: center;">Correo</label>
+                        <i class="icon" [ngClass]="classIconMail()" (mouseenter)="iconChangeEnterMail()"
+                            (mouseout)="iconChangeOverMail()" (click)="clickMail()"></i>
+                    </div>
+                    <input class="form-data" type="email" formControlName="mail1" [(ngModel)]="itemCreate.correos1">
+                    <i class="form-icon fa-regular fa-envelope fa-solid"></i>
+
+                    <input *ngIf="twoMail" class="form-data" type="email" formControlName="mail2"
+                        [(ngModel)]="itemCreate.correos2">
+                    <i *ngIf="twoMail" class="form-icon fa-regular fa-envelope fa-solid"></i>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
+                <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
+                    [disabled]="formCreateClient.invalid" (click)="saveDataConfirmed()">
+                    Guardar
+                    <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #formUpdate>
+    <mat-stepper labelPosition="bottom" linear #stepper>
+        <mat-step [editable]="true">
+            <!-- <mat-step [stepControl]="formInfoInvoice" [editable]="isEditable"> -->
+            <form [formGroup]="formInfoUpdateClient">
+                <!-- <form [formGroup]="formInfoInvoice"> -->
+                <ng-template matStepLabel>Información Basica</ng-template>
+
+                <div class="container-form-step">
+                    <div class="content-form-item">
+                        <div class="form">
+                            <label class="title">Cedula</label>
+                            <input class="form-data" type="text" formControlName="identityCard"
+                                [(ngModel)]="itemInfoUpdate.cedula">
+                            <i class="form-icon fa-solid fa-regular fa-id-badge"></i>
+                            <!-- <i class="fa-solid fa-pencil"></i> -->
+                        </div>
+
+                        <div class="form">
+                            <label class="title">Empresa Asociada*</label>
+                            <input class="form-data" type="text" formControlName="AssociatedCompany"
+                                [matAutocomplete]="auto" [(ngModel)]="itemInfoUpdate.empresa">
+                            <i class="form-icon fa-solid fa-chevron-down"></i>
+
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                <mat-option *ngFor="let option of listAssociatedCompanyFilter | async"
+                                    [value]="option.nombre" style="font-family: 'Crimson Text', serif; color: black;">
+                                    {{option.nombre}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <div class="alert alert-danger mt-1"
+                                [hidden]="formGetCreateClient('AssociatedCompany').valid || (formGetCreateClient('AssociatedCompany').pristine)">
+                                El campo no puede estar Vacio.
+                            </div>
+                        </div>
+
+                        <div class="form">
+                            <mat-form-field class="form-field-date">
+                                <mat-label class="title">Fecha de nacimiento</mat-label>
+                                <input matInput [matDatepicker]="datepicker" formControlName="birthday"
+                                    [(ngModel)]="itemInfoUpdate.fechaNac">
+
+                                <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker>
+                                </mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="content-form-item">
+                        <div class="form">
+                            <label class="title">Nombres*</label>
+                            <input class="form-data" type="text" formControlName="name"
+                                [(ngModel)]="itemInfoUpdate.nombre">
+                            <i class="form-icon fa-solid fa-pencil"></i>
+                            <div class="alert alert-danger mt-1"
+                                [hidden]="formGetCreateClient('name').valid || (formGetCreateClient('name').pristine)">
+                                El campo no puede estar Vacio.
+                            </div>
+                        </div>
+                        <div class="form">
+                            <label class="title">Apellidos*</label>
+                            <input class="form-data" type="text" formControlName="lastName"
+                                [(ngModel)]="itemInfoUpdate.apellido">
+                            <i class="form-icon fa-solid fa-pencil"></i>
+                            <div class="alert alert-danger mt-1"
+                                [hidden]="formGetCreateClient('lastName').valid || (formGetCreateClient('lastName').pristine)">
+                                El campo no puede estar Vacio.
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="content-form-item">
+
+                        <mat-form-field class="form">
+                            <mat-label class="title">Dirección</mat-label>
+                            <textarea class="form-data" formControlName="address" matInput
+                                [(ngModel)]="itemInfoUpdate.direccion"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="step-content-btn-first">
+                    <button mat-button matStepperNext class="step-btn-next" style="background: #39a805 !important;"
+                        (click)="saveDataUpdateConfirmed()"
+                        [disabled]="formContactUpdateCliente.invalid && formInfoUpdateClient.invalid">
+                        Guardar
+                        <i class="icon-step fa-regular fa-floppy-disk"></i>
+                    </button>
+                    <button mat-button matStepperNext class="step-btn-next">
+                        Siguiente
+                        <i class="icon-step fa-solid fa-right-to-bracket"></i>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [editable]="true">
+            <!-- <mat-step [stepControl]="formDataClient" [editable]="true"> -->
+            <form [formGroup]="formContactUpdateCliente">
+                <ng-template matStepLabel>Contactos del cliente</ng-template>
+
+                <div class="container-form-step">
+
+                    <div class="content-form-update">
+                        <div class="content-form-item">
+                            <div class="form">
+                                <h1 class="title">Telefono Actual (1)</h1>
+                                <input class="form-data" type="text" readonly [(ngModel)]="itemContactUpdate.phone1"
+                                    formControlName="phone1v">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                        </div>
+                        <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                            <i class="fa-solid fa-phone-slash icon-phone-" style="color: red;"></i>
+                            <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                            <i class="fa-solid fa-phone" style="color: #39a805;"></i>
+                        </div>
+                        <div class="content-form-item">
+                            <div class="form">
+                                <h1 class="title">Telefono Nuevo (1)</h1>
+                                <input class="form-data" type="text" formControlName="phone1"
+                                    [(ngModel)]="itemContactUpdateNew.phone1">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="content-form-update">
+                        <div class="content-form-item">
+                            <div class="form">
+                                <h1 class="title">Telefono Actual (2)</h1>
+                                <input class="form-data" type="text" readonly formControlName="phone2v"
+                                    [(ngModel)]="itemContactUpdate.phone2">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                        </div>
+                        <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                            <i class="fa-solid fa-phone-slash icon-phone-" style="color: red;"></i>
+                            <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                            <i class="fa-solid fa-phone" style="color: #39a805;"></i>
+                        </div>
+                        <div class="content-form-item">
+                            <div class="form">
+                                <h1 class="title">Telefono Nuevo (2)</h1>
+                                <input class="form-data" type="text" formControlName="phone2"
+                                    [(ngModel)]="itemContactUpdateNew.phone2">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="content-form-update">
+                        <div class="content-form-item">
+                            <div class="form">
+                                <h1 class="title">Correo Actual (1)</h1>
+                                <input class="form-data" type="text" readonly formControlName="mail1v"
+                                    [(ngModel)]="itemContactUpdate.mail1">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                        </div>
+                        <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                            <i class="fa-regular fa-envelope" style="color: red;"></i>
+                            <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                            <i class="fa-regular fa-envelope" style="color: #39a805;"></i>
+                        </div>
+                        <div class="content-form-item">
+                            <div class="form">
+                                <h1 class="title">Correo Nuevo (1)</h1>
+                                <input class="form-data" type="text" formControlName="mail1"
+                                    [(ngModel)]="itemContactUpdateNew.mail1">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="content-form-update">
+                        <div class="content-form-item">
+                            <div class="form">
+                                <h1 class="title">Correo Actual (2)</h1>
+                                <input class="form-data" type="text" readonly formControlName="mail2v"
+                                    [(ngModel)]="itemContactUpdate.mail2">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                        </div>
+                        <div style="margin-top: 30px; display: flex; flex-direction: row; font-size: 20px;">
+                            <i class="fa-regular fa-envelope" style="color: red;"></i>
+                            <i class="fa-solid fa-right-long" style="margin: 0 1rem; "></i>
+                            <i class="fa-regular fa-envelope" style="color: #39a805;"></i>
+                        </div>
+                        <div class="content-form-item">
+                            <div class="form">
+                                <h1 class="title">Correo Nuevo (2)</h1>
+                                <input class="form-data" type="text" formControlName="mail2"
+                                    [(ngModel)]="itemContactUpdateNew.mail2">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="step-content-btn-first">
+                    <button mat-button matStepperPrevious class="step-btn-back">
+                        <i class="icon-step fa-solid fa-right-to-bracket" style="transform: rotate(180deg);"></i>
+                        Anterior
+                    </button>
+                    <button mat-button class="step-btn-next" style="background: #39a805 !important;"
+                        (click)="saveDataUpdateConfirmed()"
+                        [disabled]="formContactUpdateCliente.invalid && formInfoUpdateClient.invalid">
+                        Guardar
+                        <i class="icon-step fa-regular fa-floppy-disk"></i>
+                    </button>
+                </div>
+
+            </form>
+        </mat-step>
+    </mat-stepper>
+</ng-template>
+
+
+<ng-template #itemInfo>
+    <div class="container-info">
+        <h1 class="title-info">{{itemClick.nombres + ' ' + itemClick.apellidos}}</h1>
+        <div class="block-content-info">
+            <h2 class="block-title-info">Informacion Basica</h2>
+        </div>
+        <div class="body-content-info">
+            <div class="content-img-info">
+                <img class="img-info" src="https://cdn-icons-png.flaticon.com/512/15430/15430330.png" alt="imagen cliente">
+            </div>
+    
+            <div class="content-texts-info">
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Cedula :</strong></span>
+                    <span class="info-text-profile">{{itemClick.cedula}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Empresa Asociada :</strong></span>
+                    <span class="info-text-profile">{{itemClick.empresa_Asociada}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Fecha de nacimiento :</strong></span>
+                    <span class="info-text-profile">{{itemClick.fechaNac}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Edad :</strong></span>
+                    <span class="info-text-profile">{{itemClick.edad}}</span>
+                </div>
+                <div class="info-profile">
+                    <span class="info-text-profile"><strong>Dirección :</strong></span>
+                    <span class="info-text-profile">{{itemClick.direccion}}</span>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="block-content-info">
+            <h1 class="block-title-info">Contactos</h1>
+        </div>
+    
+        <div class="content-texts-info">
+            <div class="info-profile">
+                <span class="info-text-profile"><strong>Telefonos : </strong></span>
+                <span class="info-text-profile">{{itemClick.telefonos}}</span>
+            </div>
+            <div class="info-profile">
+                <span class="info-text-profile"><strong>Correo :</strong></span>
+                <span class="info-text-profile">{{itemClick.correos}}</span>
+            </div>
+        </div>
+        
+    </div>
+</ng-template>
+
+
+
+
+<!-- <i class="fa-person-to-portal fa-xl">i</i> -->

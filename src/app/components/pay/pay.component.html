@@ -1,0 +1,351 @@
+<app-view-data [ItemData]="data$" [columns]="tableColumnsCliente" 
+[FormInfoView]="itemInfo" [FormView]="itemUpdate" [ItemViewGrid]="item" [FormCreateView]="formCreate"></app-view-data>
+
+<ng-template #itemUpdate let-data>
+    <mat-card class="card-invoice-update"
+        *ngIf="data.estado !=='Invalido' ; else valUpdate">
+        <div class="container-card-invoice-update">
+            <div class="content-header-card-invoice-update">
+                <h1 class="content-header-title"> Actualización del Estado del Pago </h1>
+            </div>
+            <div class="content-body-card-invoice-update">
+                <div class="content-container-text">
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Emisor
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{itemInvoice.emisor}}</span>
+                    </div>
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Cliente
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.cliente}}</span>
+                    </div>
+                </div>
+                <div class="content-container-text">
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Fecha de Pago
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.fecha_Pago}}</span>
+                    </div>
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Descripción del Pago
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.descripcion}}</span>
+                    </div>
+                </div>
+                <div class="content-container-text">
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Tipo de Pago
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.tipo_Pago}}</span>
+                    </div>
+                    <div class="content-block-text">
+                        <h2 class="text-title-block">
+                            <strong>
+                                Abono
+                            </strong>
+                        </h2>
+                        <span class="text-content-block">{{data.abono}}</span>
+                    </div>
+                </div>
+                <form class="form-update" [formGroup]="formDataUpdate">
+                    <div class="form">
+
+                        <label class="title">
+                            <strong>
+                                Estado del Pago*
+                            </strong>
+                        </label>
+                        <input class="form-data" type="text" formControlName="estadoFactura"
+                            [(ngModel)]="itemStatusInvoice" [matAutocomplete]="auto">
+                        <i class="fa-solid fa-chevron-down"></i>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of listStatusInvoiceFilterUpdate | async"
+                                [value]="option">
+                                <img mat-card-sm-image [src]="imgItems(option)" style="width: 24px;
+                                        height: 24px;
+                                        margin: 0 2rem 0 1rem;">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div class="alert 1alert-danger mt-1"
+                            [hidden]="formGetDataUpdate('estadoFactura').valid || (formGetDataUpdate('estadoFactura').pristine)">
+                            El campo no puede estar Vacio.
+                        </div>
+                    </div>
+
+                    <div style="width: calc(100%); display: flex; justify-content: flex-end; margin: 1rem 0; ">
+                        <button class="btn btn-primary" #btnEnviar (click)="saveDataConfirmeUpdate(data)">
+                            Actualizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </mat-card>
+</ng-template>
+
+<ng-template #valUpdate>
+    <div class="container-card">
+        <mat-card class="example-card">
+            <mat-card-header style="border-bottom: 1px solid #000000;">
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Asistente Virtual</mat-card-title>
+                <mat-card-subtitle>Engineer Dog</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="contentt">
+                <img class="emoji" mat-card-image src="	https://cdn-icons-png.flaticon.com/512/7933/7933285.png"
+                    alt="Error">
+                <h1 style="font-family: 'Crimson Text', serif; text-align: center;">
+                    <strong>
+                        Lo siento, El pago no puede ser editado en este momento.
+                    </strong>
+                </h1>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-template>
+
+
+<ng-template #itemInfo>
+    <div class="container-info">
+        <div class="container-left-info">
+            <div class="content-info content-left-top-info">
+                <div class="content-text-info" 
+                style="
+                display: flex; 
+                flex-direction: column; 
+                justify-content: center; 
+                align-items: center;
+                height: calc(100%);">
+                    <span class="content-text-content-info"
+                    style="margin: 0; color: rgb(32, 32, 32);">Abono</span>
+                    <h1 class="content-monto-title-info" 
+                    style="margin: 0;">
+                    {{itemClick.abono}}</h1>
+                </div>
+                <div class="content-text-info">
+                    <span class="content-text-title-info" style="color: #1573D0;">Total</span>
+                    <span class="content-text-content-info">{{itemInvoice[0].total}}</span>
+    
+                    <span class="content-text-title-info" style="color: #F8BE2B;">Faltante</span>
+                    <span class="content-text-content-info">{{itemInvoice[0].faltante}}</span>
+                </div>
+            </div>
+    
+            <div class="content-info content-left-bottom-info" >
+                <div>
+                    <div class="content-text-info">
+                        <span class="content-text-title-info"><strong>Tipo de Pago</strong></span>
+                        <span class="content-text-content-info">{{itemClick.tipo_Pago}}</span>
+                    </div>
+                    <div class="content-text-info">
+                        <span class="content-text-title-info"><strong>Fecha de Pago</strong></span>
+                        <span class="content-text-content-info">{{itemClick.fecha_Pago}}</span>
+                    </div>
+                    <div class="content-text-info">
+                        <span class="content-text-title-info"><strong>Estado del Pago</strong></span>
+                        <span class="content-text-content-info">{{itemClick.estado}}</span>
+                    </div>
+                </div>
+                <div class="content-description-info">
+                    <span class="content-text-title-info"><strong>Descripción</strong></span>
+                    <span class="content-text-content-info">{{itemClick.descripcion}}</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="content-info content-right-info">
+            <h2>Información de la factura</h2>
+            <div class="content-text-info">
+                <span class="content-text-title-info"><strong>Emisor</strong></span>
+                <span class="content-text-content-info">{{itemInvoice[0].emisor}}</span>
+            </div>
+            <div class="content-text-info">
+                <span class="content-text-title-info"><strong>Cliente</strong></span>
+                <span class="content-text-content-info">{{itemInvoice[0].cliente}}</span>
+            </div>
+            <div class="content-text-info">
+                <span class="content-text-title-info"><strong>Estado de la Fatura</strong></span>
+                <span class="content-text-content-info">{{itemInvoice[0].estado_Factura}}</span>
+            </div>
+            <div class="content-text-info">
+                <span class="content-text-title-info"><strong>Tipo de Factura</strong></span>
+                <span class="content-text-content-info">{{itemInvoice[0].tipo_Factura}}</span>
+            </div>
+            <div class="content-text-info">
+                <span class="content-text-title-info"><strong>Fecha de Emision</strong></span>
+                <span class="content-text-content-info" style="margin: 0 !important;">{{itemInvoice[0].fecha_Emision}}</span>
+            </div>
+        </div>
+        
+    </div>
+</ng-template>
+
+<ng-template #item let-data>
+    <mat-card class="card-invoice" [ngClass]="itemClick?.id_Pago===data.id_Pago?'card-invoice-active':''"
+        (click)="onItemClickActive(data)">
+        <div class="container-card-invoice">
+            <div class="content-header-card-invoice">
+                <!-- imagen y id de la factura -->
+                <img mat-card-sm-image [src]="imgItems(data.estado)" class="content-header-icon">
+                <h1 class="content-header-title">{{data.id_Pago}}</h1>
+            </div>
+            <div class="content-body-card-invoice">
+                <h2 class="text-card-title">
+                    <strong>
+                        Tipo de Pago:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.tipo_Pago}}</span>
+
+                <h2 class="text-card-title">
+                    <strong>
+                        Estado de la Factura:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.estado_Factura}}</span>
+
+                <h2 class="text-card-title">
+                    <strong>
+                        Cliente:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.cliente_Factura}}</span>
+                
+                <h2 class="text-card-title">
+                    <strong>
+                        Descripción del Pago:
+                    </strong>
+                </h2>
+                <span class="text-card-contet">{{data.descripcion}}</span>
+
+                <div
+                    style="display: flex; justify-content: flex-end; align-items: end; width: calc(100%); margin-right: 5px;">
+                    <span class="text-card-contet"
+                        style="color: #ABA9AA; padding-right: 5px;">{{data.fecha_Pago}}</span>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</ng-template>
+
+
+<ng-template #formCreate>
+    <div class="container-form-create">
+        <form class="content-form" [formGroup]="formCreateClient">
+            <h1 style="font-family: 'Crimson Text', serif; color: black;">Formulario Pago</h1>
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Factura*</label>
+                    <input class="form-data" type="text" formControlName="invoice" [(ngModel)]="itemInvoiceV.numFactura">
+                    <i class="form-icon fa-solid fa-file-invoice" (click)="openDialogWithTemplate(tableInvoice)"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+    
+                <div class="form">
+                    <label class="title">Tipo de Pago*</label>
+                    <input class="form-data" type="text" formControlName="typePay" [matAutocomplete]="auto"
+                        [(ngModel)]="itemCreatePay.tipo_Pago">
+                    <i class="form-icon fa-solid fa-chevron-down"></i>
+    
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of listTypePayCreate | async" [value]="option"
+                            style="font-family: 'Crimson Text', serif; color: black;">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetDataCreate('typePay').valid || (formGetDataCreate('typePay').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+    
+                <div class="form">
+                    <mat-form-field class="form-field-date">
+                        <mat-label class="title">Fecha del Pago*</mat-label>
+                        <input matInput [matDatepicker]="datepicker" formControlName="payDay"
+                            [(ngModel)]="itemCreatePay.fecha_Pago" readonly>
+    
+                        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker>
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+    
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Total*</label>
+                    <input class="form-data" type="text" [(ngModel)]="itemInvoiceV.total" [ngModelOptions]="{standalone: true}" readonly>
+                    <i class="form-icon fa-solid fa-money-bill" (click)="openDialogWithTemplate(tableInvoice)"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+    
+                <div class="form">
+                    <label class="title">Faltante*</label>
+                    <input class="form-data" type="text" [(ngModel)]="itemInvoiceV.faltante" [ngModelOptions]="{standalone: true}" readonly>
+                    <i class="form-icon fa-solid fa-money-bill" (click)="openDialogWithTemplate(tableInvoice)"></i>
+                    <!-- <i class="fa-solid fa-pencil"></i> -->
+                </div>
+                
+            </div>
+    
+    
+            <div class="content-form-item">
+                <div class="form">
+                    <label class="title">Abono*</label>
+                    <input class="form-data" type="text" formControlName="pass" [(ngModel)]="itemCreatePay.abono">
+                    <i class="form-icon fa-solid fa-cash-register"></i>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetDataCreate('pass').valid || (formGetDataCreate('pass').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+                </div>
+                <div class="form">
+                    <mat-form-field class="form">
+                        <mat-label class="title">Descripción</mat-label>
+                        <textarea class="form-data" formControlName="description" matInput
+                            [(ngModel)]="itemCreatePay.descripcion"></textarea>
+                    </mat-form-field>
+                    <div class="alert alert-danger mt-1"
+                        [hidden]="formGetDataCreate('description').valid || (formGetDataCreate('description').pristine)">
+                        El campo no puede estar Vacio.
+                    </div>
+    
+                </div>
+            </div>
+    
+            <div class="form-button" style="width: calc(100%); display: flex; justify-content: flex-end; ">
+                <button class="btn btn-primary" style="margin-right: 1rem; font-family: 'lato',sans-serif;" #btnEnviar
+                    [disabled]="formCreateClient.invalid" (click)="saveDataConfirmed()">
+                    Guardar
+                    <i class="fa-regular fa-floppy-disk" style="margin-left: 0.4rem;"></i>
+                </button>
+            </div>
+    
+        </form>
+    </div>
+</ng-template>
+
+
+<ng-template #tableInvoice>
+    <app-sub-tablet [data]="listInvoiceFilter" [columns]="tableColumnsInvoice"
+    (selectItemsCell)="resultDataTableProduct($event)" (cancelTable)="cancelDialogResult()">
+    </app-sub-tablet>
+</ng-template>
